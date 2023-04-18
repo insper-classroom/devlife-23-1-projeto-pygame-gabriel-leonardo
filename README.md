@@ -2,12 +2,12 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10907815&assignment_repo_type=AssignmentRepo)
 # [COLOQUE O TÍTULO DO SEU JOGO AQUI]
 
-Vocês já tiveram 2 exemplos de arquivo README nos projetos anteriores (projeto individual e checks pygame). Desta vez não forneceremos um template, mas você pode usar os projetos anteriores como base.
+Este jogo é um projeto de um jogo com base em jogos de plataforma, desenvolvido por Gabriel Rodrigues e Leonardo Freitas como projeto em grupo na disciplina Developer Life do primeiro semestre do curso de Ciência da Computação do Insper. O jogo foi desenvolvido em Python, utilizando o módulo PyGame.
 
-Lembre-se de colocar algumas imagens do jogo no seu README.
+## Descrição do jogo
 
-**IMPORTANTE:** coloque o nome de todos os membros do grupo neste documento e na página do jogo.
+## Como Jogar
 
-Além disso, a página do jogo deve ser feita dentro da pasta `docs`.
+Para jogar, é necessário ter Python 3 instalado na máquina, além da biblioteca de PyGame. Para instalar é necessário utilizar o comando: 'pip -install pygame' no terminal
 
-APAGUE ESSE CONTEÚDO E SUBSTITUA PELO SEU PRÓPRIO README!
+### Outros links
