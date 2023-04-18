@@ -1,0 +1,77 @@
+* { 
+    font-family: 'Open Sans', sans-serif;
+    text-align: justify;
+    margin: 0px;
+    padding: 0px;
+    scroll-behavior: smooth;
+    
+}
+
+main { 
+    margin-top: 100px;
+}
+
+header {
+    display: flex;
+    background-color: #000;
+    color: #fff;
+    padding: 32px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    flex-direction: row;
+    top: 0px;
+    
+}
+
+#botoes {
+    padding: 0px;
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+
+}
+
+#section-descricao {
+    background-color: red;
+    color: #fff;
+    padding: 200px;
+    text-align: center;
+    width: 100%;
+    border-bottom: 5px solid black;
+
+}
+
+#section-video {
+    background-color: blueviolet;
+    padding: 200px;
+    border-bottom: 5px solid black;
+}
+
+#section-equipe {
+    background-color: blue;
+    color: #fff;
+    text-align: center;
+    padding: 200px;
+    width: 100%;
+    border-bottom: 5px solid black;
+
+}
+
+#section-informacoes {
+    background-color: rgb(0, 255, 251);
+    color: #fff;
+    text-align: center;
+    padding: 200px;
+    border-bottom: 5px solid black;
+}
+
+#section-desenvolvimento {
+    background-color: green;
+    color: #fff;
+    text-align: center;
+    padding: 200px;
+    width: 100%;
+    border-bottom: 5px solid black;
+
+}
