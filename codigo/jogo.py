@@ -1,4 +1,4 @@
-from classes import *
+from classes import TelaInicial
 
 tela_atual = TelaInicial()
 while True:
