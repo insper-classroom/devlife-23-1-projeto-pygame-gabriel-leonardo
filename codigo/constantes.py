@@ -1,20 +1,27 @@
 import pygame
 pygame.init()
 
-# Fontes  
-font_titulo = pygame.font.Font('assets/fonts/Akira Expanded Demo.otf', 30)
-font_texto = pygame.font.Font('assets/fonts/Akira Expanded Demo.otf', 20)
-font_texto_popup = pygame.font.Font('assets/fonts/Akira Expanded Demo.otf', 25)
+# Fontes 
+font_arc ='codigo/assets/fonts\JosefinSans-BoldItalic.ttf'
+font_titulo = pygame.font.Font(font_arc, 40)
+font_texto = pygame.font.Font(font_arc, 30)
+font_texto_popup = pygame.font.Font(font_arc, 35)
 FONTE_TITULO = font_titulo
 FONTE_TEXTO = font_texto
 FONTE_TEXTO_POPUP = font_texto_popup
 
 # Backgrounds
-FUNDO = pygame.image.load('assets/backgrounds/Clouds 3/1.png')
-LUA = pygame.image.load('assets/backgrounds/Clouds 3/2.png')
-NUVEM_1 = pygame.image.load('assets/backgrounds/Clouds 3/3.png')
-NUVEM_4 = pygame.image.load('assets/backgrounds/Clouds 3/4.png')
+FUNDO = pygame.image.load('assets/backgrounds\StartScreen/1.png')
+LUA = pygame.image.load('assets/backgrounds\StartScreen/2.png')
+NUVEM_1 = pygame.image.load('assets/backgrounds\StartScreen/3.png')
+NUVEM_1_VEL = 0.5
+NUVEM_4 = pygame.image.load('assets/backgrounds\StartScreen/4.png')
+NUVEM_4_VEL = - 0.5
 
+FUNDO_INICIO = pygame.image.load('assets/backgrounds\TelaJogo\Background DE FATO.png')
+
+#
+# Sprites
 # Cores
 PRETO = (0, 0, 0)
 BRANCO = (255, 255, 255)
