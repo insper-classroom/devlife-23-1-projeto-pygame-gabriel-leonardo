@@ -68,6 +68,9 @@ class TelaInicial(Jogo):
                     return TelaOpcoes()
                 elif self.botao == 3:
                     return TelaCreditos()
+                elif self.botao == 4:
+                    pygame.quit()
+                    quit()
             elif event.type == pygame.MOUSEMOTION:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 if self.colisao_ponto_retangulo(mouse_x, mouse_y, 40, 440, 160, 20):
