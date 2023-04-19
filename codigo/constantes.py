@@ -2,7 +2,7 @@ import pygame
 pygame.init()
 
 # Fontes 
-font_arc ='assets/fonts\JosefinSans-BoldItalic.ttf'
+font_arc ='codigo/assets/fonts\JosefinSans-BoldItalic.ttf'
 font_titulo = pygame.font.Font(font_arc, 40)
 font_texto = pygame.font.Font(font_arc, 30)
 font_texto_popup = pygame.font.Font(font_arc, 35)
