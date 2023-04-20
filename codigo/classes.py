@@ -41,6 +41,7 @@ class Player(pygame.sprite.Sprite, Jogo):
 
         self.parado = True
         self.andando = False
+        self.pulando = False
 
         self.imgs = {'parado': PLAYER_PARADO,
                      'andando': PLAYER_ANDANDO}
@@ -71,17 +72,19 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.rect.x = 100
         self.rect.y = 510
         self.velocidade_x = 0
+        self.velocidade_y = 0
+        self.gravidade = 0
         self.last_updated = 0
-
+        self.pulos = 0
+        self.max_pulos = 1
 
        # self.index_andando = 0
        # self.image = self.sprite_andando[self.index_andando]
-       # self.rect = self.image.get_rect()
-       # self.rect.center = (100, 572)
+
 
     # def update(self):
     #     self.rect.x += self.player_vel * deltat
-                        
+                    
         self.index_parado += 0.1
         if self.index_parado > 5:
             self.index_parado = 0
@@ -94,11 +97,9 @@ class Player(pygame.sprite.Sprite, Jogo):
     #    self.image = self.sprite_andando[int(self.index_andando)]
 
     def movimenta_player(self):
-        delta_t = 0
-        ticks = pygame.time.get_ticks()
-        delta_t = (ticks - self.last_updated )/1000
-        self.last_updated = ticks
-        prox_posicao_x = self.rect.x + self.velocidade_x* delta_t
+        self.gravidade += 0.3
+        self.rect.y += self.gravidade
+        prox_posicao_x = self.rect.x + self.velocidade_x
 
         # Verifica borda:
         if prox_posicao_x < 0:
@@ -107,6 +108,10 @@ class Player(pygame.sprite.Sprite, Jogo):
         elif prox_posicao_x > 1024:
             prox_posicao_x = 1024
             self.velocidade_x = 0
+        elif self.rect.y > 510:
+            self.rect.y = 510
+            self.pulos = 0
+            self.pulando = False
         
         # Atualiza
         self.rect.x = prox_posicao_x
@@ -210,7 +215,6 @@ class TelaJogo(Jogo):
     def update(self):
         # self.grupos['all_sprites'].update(self.deltat)
         self.player.movimenta_player()
-        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -219,19 +223,25 @@ class TelaJogo(Jogo):
                 if event.key == pygame.K_RETURN:
                     return TelaGameOver()
                 if event.key == pygame.K_d:
-                    self.player.velocidade_x += 250
+                    self.player.velocidade_x += 3 
                 elif event.key == pygame.K_a:
-                    self.player.velocidade_x -= 250
+                    self.player.velocidade_x -= 3 
+                elif event.key == pygame.K_SPACE:
+                    if self.player.pulos < self.player.max_pulos:
+                        self.player.gravidade = -10
+                        self.player.pulos += 1
+                        self.player.pulando = True
                 self.player.parado = False
                 self.player.andando = True
-                
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_d:
-                    self.player.velocidade_x = 0
+                    self.player.velocidade_x += 3 
                 elif event.key == pygame.K_a:
-                    self.player.velocidade_x = 0
+                    self.player.velocidade_x -= 3 
                 self.player.parado = True
                 self.player.andando = False
+            
+
         return self 
     
 class TelaOpcoes(Jogo):
