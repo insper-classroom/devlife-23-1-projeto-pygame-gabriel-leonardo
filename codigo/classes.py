@@ -56,14 +56,13 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.index_parado = 0
         self.index_andando = 0
 
-        if self.parado:
-            self.image = self.sprite_parado[self.index_parado]
-            self.image = self.image.convert_alpha()
-            self.rect = self.image.get_rect()
-        elif self.andando:
-            self.image = self.sprite_andando[self.index_andando]
-            self.image = self.image.convert_alpha()
-            self.rect = self.image.get_rect()
+        self.image = self.sprite_parado[self.index_parado]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_andando[self.index_andando]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
 
         #Movimentação:
         self.rect.x = 100
@@ -76,15 +75,16 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.max_pulos = 1
     
     def update(self):
-        self.index_parado += 0.1
-        if self.index_parado > 5:
-            self.index_parado = 0
-        self.image = self.sprite_parado[int(self.index_parado)]
-
-        self.index_andando += 0.1
-        if self.index_andando > 7:
-            self.index_andando = 0
-        self.image = self.sprite_andando[int(self.index_andando)]
+        if self.parado:
+            self.index_parado += 0.1
+            if self.index_parado > 5:
+                self.index_parado = 0
+            self.image = self.sprite_parado[int(self.index_parado)]
+        if self.andando:
+            self.index_andando += 0.1
+            if self.index_andando > 7:
+                self.index_andando = 0
+            self.image = self.sprite_andando[int(self.index_andando)]
 
 
 
