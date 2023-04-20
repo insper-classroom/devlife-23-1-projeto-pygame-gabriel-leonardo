@@ -40,28 +40,28 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.imgs = {'parado': PLAYER_PARADO,
                      'andando': PLAYER_ANDANDO}
         self.imgs['parado'].convert_alpha()
-        self.imgs['andando'].convert_alpha()
+        #self.imgs['andando'].convert_alpha()
         self.grupos = grupos
         self.grupos['all_sprites'].add(self)
         self.sprite_parado = []
-        self.sprite_andando = []
+       # self.sprite_andando = []
 
         for i in range(6):
             img = self.imgs['parado'].subsurface((128 * i, 0), (128,128))
             self.sprite_parado.append(img)
-        for i in range(8):
-            img = self.imgs['andando'].subsurface((128 * i, 0), (128,128))
-            self.sprite_andando.append(img)
+        #for i in range(8):
+        #    img = self.imgs['andando'].subsurface((128 * i, 0), (128,128))
+        #    self.sprite_andando.append(img)
 
         self.index_parado = 0
         self.image = self.sprite_parado[self.index_parado]
         self.rect = self.image.get_rect()
         self.rect.center = (100, 572)
 
-        self.index_andando = 0
-        self.image = self.sprite_andando[self.index_andando]
-        self.rect = self.image.get_rect()
-        self.rect.center = (100, 572)
+       # self.index_andando = 0
+       # self.image = self.sprite_andando[self.index_andando]
+       # self.rect = self.image.get_rect()
+       # self.rect.center = (100, 572)
 
 
 
@@ -74,10 +74,10 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.image = self.sprite_parado[int(self.index_parado)]
 
         
-        self.index_andando += 0.1
-        if self.index_andando > 7:
-            self.index_andando = 0
-        self.image = self.sprite_andando[int(self.index_andando)]
+       # self.index_andando += 0.1
+       # if self.index_andando > 7:
+       #     self.index_andando = 0
+       # self.image = self.sprite_andando[int(self.index_andando)]
         
         
 
