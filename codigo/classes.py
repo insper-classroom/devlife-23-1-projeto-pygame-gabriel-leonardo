@@ -43,48 +43,27 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.andando = False
         self.pulando = False
 
-        self.imgs = {'parado': PLAYER_PARADO,
-                     'andando': PLAYER_ANDANDO}
-        self.imgs['parado'].convert_alpha()
-        self.imgs['andando'].convert_alpha()
-
-        # self.grupos = grupos
-
-        # self.grupos['all_sprites'].add(self)
-        
-
         self.sprite_parado = []
         self.sprite_andando = []
         for i in range(6):
-            img = self.imgs['parado'].subsurface((128 * i, 0), (128,128))
+            img = PLAYER_PARADO.subsurface((128 * i, 0), (128,128))
             self.sprite_parado.append(img)
 
         for i in range(8):
-            img = self.imgs['andando'].subsurface((128 * i, 0), (128,128))
+            img = PLAYER_ANDANDO.subsurface((128 * i, 0), (128,128))
             self.sprite_andando.append(img)
-
-        self.index_parado = 0
-        self.image = self.sprite_parado[self.index_parado]
-
-        self.image = PLAYER_PARADO.convert_alpha()
-        self.rect = self.image.get_rect()
-
-       # self.index_andando = 0
-       # self.image = self.sprite_andando[self.index_andando]
-
-    # def update(self):
-    #     self.rect.x += self.player_vel * deltat
-                    
-        self.index_parado += 0.1
-        if self.index_parado > 5:
-            self.index_parado = 0
-        self.image = self.sprite_parado[int(self.index_parado)]
-
         
-    #    self.index_andando += 0.1
-    #    if self.index_andando > 7:
-    #        self.index_andando = 0
-    #    self.image = self.sprite_andando[int(self.index_andando)]
+        self.index_parado = 0
+        self.index_andando = 0
+
+        if self.parado:
+            self.image = self.sprite_parado[self.index_parado]
+            self.image = self.image.convert_alpha()
+            self.rect = self.image.get_rect()
+        elif self.andando:
+            self.image = self.sprite_andando[self.index_andando]
+            self.image = self.image.convert_alpha()
+            self.rect = self.image.get_rect()
 
         #Movimentação:
         self.rect.x = 100
@@ -95,6 +74,20 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.last_updated = 0
         self.pulos = 0
         self.max_pulos = 1
+    
+    def update(self):
+        self.index_parado += 0.1
+        if self.index_parado > 5:
+            self.index_parado = 0
+        self.image = self.sprite_parado[int(self.index_parado)]
+
+        self.index_andando += 0.1
+        if self.index_andando > 7:
+            self.index_andando = 0
+        self.image = self.sprite_andando[int(self.index_andando)]
+
+
+
 
     def movimenta_player(self):
         self.gravidade += 0.3
@@ -211,8 +204,8 @@ class TelaJogo(Jogo):
     def desenha(self):
         self.window.fill((255, 255, 255))
         self.window.blit(pygame.transform.scale(FUNDO_INICIO, (self.WIDTH, self.HEIGHT)), (0, 0))
-        self.sprites.update()
         self.sprites.draw(self.window)
+        self.sprites.update()
 
     def update(self):
         # self.grupos['all_sprites'].update(self.deltat)
