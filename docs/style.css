@@ -1,87 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans'); 
+/* ChatGPT */
+
 * { 
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 1000;
     margin: 0px;
     padding: 0px;
     scroll-behavior: smooth;
-    /* josefin sans */
-    
 }
 
 :root {
-    --gradient: linear-gradient(45deg, #363635, rgb(20, 20, 20), rgb(43, 39, 39));
+    --gradiente1: linear-gradient(45deg, #363732, #1b1b1e, #000000);
+    --gradiente2: linear-gradient(45deg, #606E82ff, #4F5A6Cff, #383F50ff, #1F2335ff, #151926ff);
   }
   
 main { 
-    margin-top: 90px;
+    margin-top: 80px;
 }
 
+/* header */
 header {
     display: flex;
-    background-image: var(--gradient);
-    color: #fff;
-    height: 90px;
+    background-color: #1f1f1f;
+    color: #FFFFFF;
+    height: 80px;
     align-items: center;
     position: fixed;
     width: 100%;
     flex-direction: row;
     top: 0px;
+    z-index: 1;
 
 }
 
 #titulo-principal {
     margin-left: 15px;
-    border-bottom: 2px white solid;
+    border-bottom: 2px #606E82ff solid;
 }
 
-#botoes{
+.botoes{
     margin-left: auto;
     margin-right: 15px;
+    
 }
 
-#botoes a {
+.botoes a {
     text-decoration: none;
-    color: white;
+    color: #FFFFFF;
     padding: 10px;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: bolder;
     border-bottom: 2px transparent solid;
 }
 
-#botoes a:hover {
+.botoes a:hover {
     font-size: 22px;
-    color:#eff9f0;
-    border-bottom: 2px white solid;
-    transition: 0.2s;
+    border-bottom: 2px #606E82ff solid;
+    transition: 0.5s;
 }
 
+/* section descricao */
 #section-descricao {
-    background-color: black;
     color: #fff;
-    text-align: center;
     width: 100%;
-    border-bottom: 15px solid red;
+    border-bottom: 5px solid black;
     background-image: url('imagens e outros/background.png');
     background-size: cover;
-    background-repeat: no-repeat;
-    height: 85vh;
+    height: 80vh;
+    position: relative;
 
 }
 
-.titulo-descricao {
-    padding-top: 25px;
+#caixa-preta {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    height: 70%;
+    background-color: black;
+    opacity: 0.9;
+    border-radius: 15px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+
 }
 
+/* section video */
 #section-video {
-    background-color: while ;
+    background-image: var(--gradiente1) ;
+    animation: bg-anim 20s infinite alternate;
     height: 522px;
     width: 100%;
-    border-bottom: 15px solid red;
+    border-bottom: 5px solid black;
     text-align: center;
     align-items: center;
 }
 
 .titulo-video {
-    color: black;
+    color: #FFFFFF;
     padding-top: 25px;
     padding-bottom: 25px;
 }
@@ -93,9 +111,10 @@ iframe{
     border-radius: 10px;
 }
 
+/* section equipe */
 #section-equipe {
-    background-color: black;
-    color: #fff;
+    background-image: var(--gradiente2);
+    color: black;
     text-align: center;
     width: 100%;
     border-bottom: 5px solid black;
@@ -107,9 +126,37 @@ iframe{
     padding-bottom: 25px;
 }
 
-#section-informacoes {
-    background-color: white;
+#nomes {
+    padding-bottom: 25px;
+}
+
+#nomes a {
+    text-decoration: none;
+    text-decoration: underline;
     color: black;
+    }
+
+#nomes a:hover {
+    font-size: larger;
+    transition: 0.5s;
+}
+
+#texto-equipe {
+    padding-bottom: 25px;
+}
+
+#texto-equipe a {
+    text-decoration: underline;
+    text-transform: uppercase;
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+
+/* section informacoes */
+#section-informacoes {
+    background-image: var(--gradiente1);
+    color: #FFFFFF;
     text-align: center;
     width: 100%;
     border-bottom: 5px solid black;
@@ -117,11 +164,13 @@ iframe{
 
 .titulo-tutorial {
     padding-top: 25px;
+    padding-bottom: 25px;
 }
 
+/* section logs */
 #section-desenvolvimento {
-    background-color: black;
-    color: #fff;
+    background-image: var(--gradiente2);
+    color: black;
     text-align: center;
     width: 100%;
     border-bottom: 5px solid black;

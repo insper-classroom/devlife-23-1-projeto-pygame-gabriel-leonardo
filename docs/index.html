@@ -1,3 +1,5 @@
+<!-- Site inspirado no site da openai e no site do ninja marcelo (projeto anterior) -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,10 +10,11 @@
     <title>Shadow of The Ninja</title>
 </head>
 <body>
-    <header>
-        <h1 id="titulo-principal">Shadow of The Ninja</h1>
 
-            <div id="botoes">
+    <!-- Header -->
+    <header>
+        <h1 id="titulo-principal">SHADOW OF THE NINJA</h1>
+            <div class="botoes">
                 <a href="#section-video">Vídeo</a>
                 <a href="#section-equipe">Equipe</a>
                 <a href="#section-informacoes">Informações</a>
@@ -20,31 +23,42 @@
     </header>
 
     <main>
+
+        <!-- Section descricao -->
         <section id="section-descricao">
-                <p class="p-descricao"></p>
+            
+            <div id="caixa-preta">
+
+            </div>
+
         </section>
 
         <section id="section-video">
-            <h2 class="titulo-video">Vídeo do jogo</h2>
+            <h2 class="titulo-video">Vídeo do Jogo</h2>
             <iframe src="https://youtube.com/embed/921VbEMAwwY" width="620" height="400"></iframe>
         </section>
-    
+        
+        <!-- Section equipe -->
         <section id="section-equipe">
-        <h2 class="titulo-equipe">Nossa equipe</h2>
-            <p class="p-equipe">A nossa equipe é formada por duas pessoas:
-                <ul>
-                    <li>Leonardo Freitas</li>
-                    <li>Gabriel Rodrigues</li>
-                </ul>
-            </p>
+        <h1 class="titulo-equipe">Nossa equipe:</h1>
+            <h2><ul id="nomes">
+                <li><a href="https://github.com/leosfreitas">Leonardo Freitas</a></li>
+                <li><a href="https://github.com/rxdrigues">Gabriel Rodrigues</a></li>
+            </ul></h2>
+
+            <p id="texto-equipe">Nossa equipe é composta por dois alunos de Ciência da Computação do INSPER Instituto de Ensino e Pesquisa. <br>
+                 Estamos no primeiro semestre do nosso curso (2023.1) e esse projeto foi criado para a disciplina Developer Life.<br>
+                Para saber mais clique <a href="https://www.insper.edu.br/graduacao/ciencia-da-computacao/">aqui</a>
+                </p>
         </section>
     
         
-        
+        <!-- Section informacoes -->
         <section id="section-informacoes">
             <h2 class="titulo-tutorial">Informações jogo:</h2>
         </section>
         
+        <!-- Section desenvolvimento -->
         <section id="section-desenvolvimento">
             <h2 class="titulo-desenvolvimento">Log de desenvolvimento:</h2>
         </section>
@@ -52,8 +66,5 @@
         
     </main>
     
-
-   
-
 </body>
 </html>
