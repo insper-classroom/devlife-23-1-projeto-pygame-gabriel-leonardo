@@ -104,10 +104,13 @@ class Player(pygame.sprite.Sprite, Jogo):
         # Verifica borda:
         if prox_posicao_x < 0:
             prox_posicao_x = 0
-            self.velocidade_x = 0
+            if self.rect.y < 510:
+                self.rect.y = self.rect.y
+            else:
+                self.rect.y = 510
         elif prox_posicao_x > 1024:
             prox_posicao_x = 1024
-            self.velocidade_x = 0
+            self.rect.y = 510
         elif self.rect.y > 510:
             self.rect.y = 510
             self.pulos = 0
@@ -218,11 +221,11 @@ class TelaJogo(Jogo):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN :
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     return TelaGameOver()
                 if event.key == pygame.K_d:
-                    self.player.velocidade_x += 3 
+                    self.player.velocidade_x += 3
                 elif event.key == pygame.K_a:
                     self.player.velocidade_x -= 3 
                 elif event.key == pygame.K_SPACE:
@@ -239,8 +242,6 @@ class TelaJogo(Jogo):
                     self.player.velocidade_x += 3 
                 self.player.parado = True
                 self.player.andando = False
-            
-
         return self 
     
 class TelaOpcoes(Jogo):
