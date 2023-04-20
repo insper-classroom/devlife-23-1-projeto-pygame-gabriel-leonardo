@@ -2,7 +2,7 @@ import pygame
 pygame.init()
 
 # Fontes 
-font_arc ='codigo/assets/fonts\JosefinSans-BoldItalic.ttf'
+font_arc ='assets/fonts\JosefinSans-BoldItalic.ttf'
 font_titulo = pygame.font.Font(font_arc, 40)
 font_texto = pygame.font.Font(font_arc, 30)
 font_texto_popup = pygame.font.Font(font_arc, 35)
@@ -17,11 +17,13 @@ NUVEM_1 = pygame.image.load('assets/backgrounds\StartScreen/3.png')
 NUVEM_1_VEL = 0.5
 NUVEM_4 = pygame.image.load('assets/backgrounds\StartScreen/4.png')
 NUVEM_4_VEL = - 0.5
-
+CHAO = pygame.image.load('assets/backgrounds\TelaJogo\CHAO TESTE.png')
 FUNDO_INICIO = pygame.image.load('assets/backgrounds\TelaJogo\Background DE FATO.png')
 
 #
 # Sprites
+PLAYER_PARADO = pygame.image.load('assets\player\parado\Idle.png')
+PLAYER_ANDANDO = pygame.image.load('assets\player/andando\Walk.png')
 # Cores
 PRETO = (0, 0, 0)
 BRANCO = (255, 255, 255)

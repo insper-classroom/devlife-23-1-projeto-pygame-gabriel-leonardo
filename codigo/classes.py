@@ -1,5 +1,8 @@
 import pygame
 from constantes import *
+import os
+
+
 
 class Jogo:
     def __init__(self):
@@ -11,14 +14,73 @@ class Jogo:
         self.window = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.botao = 0
         self.volume = True
-        self.wasd = True
-        
+        self.wasd = True    
+        self.grupos = {'all_sprites': pygame.sprite.Group()}
+        self.player = Player(self.grupos)
+        self.t0 = -1
+        self.deltat = (pygame.time.get_ticks() - self.t0) / 1000
     def roda(self):
         self.desenha()
         pygame.display.update()
     
     def update(self):
-        pass
+        pygame.time.Clock().tick(60)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        if self.wasd == True:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    self.player_vel = -10
+
+class Player(pygame.sprite.Sprite, Jogo):
+    def __init__(self, grupos):
+        pygame.sprite.Sprite.__init__(self)
+        self.player_vel = 0
+        self.imgs = {'parado': PLAYER_PARADO,
+                     'andando': PLAYER_ANDANDO}
+        self.imgs['parado'].convert_alpha()
+        self.imgs['andando'].convert_alpha()
+        self.grupos = grupos
+        self.grupos['all_sprites'].add(self)
+        self.sprite_parado = []
+        self.sprite_andando = []
+
+        for i in range(6):
+            img = self.imgs['parado'].subsurface((128 * i, 0), (128,128))
+            self.sprite_parado.append(img)
+        for i in range(8):
+            img = self.imgs['andando'].subsurface((128 * i, 0), (128,128))
+            self.sprite_andando.append(img)
+
+        self.index_parado = 0
+        self.image = self.sprite_parado[self.index_parado]
+        self.rect = self.image.get_rect()
+        self.rect.center = (100, 572)
+
+        self.index_andando = 0
+        self.image = self.sprite_andando[self.index_andando]
+        self.rect = self.image.get_rect()
+        self.rect.center = (100, 572)
+
+
+
+    def update(self, deltat):
+        self.rect.x += self.player_vel * deltat
+                        
+        self.index_parado += 0.1
+        if self.index_parado > 5:
+            self.index_parado = 0
+        self.image = self.sprite_parado[int(self.index_parado)]
+
+        
+        self.index_andando += 0.1
+        if self.index_andando > 7:
+            self.index_andando = 0
+        self.image = self.sprite_andando[int(self.index_andando)]
+        
+        
+
 
 class TelaInicial(Jogo):
     def desenha(self):
@@ -105,8 +167,11 @@ class TelaJogo(Jogo):
     def desenha(self):
         self.window.fill((255, 255, 255))
         self.window.blit(pygame.transform.scale(FUNDO_INICIO, (self.WIDTH, self.HEIGHT)), (0, 0))
+        self.grupos['all_sprites'].draw(self.window)
+
 
     def update(self):
+        self.grupos['all_sprites'].update(self.deltat)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
