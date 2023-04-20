@@ -62,8 +62,8 @@ class Player(pygame.sprite.Sprite, Jogo):
             img = self.imgs['andando'].subsurface((128 * i, 0), (128,128))
             self.sprite_andando.append(img)
 
-        # self.index_parado = 0
-        # self.image = self.sprite_parado[self.index_parado]
+        self.index_parado = 0
+        self.image = self.sprite_parado[self.index_parado]
 
         self.image = PLAYER_PARADO.convert_alpha()
         self.rect = self.image.get_rect()
@@ -82,10 +82,10 @@ class Player(pygame.sprite.Sprite, Jogo):
     # def update(self):
     #     self.rect.x += self.player_vel * deltat
                         
-    #     self.index_parado += 0.1
-    #     if self.index_parado > 5:
-    #         self.index_parado = 0
-    #     self.image = self.sprite_parado[int(self.index_parado)]
+        self.index_parado += 0.1
+        if self.index_parado > 5:
+            self.index_parado = 0
+        self.image = self.sprite_parado[int(self.index_parado)]
 
         
     #    self.index_andando += 0.1
