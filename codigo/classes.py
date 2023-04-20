@@ -15,10 +15,11 @@ class Jogo:
         self.botao = 0
         self.volume = True
         self.wasd = True    
-        self.grupos = {'all_sprites': pygame.sprite.Group()}
-        self.player = Player(self.grupos)
+        # self.grupos = {'all_sprites': pygame.sprite.Group()}
+        # self.player = Player(self.grupos)
         self.t0 = -1
         self.deltat = (pygame.time.get_ticks() - self.t0) / 1000
+
     def roda(self):
         self.desenha()
         pygame.display.update()
@@ -28,59 +29,89 @@ class Jogo:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-        if self.wasd == True:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
-                    self.player_vel = -10
+        # if self.wasd == True:
+        #     if event.type == pygame.KEYDOWN:
+        #         if event.key == pygame.K_a:
+        #             self.player_vel = -10
 
 class Player(pygame.sprite.Sprite, Jogo):
-    def __init__(self, grupos):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.player_vel = 0
+        # self.player_vel = 0
+
+        self.parado = True
+        self.andando = False
+
         self.imgs = {'parado': PLAYER_PARADO,
                      'andando': PLAYER_ANDANDO}
         self.imgs['parado'].convert_alpha()
-        #self.imgs['andando'].convert_alpha()
-        self.grupos = grupos
-        self.grupos['all_sprites'].add(self)
-        self.sprite_parado = []
-       # self.sprite_andando = []
+        self.imgs['andando'].convert_alpha()
 
+        # self.grupos = grupos
+
+        # self.grupos['all_sprites'].add(self)
+        
+
+        self.sprite_parado = []
+        self.sprite_andando = []
         for i in range(6):
             img = self.imgs['parado'].subsurface((128 * i, 0), (128,128))
             self.sprite_parado.append(img)
-        #for i in range(8):
-        #    img = self.imgs['andando'].subsurface((128 * i, 0), (128,128))
-        #    self.sprite_andando.append(img)
 
-        self.index_parado = 0
-        self.image = self.sprite_parado[self.index_parado]
+        for i in range(8):
+            img = self.imgs['andando'].subsurface((128 * i, 0), (128,128))
+            self.sprite_andando.append(img)
+
+        # self.index_parado = 0
+        # self.image = self.sprite_parado[self.index_parado]
+
+        self.image = PLAYER_PARADO.convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = (100, 572)
+
+        self.rect.x = 100
+        self.rect.y = 510
+        self.velocidade_x = 0
+        self.last_updated = 0
+
 
        # self.index_andando = 0
        # self.image = self.sprite_andando[self.index_andando]
        # self.rect = self.image.get_rect()
        # self.rect.center = (100, 572)
 
-
-
-    def update(self, deltat):
-        self.rect.x += self.player_vel * deltat
+    # def update(self):
+    #     self.rect.x += self.player_vel * deltat
                         
-        self.index_parado += 0.1
-        if self.index_parado > 5:
-            self.index_parado = 0
-        self.image = self.sprite_parado[int(self.index_parado)]
+    #     self.index_parado += 0.1
+    #     if self.index_parado > 5:
+    #         self.index_parado = 0
+    #     self.image = self.sprite_parado[int(self.index_parado)]
 
         
-       # self.index_andando += 0.1
-       # if self.index_andando > 7:
-       #     self.index_andando = 0
-       # self.image = self.sprite_andando[int(self.index_andando)]
-        
-        
+    #    self.index_andando += 0.1
+    #    if self.index_andando > 7:
+    #        self.index_andando = 0
+    #    self.image = self.sprite_andando[int(self.index_andando)]
 
+    def movimenta_player(self):
+        delta_t = 0
+        ticks = pygame.time.get_ticks()
+        delta_t = (ticks - self.last_updated )/1000
+        self.last_updated = ticks
+        prox_posicao_x = self.rect.x + self.velocidade_x* delta_t
+
+        # Verifica borda:
+        if prox_posicao_x < 0:
+            prox_posicao_x = 0
+            self.velocidade_x = 0
+        elif prox_posicao_x > 1024:
+            prox_posicao_x = 1024
+            self.velocidade_x = 0
+        
+        # Atualiza
+        self.rect.x = prox_posicao_x
+        self.velocidade_x = self.velocidade_x
+        
 
 class TelaInicial(Jogo):
     def desenha(self):
@@ -164,20 +195,43 @@ class TelaInicial(Jogo):
         return self 
     
 class TelaJogo(Jogo):
+    def __init__(self):
+        super().__init__()
+        self.player = Player()
+        self.sprites = pygame.sprite.Group()
+        self.sprites.add(self.player)
+
     def desenha(self):
         self.window.fill((255, 255, 255))
         self.window.blit(pygame.transform.scale(FUNDO_INICIO, (self.WIDTH, self.HEIGHT)), (0, 0))
-        self.grupos['all_sprites'].draw(self.window)
-
+        self.sprites.update()
+        self.sprites.draw(self.window)
 
     def update(self):
-        self.grupos['all_sprites'].update(self.deltat)
+        # self.grupos['all_sprites'].update(self.deltat)
+        self.player.movimenta_player()
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                return TelaGameOver()
+            elif event.type == pygame.KEYDOWN :
+                if event.key == pygame.K_RETURN:
+                    return TelaGameOver()
+                if event.key == pygame.K_d:
+                    self.player.velocidade_x += 250
+                elif event.key == pygame.K_a:
+                    self.player.velocidade_x -= 250
+                self.player.parado = False
+                self.player.andando = True
+                
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_d:
+                    self.player.velocidade_x = 0
+                elif event.key == pygame.K_a:
+                    self.player.velocidade_x = 0
+                self.player.parado = True
+                self.player.andando = False
         return self 
     
 class TelaOpcoes(Jogo):
