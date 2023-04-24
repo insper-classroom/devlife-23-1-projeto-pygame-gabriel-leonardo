@@ -21,8 +21,6 @@ NUVEM_4 = pygame.image.load('assets/backgrounds\StartScreen/4.png')
 NUVEM_4_VEL = - 0.5
 
 #TelaJogo
-CHAO = pygame.image.load('assets/backgrounds\TelaJogo\CHAO TESTE.png')
-FUNDO_INICIO = pygame.image.load('assets/backgrounds\TelaJogo\Background DE FATO.png')
 
 
 # Sprites

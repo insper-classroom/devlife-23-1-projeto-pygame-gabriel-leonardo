@@ -223,12 +223,20 @@ class TelaJogo(Jogo):
         key = pygame.key.get_pressed()
         if key[pygame.K_a]:
             self.scroll -= 5
+            self.player.andando = True
         if key[pygame.K_d]:
             self.scroll += 5
+            self.player.andando = True
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_a or event.key == pygame.K_d:
+                    self.player.andando = False
+                    self.player.parado = True
+
+        
                 
             #if event.type == pygame.KEYDOWN:
             #    if event.key == pygame.K_RETURN:
@@ -249,8 +257,6 @@ class TelaJogo(Jogo):
                 #    self.scroll -= 3 
                 #elif event.key == pygame.K_a:
                 #    self.scroll += 3 
-                self.player.parado = True
-                self.player.andando = False
         return self 
     
 class TelaOpcoes(Jogo):
