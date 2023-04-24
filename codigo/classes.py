@@ -55,18 +55,19 @@ class Player(pygame.sprite.Sprite, Jogo):
         for i in range(6):
             img = PLAYER_PARADO.subsurface((128 * i, 0), (128,128))
             self.sprite_parado.append(img)
-        for i in range(8):
+        for i in range(9):
             img = PLAYER_ANDANDO.subsurface((128 * i, 0), (128,128))
             self.sprite_andando.append(img)
-        for i in range(7):
+        for i in range(8):
             img = PLAYER_CORRENDO.subsurface((128 * i, 0), (128,128))
             self.sprite_correndo.append(img)
-        for i in range(4):
+        for i in range(5):
             img = PLAYER_ATAQUE_FORTE.subsurface((128 * i, 0), (128,128))
             self.sprite_ataque_forte.append(img)
-        for i in range(3):
+        for i in range(4):
             img = PLAYER_ATAQUE_FRACO.subsurface((128 * i, 0), (128,128))
             self.sprite_ataque_fraco.append(img)
+        print(self.sprite_parado)
         
         # Indexes:
         self.index_parado = 0
@@ -115,7 +116,7 @@ class Player(pygame.sprite.Sprite, Jogo):
         # Parado(Início do jogo):
         if self.inicio:
             self.index_parado += 0.1
-            if self.index_parado > 5:
+            if self.index_parado > 6:
                 self.index_parado = 0
             self.image = self.sprite_parado[int(self.index_parado)]
 
@@ -123,29 +124,29 @@ class Player(pygame.sprite.Sprite, Jogo):
         if self.direita:
             if self.parado:
                 self.index_parado += 0.1
-                if self.index_parado > 5:
+                if self.index_parado > 6:
                     self.index_parado = 0
                 self.image = self.sprite_parado[int(self.index_parado)]
             if self.andando:
                 self.index_andando += 0.1
-                if self.index_andando > 7:
+                if self.index_andando > 9:
                     self.index_andando = 0
                 self.image = self.sprite_andando[int(self.index_andando)]
             if self.correndo:
                 self.index_correndo += 0.1
-                if self.index_correndo > 6:
+                if self.index_correndo > 8:
                     self.index_correndo = 0
                 self.image = self.sprite_correndo[int(self.index_correndo)]
             if self.ataque_forte:
                 self.index_ataque_forte += 0.05
-                if self.index_ataque_forte > 4:
+                if self.index_ataque_forte > 5:
                     self.index_ataque_forte = 0
                     self.ataque_forte = False
                     self.parado = True
                 self.image = self.sprite_ataque_forte[int(self.index_ataque_forte)]
             if self.ataque_fraco:
                 self.index_ataque_fraco += 0.05
-                if self.index_ataque_fraco > 3:
+                if self.index_ataque_fraco > 4:
                     self.index_ataque_fraco = 0
                     self.ataque_fraco = False
                     self.parado = True
@@ -155,25 +156,25 @@ class Player(pygame.sprite.Sprite, Jogo):
         elif self.esquerda:
             if self.parado:
                 self.index_parado += 0.1
-                if self.index_parado > 5:
+                if self.index_parado > 6:
                     self.index_parado = 0
                 imagem = self.sprite_parado[int(self.index_parado)]
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.andando:
                 self.index_andando += 0.1
-                if self.index_andando > 7:
+                if self.index_andando > 9:
                     self.index_andando = 0
                 imagem = self.sprite_andando[int(self.index_andando)]
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.correndo:
                 self.index_correndo += 0.1
-                if self.index_correndo > 6:
+                if self.index_correndo > 8:
                     self.index_correndo = 0
                 imagem = self.sprite_correndo[int(self.index_correndo)]
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.ataque_forte:
                 self.index_ataque_forte += 0.05
-                if self.index_ataque_forte > 4:
+                if self.index_ataque_forte > 5:
                     self.index_ataque_forte = 0
                     self.ataque_forte = False
                     self.parado = True
@@ -181,7 +182,7 @@ class Player(pygame.sprite.Sprite, Jogo):
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.ataque_fraco:
                 self.index_ataque_fraco += 0.05
-                if self.index_ataque_fraco > 3:
+                if self.index_ataque_fraco > 4:
                     self.index_ataque_fraco = 0
                     self.ataque_fraco = False
                     self.parado = True
@@ -302,7 +303,7 @@ class TelaJogo(Jogo):
         self.sprites.add(self.player)
         self.background = []
         for i in range(1, 13):
-            img = pygame.image.load(f'assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
+            img = pygame.image.load(f'../assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
             img = pygame.transform.scale(img, (self.WIDTH, self.HEIGHT))
             self.background.append(img)
 
@@ -370,6 +371,7 @@ class TelaJogo(Jogo):
                 self.player.ataque_forte = True
                 if self.player.parado == True:
                     self.player.parado = False
+                
             if key[pygame.K_e]:
                 self.player.ataque_fraco = True
                 if self.player.parado == True:
