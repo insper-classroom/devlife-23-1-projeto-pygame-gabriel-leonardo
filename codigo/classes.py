@@ -6,6 +6,7 @@ import os
 
 class Jogo:
     def __init__(self):
+        # Inicialização do pygame:
         self.WIDTH = 1024
         self.HEIGHT =  720 
         self.nuvem1_vel = NUVEM_1_VEL
@@ -16,56 +17,54 @@ class Jogo:
         self.musica = True
         self.sons = True
         self.show_fps = False
-        # self.grupos = {'all_sprites': pygame.sprite.Group()}
-        # self.player = Player(self.grupos)
         self.t0 = -1
         self.deltat = (pygame.time.get_ticks() - self.t0) / 1000
-
-        
-
         self.scroll = 0
 
     def roda(self):
+        # Update na tela(não precisa ficar chamando a funcao pygame.display.update):
         self.desenha()
         pygame.display.update()
     
     def update(self):
+        # Define a taxa de atualizacao da tela:
         pygame.time.Clock().tick(60)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
 
 class Player(pygame.sprite.Sprite, Jogo):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        # self.player_vel = 0
-
+        # Variáveis de estado:
         self.parado = True
         self.andando = False
         self.pulando = False
 
+        ## INICIALIZAÇÃO DE IMAGENS (ANIMAÇÃO):
+
+        # Adicionando as imagens em listas (uma lista para cada tipo de animação. Ex.: parado, andando, pulando, etc.):
         self.sprite_parado = []
         self.sprite_andando = []
         for i in range(6):
             img = PLAYER_PARADO.subsurface((128 * i, 0), (128,128))
             self.sprite_parado.append(img)
-
         for i in range(8):
             img = PLAYER_ANDANDO.subsurface((128 * i, 0), (128,128))
             self.sprite_andando.append(img)
         
+        # Indexes:
         self.index_parado = 0
         self.index_andando = 0
 
+        # Parado:
         self.image = self.sprite_parado[self.index_parado]
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
 
+        # Andando:
         self.image = self.sprite_andando[self.index_andando]
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
 
-        #Movimentação:
+        # Movimentação:
         self.rect.x = 512
         self.rect.y = 510
         self.velocidade_x = 0
@@ -76,6 +75,7 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.max_pulos = 1
     
     def update(self):
+        # Função que atualiza a animação do player:
         if self.parado:
             self.index_parado += 0.1
             if self.index_parado > 5:
@@ -86,9 +86,6 @@ class Player(pygame.sprite.Sprite, Jogo):
             if self.index_andando > 7:
                 self.index_andando = 0
             self.image = self.sprite_andando[int(self.index_andando)]
-
-
-
 
     def movimenta_player(self):
         self.gravidade += 0.3
@@ -104,7 +101,10 @@ class Player(pygame.sprite.Sprite, Jogo):
                 self.rect.y = 510
         elif prox_posicao_x > 896:
             prox_posicao_x = 896
-            self.rect.y = 510
+            if self.rect.y < 510:
+                self.rect.y = self.rect.y
+            else:
+                self.rect.y = 510
         elif self.rect.y > 510:
             self.rect.y = 510
             self.pulos = 0
@@ -142,7 +142,6 @@ class TelaInicial(Jogo):
         else:
             self.window.blit(FONTE_TEXTO.render('Sair', True, CINZA), (40, self.HEIGHT/2 + 230))
 
-            
     def colisao_ponto_retangulo(self, ponto_x, ponto_y, rect_x, rect_y, rect_w, rect_h):
         if (
         rect_x <= ponto_x and 
@@ -161,7 +160,6 @@ class TelaInicial(Jogo):
         if self.nuv_dir == 1:
             self.nuvem1_vel += 0.5
             self.nuvem4_vel -= 0.5
-        
         if self.nuvem1_vel == 50:
             self.nuv_dir = -1
         if self.nuvem1_vel == 0.5:
@@ -203,20 +201,17 @@ class TelaJogo(Jogo):
         self.sprites.add(self.player)
         self.background = []
         for i in range(1, 13):
-            img = pygame.image.load(f'assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
+            img = pygame.image.load(f'../assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
             img = pygame.transform.scale(img, (self.WIDTH, self.HEIGHT))
             self.background.append(img)
 
     def desenha(self):
         self.window.fill((255, 255, 255))
-
         for x in range(12):
             for i in self.background:
                 self.window.blit(i, (x * self.WIDTH - self.scroll, 0))
-        
         self.sprites.draw(self.window)
         self.sprites.update()
-        
 
     def update(self):
         self.player.movimenta_player()
@@ -225,22 +220,29 @@ class TelaJogo(Jogo):
         if key[pygame.K_a]:
             if self.scroll == 0:
                 self.player.rect.x -= 3
-            elif self.player.rect.x <= 511:
+            elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
                 self.scroll -= 5
             elif self.scroll == 1000:
                 self.player.rect.x -= 3
-
             self.player.andando = True
         
         if key[pygame.K_d]:
             if self.scroll == 1000:
                 self.player.rect.x += 3
-            elif self.player.rect.x >= 511:
+            elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
                 self.scroll += 5
             elif self.scroll == 0:
                 self.player.rect.x += 3
             self.player.andando = True
         
+        if key[pygame.K_SPACE]:
+            if self.player.pulos < self.player.max_pulos:
+                self.player.gravidade = -10
+                self.player.pulos += 1
+                self.player.andando = False
+                self.player.parado = False
+                self.player.pulando = True
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -250,27 +252,6 @@ class TelaJogo(Jogo):
                     self.player.andando = False
                     self.player.parado = True
 
-        
-                
-            #if event.type == pygame.KEYDOWN:
-            #    if event.key == pygame.K_RETURN:
-            #        return TelaGameOver()
-            #    if event.key == pygame.K_d and self.scroll < 3000:
-            #        self.scroll += 5
-            #    elif event.key == pygame.K_a and self.scroll > 0:
-            #        self.scroll -= 5 
-            #    elif event.key == pygame.K_SPACE:
-            #        if self.player.pulos < self.player.max_pulos:
-            #            self.player.gravidade = -10
-            #            self.player.pulos += 1
-            #            self.player.pulando = True
-            #    self.player.parado = False
-            #    self.player.andando = True
-            #elif event.type == pygame.KEYUP:
-                #if event.key == pygame.K_d:
-                #    self.scroll -= 3 
-                #elif event.key == pygame.K_a:
-                #    self.scroll += 3 
         return self 
     
 class TelaOpcoes(Jogo):
