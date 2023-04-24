@@ -37,22 +37,28 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.parado = True
         self.andando = False
         self.pulando = False
+        self.correndo = False
 
         ## INICIALIZAÇÃO DE IMAGENS (ANIMAÇÃO):
 
         # Adicionando as imagens em listas (uma lista para cada tipo de animação. Ex.: parado, andando, pulando, etc.):
         self.sprite_parado = []
         self.sprite_andando = []
+        self.sprite_correndo = []
         for i in range(6):
             img = PLAYER_PARADO.subsurface((128 * i, 0), (128,128))
             self.sprite_parado.append(img)
         for i in range(8):
             img = PLAYER_ANDANDO.subsurface((128 * i, 0), (128,128))
             self.sprite_andando.append(img)
+        for i in range(7):
+            img = PLAYER_CORRENDO.subsurface((128 * i, 0), (128,128))
+            self.sprite_correndo.append(img)
         
         # Indexes:
         self.index_parado = 0
         self.index_andando = 0
+        self.index_correndo = 0
 
         # Parado:
         self.image = self.sprite_parado[self.index_parado]
@@ -61,6 +67,11 @@ class Player(pygame.sprite.Sprite, Jogo):
 
         # Andando:
         self.image = self.sprite_andando[self.index_andando]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        # Correndo:
+        self.image = self.sprite_correndo[self.index_correndo]
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
 
@@ -86,6 +97,11 @@ class Player(pygame.sprite.Sprite, Jogo):
             if self.index_andando > 7:
                 self.index_andando = 0
             self.image = self.sprite_andando[int(self.index_andando)]
+        if self.correndo:
+            self.index_correndo += 0.1
+            if self.index_correndo > 6:
+                self.index_correndo = 0
+            self.image = self.sprite_correndo[int(self.index_correndo)]
 
     def movimenta_player(self):
         self.gravidade += 0.3
@@ -216,31 +232,49 @@ class TelaJogo(Jogo):
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
-        
+
+        # Movimentação do player:
         if key[pygame.K_a]:
             if self.scroll == 0:
-                self.player.rect.x -= 3
+                self.player.rect.x -= 1
             elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll -= 5
+                self.scroll -= 2
             elif self.scroll == 1000:
-                self.player.rect.x -= 3
+                self.player.rect.x -= 1
             self.player.andando = True
-        
         if key[pygame.K_d]:
             if self.scroll == 1000:
-                self.player.rect.x += 3
+                self.player.rect.x += 1
             elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll += 5
+                self.scroll += 2
             elif self.scroll == 0:
-                self.player.rect.x += 3
+                self.player.rect.x += 1
             self.player.andando = True
-        
+        if key[pygame.K_LSHIFT] and key[pygame.K_a]:
+            if self.scroll == 0:
+                self.player.rect.x -= 1
+            elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
+                self.scroll -= 2
+            elif self.scroll == 1000:
+                self.player.rect.x -= 1
+            self.player.andando = False
+            self.player.correndo = True
+        if key[pygame.K_LSHIFT] and key[pygame.K_d]: 
+            if self.scroll == 1000:
+                self.player.rect.x += 1
+            elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
+                self.scroll += 2
+            elif self.scroll == 0:
+                self.player.rect.x += 1
+            self.player.andando = False
+            self.player.correndo = True
         if key[pygame.K_SPACE]:
             if self.player.pulos < self.player.max_pulos:
                 self.player.gravidade = -10
                 self.player.pulos += 1
                 self.player.andando = False
                 self.player.parado = False
+                self.player.correndo = False
                 self.player.pulando = True
 
         for event in pygame.event.get():
@@ -251,7 +285,8 @@ class TelaJogo(Jogo):
                 if event.key == pygame.K_a or event.key == pygame.K_d:
                     self.player.andando = False
                     self.player.parado = True
-
+                if event.key == pygame.K_LSHIFT:
+                    self.player.correndo = False
         return self 
     
 class TelaOpcoes(Jogo):
