@@ -26,8 +26,8 @@ NUVEM_4_VEL = - 0.5
 # Sprites
 # Player
 PLAYER_ANDANDO = pygame.image.load('assets\player/andando\Andando.png')
-PLAYER_ATAQUE_FORTE = pygame.image.load('assets\player/atacando 1\Ataque_1.png')
-PLAYER_ATAQUE_FRACO = pygame.image.load('assets\player/atacando 2\Ataque_2.png')
+PLAYER_ATAQUE_FORTE = pygame.image.load('assets\player/ataque_forte\Ataque_forte.png')
+PLAYER_ATAQUE_FRACO = pygame.image.load('assets\player/ataque_fraco\Ataque_fraco.png')
 PLAYER_CORRENDO = pygame.image.load('assets\player\correndo\Correndo.png')
 PLAYER_DEFENDENDO = pygame.image.load('assets\player\defendendo\Defesa.png')
 PLAYER_MORRENDO = pygame.image.load('assets\player\morrendo\Morrendo.png')
