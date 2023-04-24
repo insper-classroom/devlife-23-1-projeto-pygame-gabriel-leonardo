@@ -21,10 +21,7 @@ class Jogo:
         self.t0 = -1
         self.deltat = (pygame.time.get_ticks() - self.t0) / 1000
 
-        self.background = []
-        for i in range(1, 13):
-            img = pygame.image.load(f'../assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
-            self.background.append(img)
+        
 
         self.scroll = 0
 
@@ -204,46 +201,56 @@ class TelaJogo(Jogo):
         self.player = Player()
         self.sprites = pygame.sprite.Group()
         self.sprites.add(self.player)
+        self.background = []
+        for i in range(1, 13):
+            img = pygame.image.load(f'assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
+            img = pygame.transform.scale(img, (self.WIDTH, self.HEIGHT))
+            self.background.append(img)
 
     def desenha(self):
         self.window.fill((255, 255, 255))
 
         for x in range(12):
             for i in self.background:
-                self.window.blit(pygame.transform.scale(i, (self.WIDTH, self.HEIGHT)), (x*self.WIDTH - self.scroll , 0))
+                self.window.blit(i, (x * self.WIDTH - self.scroll, 0))
         
         self.sprites.draw(self.window)
         self.sprites.update()
         
 
     def update(self):
-
         self.player.movimenta_player()
+        key = pygame.key.get_pressed()
+        if key[pygame.K_a]:
+            self.scroll -= 5
+        if key[pygame.K_d]:
+            self.scroll += 5
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    return TelaGameOver()
-                if event.key == pygame.K_d and self.scroll < 3000:
-                    self.scroll += 5
-                elif event.key == pygame.K_a and self.scroll > 0:
-                    self.scroll -= 5 
-            #     elif event.key == pygame.K_SPACE:
-            #         if self.player.pulos < self.player.max_pulos:
-            #             self.player.gravidade = -10
-            #             self.player.pulos += 1
-            #             self.player.pulando = True
-            #     self.player.parado = False
-            #     self.player.andando = True
-            # elif event.type == pygame.KEYUP:
-            #     if event.key == pygame.K_d:
-            #         self.player.velocidade_x -= 3 
-            #     elif event.key == pygame.K_a:
-            #         self.player.velocidade_x += 3 
-            #     self.player.parado = True
-            #     self.player.andando = False
+                
+            #if event.type == pygame.KEYDOWN:
+            #    if event.key == pygame.K_RETURN:
+            #        return TelaGameOver()
+            #    if event.key == pygame.K_d and self.scroll < 3000:
+            #        self.scroll += 5
+            #    elif event.key == pygame.K_a and self.scroll > 0:
+            #        self.scroll -= 5 
+            #    elif event.key == pygame.K_SPACE:
+            #        if self.player.pulos < self.player.max_pulos:
+            #            self.player.gravidade = -10
+            #            self.player.pulos += 1
+            #            self.player.pulando = True
+            #    self.player.parado = False
+            #    self.player.andando = True
+            #elif event.type == pygame.KEYUP:
+                #if event.key == pygame.K_d:
+                #    self.scroll -= 3 
+                #elif event.key == pygame.K_a:
+                #    self.scroll += 3 
+                self.player.parado = True
+                self.player.andando = False
         return self 
     
 class TelaOpcoes(Jogo):
