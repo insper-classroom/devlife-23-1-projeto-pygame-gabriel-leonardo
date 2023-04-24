@@ -250,7 +250,7 @@ class TelaJogo(Jogo):
         self.sprites.add(self.player)
         self.background = []
         for i in range(1, 13):
-            img = pygame.image.load(f'../assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
+            img = pygame.image.load(f'assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
             img = pygame.transform.scale(img, (self.WIDTH, self.HEIGHT))
             self.background.append(img)
 
