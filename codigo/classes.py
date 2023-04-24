@@ -66,7 +66,7 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.rect = self.image.get_rect()
 
         #Movimentação:
-        self.rect.x = 100
+        self.rect.x = 512
         self.rect.y = 510
         self.velocidade_x = 0
         self.velocidade_y = 0
@@ -102,8 +102,8 @@ class Player(pygame.sprite.Sprite, Jogo):
                 self.rect.y = self.rect.y
             else:
                 self.rect.y = 510
-        elif prox_posicao_x > 1024:
-            prox_posicao_x = 1024
+        elif prox_posicao_x > 896:
+            prox_posicao_x = 896
             self.rect.y = 510
         elif self.rect.y > 510:
             self.rect.y = 510
@@ -221,12 +221,26 @@ class TelaJogo(Jogo):
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
+        
         if key[pygame.K_a]:
-            self.scroll -= 5
+            if self.scroll == 0:
+                self.player.rect.x -= 3
+            elif self.player.rect.x <= 511:
+                self.scroll -= 5
+            elif self.scroll == 1000:
+                self.player.rect.x -= 3
+
             self.player.andando = True
+        
         if key[pygame.K_d]:
-            self.scroll += 5
+            if self.scroll == 1000:
+                self.player.rect.x += 3
+            elif self.player.rect.x >= 511:
+                self.scroll += 5
+            elif self.scroll == 0:
+                self.player.rect.x += 3
             self.player.andando = True
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
