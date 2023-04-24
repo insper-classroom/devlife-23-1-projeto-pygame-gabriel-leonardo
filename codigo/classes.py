@@ -34,10 +34,13 @@ class Player(pygame.sprite.Sprite, Jogo):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         # Variáveis de estado:
+        # self.inicio = True
         self.parado = True
         self.andando = False
         self.pulando = False
         self.correndo = False
+        self.esquerda = False
+        self.direita = False
 
         ## INICIALIZAÇÃO DE IMAGENS (ANIMAÇÃO):
 
@@ -87,21 +90,51 @@ class Player(pygame.sprite.Sprite, Jogo):
     
     def update(self):
         # Função que atualiza a animação do player:
+        # Parado(Início do jogo):
         if self.parado:
             self.index_parado += 0.1
             if self.index_parado > 5:
                 self.index_parado = 0
             self.image = self.sprite_parado[int(self.index_parado)]
-        if self.andando:
-            self.index_andando += 0.1
-            if self.index_andando > 7:
-                self.index_andando = 0
-            self.image = self.sprite_andando[int(self.index_andando)]
-        if self.correndo:
-            self.index_correndo += 0.1
-            if self.index_correndo > 6:
-                self.index_correndo = 0
-            self.image = self.sprite_correndo[int(self.index_correndo)]
+
+        # Para a direita:
+        if self.direita:
+            if self.parado:
+                self.index_parado += 0.1
+                if self.index_parado > 5:
+                    self.index_parado = 0
+                self.image = self.sprite_parado[int(self.index_parado)]
+            if self.andando:
+                self.index_andando += 0.1
+                if self.index_andando > 7:
+                    self.index_andando = 0
+                self.image = self.sprite_andando[int(self.index_andando)]
+            if self.correndo:
+                self.index_correndo += 0.1
+                if self.index_correndo > 6:
+                    self.index_correndo = 0
+                self.image = self.sprite_correndo[int(self.index_correndo)]
+        
+        # Para a esquerda:
+        elif self.esquerda:
+            if self.parado:
+                self.index_parado += 0.1
+                if self.index_parado > 5:
+                    self.index_parado = 0
+                imagem = self.sprite_parado[int(self.index_parado)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.andando:
+                self.index_andando += 0.1
+                if self.index_andando > 7:
+                    self.index_andando = 0
+                imagem = self.sprite_andando[int(self.index_andando)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.correndo:
+                self.index_correndo += 0.1
+                if self.index_correndo > 6:
+                    self.index_correndo = 0
+                imagem = self.sprite_correndo[int(self.index_correndo)]
+                self.image = pygame.transform.flip(imagem, True, False)
 
     def movimenta_player(self):
         self.gravidade += 0.3
@@ -242,6 +275,8 @@ class TelaJogo(Jogo):
             elif self.scroll == 1000:
                 self.player.rect.x -= 1
             self.player.andando = True
+            self.player.esquerda = True
+            self.player.direita = False
         if key[pygame.K_d]:
             if self.scroll == 1000:
                 self.player.rect.x += 1
@@ -250,6 +285,8 @@ class TelaJogo(Jogo):
             elif self.scroll == 0:
                 self.player.rect.x += 1
             self.player.andando = True
+            self.player.direita = True
+            self.player.esquerda = False
         if key[pygame.K_LSHIFT] and key[pygame.K_a]:
             if self.scroll == 0:
                 self.player.rect.x -= 1
@@ -272,10 +309,10 @@ class TelaJogo(Jogo):
             if self.player.pulos < self.player.max_pulos:
                 self.player.gravidade = -10
                 self.player.pulos += 1
-                self.player.andando = False
-                self.player.parado = False
-                self.player.correndo = False
                 self.player.pulando = True
+                self.player.andando = False
+                self.player.correndo = False
+                self.player.parado = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
