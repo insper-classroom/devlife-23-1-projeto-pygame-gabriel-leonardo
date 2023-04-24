@@ -53,19 +53,19 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.sprite_ataque_forte = []
         self.sprite_ataque_fraco = []
         for i in range(6):
-            img = PLAYER_PARADO.subsurface((128 * i, 0), (128,128))
+            img = PLAYER_PARADO.subsurface((85 * i, 0), (85,104))
             self.sprite_parado.append(img)
         for i in range(9):
-            img = PLAYER_ANDANDO.subsurface((128 * i, 0), (128,128))
+            img = PLAYER_ANDANDO.subsurface((85 * i, 0), (85,104))
             self.sprite_andando.append(img)
         for i in range(8):
-            img = PLAYER_CORRENDO.subsurface((128 * i, 0), (128,128))
+            img = PLAYER_CORRENDO.subsurface((85 * i, 0), (85,104))
             self.sprite_correndo.append(img)
         for i in range(5):
-            img = PLAYER_ATAQUE_FORTE.subsurface((128 * i, 0), (128,128))
+            img = PLAYER_ATAQUE_FORTE.subsurface((85 * i, 0), (85,104))
             self.sprite_ataque_forte.append(img)
         for i in range(4):
-            img = PLAYER_ATAQUE_FRACO.subsurface((128 * i, 0), (128,128))
+            img = PLAYER_ATAQUE_FRACO.subsurface((85 * i, 0), (85,104))
             self.sprite_ataque_fraco.append(img)
         print(self.sprite_parado)
         
@@ -303,7 +303,7 @@ class TelaJogo(Jogo):
         self.sprites.add(self.player)
         self.background = []
         for i in range(1, 13):
-            img = pygame.image.load(f'../assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
+            img = pygame.image.load(f'assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
             img = pygame.transform.scale(img, (self.WIDTH, self.HEIGHT))
             self.background.append(img)
 
