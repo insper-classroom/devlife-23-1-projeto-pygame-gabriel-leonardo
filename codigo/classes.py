@@ -13,8 +13,9 @@ class Jogo:
         self.nuv_dir = 0
         self.window = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.botao = 0
-        self.volume = True
-        self.wasd = True    
+        self.musica = True
+        self.sons = True
+        self.show_fps = False
         # self.grupos = {'all_sprites': pygame.sprite.Group()}
         # self.player = Player(self.grupos)
         self.t0 = -1
@@ -29,7 +30,7 @@ class Jogo:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-        # if self.wasd == True:
+        # if self.sons == True:
         #     if event.type == pygame.KEYDOWN:
         #         if event.key == pygame.K_a:
         #             self.player_vel = -10
@@ -200,15 +201,23 @@ class TelaJogo(Jogo):
         self.player = Player()
         self.sprites = pygame.sprite.Group()
         self.sprites.add(self.player)
+        self.background = []
+        for i in range(1, 13):
+            img = pygame.image.load(f'assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png')
+            self.background.append(img)
 
     def desenha(self):
         self.window.fill((255, 255, 255))
-        self.window.blit(pygame.transform.scale(FUNDO_INICIO, (self.WIDTH, self.HEIGHT)), (0, 0))
+
+        for i in self.background:
+            self.window.blit(pygame.transform.scale(i, (self.WIDTH, self.HEIGHT)), (0, 0))
+        
         self.sprites.draw(self.window)
         self.sprites.update()
+        
 
     def update(self):
-        # self.grupos['all_sprites'].update(self.deltat)
+
         self.player.movimenta_player()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -247,25 +256,34 @@ class TelaOpcoes(Jogo):
 
 
         if self.botao == 1:
-            if self.volume == True:
-                self.window.blit(FONTE_TEXTO_POPUP.render('Sons e música [LIGADOS]', True, BRANCO), (40, self.HEIGHT/2 + 77))
+            if self.musica == True:
+                self.window.blit(FONTE_TEXTO_POPUP.render('Música [LIGADA]', True, BRANCO), (40, self.HEIGHT/2 + 77))
             else:
-                self.window.blit(FONTE_TEXTO_POPUP.render('Sons e música [DESLIGADOS]', True, BRANCO), (40, self.HEIGHT/2 + 77))
+                self.window.blit(FONTE_TEXTO_POPUP.render('Música [DESLIGADA]', True, BRANCO), (40, self.HEIGHT/2 + 77))
         else:
-            self.window.blit(FONTE_TEXTO.render('Sons e música', True, CINZA), (40, self.HEIGHT/2 + 80))
+            self.window.blit(FONTE_TEXTO.render('Música', True, CINZA), (40, self.HEIGHT/2 + 80))
         
         if self.botao == 2:
-            if self.wasd == True:
-                self.window.blit(FONTE_TEXTO_POPUP.render('Controles [W A S D]', True, BRANCO), (40, self.HEIGHT/2 + 127))
+            if self.sons == True:
+                self.window.blit(FONTE_TEXTO_POPUP.render('Efeitos Sonoros [LIGADOS]', True, BRANCO), (40, self.HEIGHT/2 + 127))
             else:
-                self.window.blit(FONTE_TEXTO_POPUP.render('Controles [S E T A S]', True, BRANCO), (40, self.HEIGHT/2 + 127))
+                self.window.blit(FONTE_TEXTO_POPUP.render('Efeitos Sonoros [DESLIGADOS]', True, BRANCO), (40, self.HEIGHT/2 + 127))
         else:
-            self.window.blit(FONTE_TEXTO.render('Controles', True, CINZA), (40, self.HEIGHT/2 + 130))
+            self.window.blit(FONTE_TEXTO.render('Efeitos Sonoros', True, CINZA), (40, self.HEIGHT/2 + 130))
 
         if self.botao == 3:
-            self.window.blit(FONTE_TEXTO_POPUP.render('Voltar', True, BRANCO), (40, self.HEIGHT/2 + 177))
+            if self.show_fps == True:
+                self.window.blit(FONTE_TEXTO_POPUP.render('FPS [LIGADO]', True, BRANCO), (40, self.HEIGHT/2 + 177))
+            else:
+                self.window.blit(FONTE_TEXTO_POPUP.render('FPS [DESLIGADO]', True, BRANCO), (40, self.HEIGHT/2 + 177))
         else:
-            self.window.blit(FONTE_TEXTO.render('Voltar', True, CINZA), (40, self.HEIGHT/2 + 180))
+            self.window.blit(FONTE_TEXTO.render('FPS', True, CINZA), (40, self.HEIGHT/2 + 180))
+        
+        if self.botao == 4:
+            self.window.blit(FONTE_TEXTO_POPUP.render('Voltar', True, BRANCO), (40, self.HEIGHT/2 + 227))
+        else:
+            self.window.blit(FONTE_TEXTO.render('Voltar', True, CINZA), (40, self.HEIGHT/2 + 230))
+
 
     def colisao_ponto_retangulo(self, ponto_x, ponto_y, rect_x, rect_y, rect_w, rect_h):
         if (
@@ -294,16 +312,21 @@ class TelaOpcoes(Jogo):
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if self.botao == 1:
-                    if self.volume == False:
-                        self.volume = True
-                    elif self.volume == True:
-                        self.volume = False
+                    if self.musica == False:
+                        self.musica = True
+                    elif self.musica == True:
+                        self.musica = False
                 if self.botao == 2:
-                    if self.wasd == False:
-                        self.wasd = True
-                    elif self.wasd == True:
-                        self.wasd = False
+                    if self.sons == False:
+                        self.sons = True
+                    elif self.sons == True:
+                        self.sons = False
                 if self.botao == 3:
+                    if self.show_fps == False:
+                        self.show_fps = True
+                    elif self.show_fps == True:
+                        self.show_fps = False
+                if self.botao == 4:
                     return TelaInicial()
 
             elif event.type == pygame.MOUSEMOTION:
@@ -316,6 +339,8 @@ class TelaOpcoes(Jogo):
                     self.botao = 2
                 if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 540, 85, 25):
                     self.botao = 3
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 590, 60, 25):
+                    self.botao = 4
         return self
     
 class TelaCreditos(Jogo):
