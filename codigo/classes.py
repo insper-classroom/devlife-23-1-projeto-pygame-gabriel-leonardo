@@ -34,13 +34,12 @@ class Player(pygame.sprite.Sprite, Jogo):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         # Variáveis de estado:
-        self.inicio = True
         self.parado = True
         self.andando = False
         self.pulando = False
         self.correndo = False
         self.esquerda = False
-        self.direita = False
+        self.direita = True
         self.ataque_forte = False
         self.ataque_fraco = False
 
@@ -113,13 +112,6 @@ class Player(pygame.sprite.Sprite, Jogo):
     
     def update(self):
         # Função que atualiza a animação do player:
-        # Parado(Início do jogo):
-        if self.inicio:
-            self.index_parado += 0.1
-            if self.index_parado > 6:
-                self.index_parado = 0
-            self.image = self.sprite_parado[int(self.index_parado)]
-
         # Para a direita:
         if self.direita:
             if self.parado:
@@ -303,7 +295,7 @@ class TelaJogo(Jogo):
         self.sprites.add(self.player)
         self.background = []
         for i in range(1, 13):
-            img = pygame.image.load(f'assets/backgrounds\TelaJogo\Backgorund_Floresta\{i}.png').convert_alpha()
+            img = pygame.image.load(f'../assets/backgrounds/TelaJogo/Backgorund_Floresta/{i}.png').convert_alpha()
             img = pygame.transform.scale(img, (self.WIDTH, self.HEIGHT))
             self.background.append(img)
 
@@ -387,6 +379,7 @@ class TelaJogo(Jogo):
                 if event.key == pygame.K_a or event.key == pygame.K_d:
                     self.player.andando = False
                     self.player.parado = True
+                    self.player.correndo = False
                 if event.key == pygame.K_LSHIFT:
                     self.player.correndo = False
 
