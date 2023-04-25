@@ -26,14 +26,32 @@ TESTE = pygame.image.load('../assets/backgrounds/TelaJogo/Backgorund_Floresta/t√
 
 # Sprites
 # Player
+PLAYER_PARADO = pygame.image.load('../assets/player/parado/Parado.png')
 PLAYER_ANDANDO = pygame.image.load('../assets/player/andando/Andando.png')
-PLAYER_ATAQUE_FORTE = pygame.image.load('../assets/player/ataque_forte/Ataque_forte.png')
-PLAYER_ATAQUE_FRACO = pygame.image.load('../assets/player/ataque_fraco/Ataque_fraco.png')
 PLAYER_CORRENDO = pygame.image.load('../assets/player/correndo/Correndo.png')
+PLAYER_PULANDO = pygame.image.load('../assets/player/pulando/Pulando.png')
+PLAYER_ATAQUE_FRACO = pygame.image.load('../assets/player/ataque_fraco/Ataque_fraco.png')
+PLAYER_ATAQUE_FORTE = pygame.image.load('../assets/player/ataque_forte/Ataque_forte.png')
 PLAYER_DEFENDENDO = pygame.image.load('../assets/player/defendendo/Defesa.png')
 PLAYER_MORRENDO = pygame.image.load('../assets/player/morrendo/Morrendo.png')
-PLAYER_PARADO = pygame.image.load('../assets/player/parado/Parado.png')
-PLAYER_PULANDO = pygame.image.load('../assets/player/pulando/Pulando.png')
+
+# Inimigo meele
+INIMIGO_MEELE_PARADO = pygame.image.load('../assets/Inimigo_meele/Parado.png')
+INIMIGO_MEELE_CORRENDO = pygame.image.load('../assets/Inimigo_meele/Correndo.png')
+INIMIGO_MEELE_ATAQUE_1 = pygame.image.load('../assets/Inimigo_meele/Ataque_1.png')
+INIMIGO_MEELE_ATAQUE_2 = pygame.image.load('../assets/Inimigo_meele/Ataque_2.png')
+INIMIGO_MEELE_ATAQUE_3 = pygame.image.load('../assets/Inimigo_meele/Ataque_3.png')
+INIMIGO_MEELE_MORRENDO = pygame.image.load('../assets/Inimigo_meele/Morrendo.png')
+INIMIGO_MEELE_DEFENDENDO = pygame.image.load('../assets/Inimigo_meele/Defendendo.png')
+
+# Inimigo ranged
+INIMIGO_RANGED_PARADO = pygame.image.load('../assets/inimigo_ranged/Parado.png')
+INIMIGO_RANGED_ATIRANDO = pygame.image.load('../assets/inimigo_ranged/Atirando.png')
+INIMIGO_RANGED_MORRENDO = pygame.image.load('../assets/inimigo_ranged/Morrendo.png')
+INIMIGO_RANGED_ATAQUE_FRACO = pygame.image.load('../assets/inimigo_ranged/Ataque_fraco.png')
+INIMIGO_RANGED_ATAQUE_FORTE = pygame.image.load('../assets/inimigo_ranged/Ataque_forte.png')
+INIMIGO_RANGED_FLECHA = pygame.image.load('../assets/inimigo_ranged/Flecha.png')
+
 
 
 
