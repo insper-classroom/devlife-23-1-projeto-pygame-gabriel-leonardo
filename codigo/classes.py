@@ -226,8 +226,290 @@ class Player(pygame.sprite.Sprite, Jogo):
         
         # Atualiza
         self.rect.x = prox_posicao_x
-        self.velocidade_x = self.velocidade_x       
+        self.velocidade_x = self.velocidade_x      
 
+class InimigoMeele(pygame.sprite.Sprite, Jogo):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.meele_parado = False
+        self.meele_correndo = False
+        self.meele_ataque1 = False
+        self.meele_ataque2 = False
+        self.meele_ataque3 = False
+        self.meele_morrendo = False
+        self.meele_defendendo = False
+        self.meele_esquerda = True
+        self.meele_direita = False
+
+        self.sprite_meele_parado = []
+        self.sprite_meele_correndo = []
+        self.sprite_meele_ataque1 = []
+        self.sprite_meele_ataque2 = []
+        self.sprite_meele_ataque3 = []
+        self.sprite_meele_morrendo = []
+        self.sprite_meele_defendendo = []
+        
+        for i in range(5):
+            img = INIMIGO_MEELE_PARADO.subsurface((85 * i, 0), (85,104))
+            self.sprite_parado.append(img)
+        for i in range(8):
+            img = INIMIGO_MEELE_CORRENDO.subsurface((85 * i, 0), (85,104))
+            self.sprite_correndo.append(img)
+        for i in range(4):
+            img = INIMIGO_MEELE_ATAQUE_1.subsurface((85 * i, 0), (85,104))
+            self.sprite_ataque1.append(img)
+        for i in range(5):
+            img = INIMIGO_MEELE_ATAQUE_2.subsurface((85 * i, 0), (85,104))
+            self.sprite_ataque2.append(img)
+        for i in range(4):
+            img = INIMIGO_MEELE_ATAQUE_3.subsurface((85 * i, 0), (85,104))
+            self.sprite_ataque3.append(img)
+        for i in range(6):
+            img = INIMIGO_MEELE_MORRENDO.subsurface((85 * i, 0), (85,104))
+            self.sprite_morrendo.append(img)
+        for i in range(2):
+            img = INIMIGO_MEELE_DEFENDENDO.subsurface((85 * i, 0), (85,104))
+            self.sprite_defendendo.append(img)
+
+        self.index_meele_parado = 0
+        self.index_meele_correndo = 0
+        self.index_meele_ataque1 = 0
+        self.index_meele_ataque2 = 0
+        self.index_meele_ataque3 = 0
+        self.index_meele_morrendo = 0
+        self.index_meele_defendendo = 0
+
+        self.image = self.sprite_meele_parado[self.index_meele_parado]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_meele_correndo[self.index_meele_correndo]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_meele_ataque1[self.index_meele_ataque1]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_meele_ataque2[self.index_meele_ataque2]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_meele_ataque3[self.index_meele_ataque3]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_meele_morrendo[self.index_meele_morrendo]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_meele_defendendo[self.index_meele_defendendo]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+    def update(self):
+        if self.meele_direita:
+            if self.meele_parado:
+                self.index_meele_parado += 0.08
+                if self.index_meele_parado > 5:
+                    self.index_meele_parado = 0
+                self.image = self.sprite_meele_parado[int(self.index_meele_parado)]
+            if self.meele_correndo:
+                self.index_meele_correndo += 0.08
+                if self.index_meele_correndo > 8:
+                    self.index_meele_correndo = 0
+                self.image = self.sprite_meele_correndo[int(self.index_meele_correndo)]
+            if self.meele_ataque1:
+                self.index_meele_ataque1 += 0.08
+                if self.index_meele_ataque1 > 4:
+                    self.index_meele_ataque1 = 0
+                self.image = self.sprite_meele_ataque1[int(self.index_meele_ataque1)]
+            if self.meele_ataque2:
+                self.index_meele_ataque2 += 0.08
+                if self.index_meele_ataque2 > 5:
+                    self.index_meele_ataque2 = 0
+                self.image = self.sprite_meele_ataque2[int(self.index_meele_ataque2)]
+            if self.meele_ataque3:
+                self.index_meele_ataque3 += 0.08
+                if self.index_meele_ataque3 > 4:
+                    self.index_meele_ataque3 = 0
+                self.image = self.sprite_meele_ataque3[int(self.index_meele_ataque3)]
+            if self.meele_morrendo:
+                self.index_meele_morrendo += 0.08
+                if self.index_meele_morrendo > 6:
+                    self.index_meele_morrendo = 0
+                self.image = self.sprite_meele_morrendo[int(self.index_meele_morrendo)]
+            if self.meele_defendendo:
+                self.index_meele_defendendo += 0.08
+                if self.index_meele_defendendo > 2:
+                    self.index_meele_defendendo = 0
+                self.image = self.sprite_meele_defendendo[int(self.index_meele_defendendo)]
+        elif self.meele_esquerda:
+            if self.meele_parado:
+                self.index_meele_parado += 0.08
+                if self.index_meele_parado > 5:
+                    self.index_meele_parado = 0
+                imagem = self.sprite_meele_parado[int(self.index_meele_parado)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.meele_correndo:
+                self.index_meele_correndo += 0.08
+                if self.index_meele_correndo > 8:
+                    self.index_meele_correndo = 0
+                imagem = self.sprite_meele_correndo[int(self.index_meele_correndo)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.meele_ataque1:
+                self.index_meele_ataque1 += 0.08
+                if self.index_meele_ataque1 > 4:
+                    self.index_meele_ataque1 = 0
+                imagem = self.sprite_meele_ataque1[int(self.index_meele_ataque1)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.meele_ataque2:
+                self.index_meele_ataque2 += 0.08
+                if self.index_meele_ataque2 > 5:
+                    self.index_meele_ataque2 = 0
+                imagem = self.sprite_meele_ataque2[int(self.index_meele_ataque2)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.meele_ataque3:
+                self.index_meele_ataque3 += 0.08
+                if self.index_meele_ataque3 > 4:
+                    self.index_meele_ataque3 = 0
+                imagem = self.sprite_meele_ataque3[int(self.index_meele_ataque3)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.meele_morrendo:
+                self.index_meele_morrendo += 0.08
+                if self.index_meele_morrendo > 6:
+                    self.index_meele_morrendo = 0
+                imagem = self.sprite_meele_morrendo[int(self.index_meele_morrendo)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.meele_defendendo:
+                self.index_meele_defendendo += 0.08
+                if self.index_meele_defendendo > 2:
+                    self.index_meele_defendendo = 0
+                imagem = self.sprite_meele_defendendo[int(self.index_meele_defendendo)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            
+    # def movimenta_meele(self):
+ 
+class InimigoRanged(pygame.sprite.Sprite, Jogo):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.ranged_parado = True
+        self.ranged_atirando = False
+        self.ranged_morrendo = False
+        self.ranged_ataque_fraco = False
+        self.ranged_ataque_forte = False
+        self.ranged_esquerda = True
+        self.ranged_direita = False
+        
+        self.sprite_ranged_parado = []
+        self.sprite_ranged_atirando = []
+        self.sprite_ranged_morrendo = []
+        self.sprite_ranged_ataque_fraco = []
+        self.sprite_ranged_ataque_forte = []
+
+        for i in range(9):
+            img = INIMIGO_RANGED_PARADO.subsurface((85 * i, 0), (85,104))
+            self.sprite_ranged_parado.append(img)
+        for i in range(14):
+            img = INIMIGO_RANGED_ATIRANDO.subsurface((85 * i, 0), (85,104))
+            self.sprite_ranged_atirando.append(img)
+        for i in range(4):
+            img = INIMIGO_RANGED_MORRENDO.subsurface((85 * i, 0), (85,104))
+            self.sprite_ranged_morrendo.append(img)
+        for i in range(5):
+            img = INIMIGO_RANGED_ATAQUE_FRACO.subsurface((85 * i, 0), (85,104))
+            self.sprite_ranged_ataque_fraco.append(img)
+        for i in range(5):
+            img = INIMIGO_RANGED_ATAQUE_FORTE.subsurface((85 * i, 0), (85,104))
+            self.sprite_ranged_ataque_forte.append(img)
+
+        self.index_ranged_parado = 0
+        self.index_ranged_atirando = 0
+        self.index_ranged_morrendo = 0
+        self.index_ranged_ataque_fraco = 0
+        self.index_ranged_ataque_forte = 0
+
+        self.image = self.sprite_ranged_parado[self.index_ranged_parado]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_ranged_atirando[self.index_ranged_atirando]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_ranged_morrendo[self.index_ranged_morrendo]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_ranged_ataque_fraco[self.index_ranged_ataque_fraco]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        self.image = self.sprite_ranged_ataque_forte[self.index_ranged_ataque_forte]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+    def update(self):
+        if self.ranged_direita:
+            if self.ranged_parado:
+                self.index_ranged_parado += 0.08
+                if self.index_ranged_parado > 9:
+                    self.index_ranged_parado = 0
+                self.image = self.sprite_ranged_parado[int(self.index_ranged_parado)]
+            if self.ranged_atirando:
+                self.index_ranged_atirando += 0.08
+                if self.index_ranged_atirando > 14:
+                    self.index_ranged_atirando = 0
+                self.image = self.sprite_ranged_atirando[int(self.index_ranged_atirando)]
+            if self.ranged_morrendo:
+                self.index_ranged_morrendo += 0.08
+                if self.index_ranged_morrendo > 4:
+                    self.index_ranged_morrendo = 0
+                self.image = self.sprite_ranged_morrendo[int(self.index_ranged_morrendo)]
+            if self.ranged_ataque_fraco:
+                self.index_ranged_ataque_fraco += 0.08
+                if self.index_ranged_ataque_fraco > 5:
+                    self.index_ranged_ataque_fraco = 0
+                self.image = self.sprite_ranged_ataque_fraco[int(self.index_ranged_ataque_fraco)]
+            if self.ranged_ataque_forte:
+                self.index_ranged_ataque_forte += 0.08
+                if self.index_ranged_ataque_forte > 5:
+                    self.index_ranged_ataque_forte = 0
+                self.image = self.sprite_ranged_ataque_forte[int(self.index_ranged_ataque_forte)]
+        elif self.ranged_esquerda:
+            if self.ranged_parado:
+                self.index_ranged_parado += 0.08
+                if self.index_ranged_parado > 9:
+                    self.index_ranged_parado = 0
+                imagem = self.sprite_ranged_parado[int(self.index_ranged_parado)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.ranged_atirando:
+                self.index_ranged_atirando += 0.08
+                if self.index_ranged_atirando > 14:
+                    self.index_ranged_atirando = 0
+                imagem = self.sprite_ranged_atirando[int(self.index_ranged_atirando)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.ranged_morrendo:
+                self.index_ranged_morrendo += 0.08
+                if self.index_ranged_morrendo > 4:
+                    self.index_ranged_morrendo = 0
+                imagem = self.sprite_ranged_morrendo[int(self.index_ranged_morrendo)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.ranged_ataque_fraco:
+                self.index_ranged_ataque_fraco += 0.08
+                if self.index_ranged_ataque_fraco > 5:
+                    self.index_ranged_ataque_fraco = 0
+                imagem = self.sprite_ranged_ataque_fraco[int(self.index_ranged_ataque_fraco)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.ranged_ataque_forte:
+                self.index_ranged_ataque_forte += 0.08
+                if self.index_ranged_ataque_forte > 5:
+                    self.index_ranged_ataque_forte = 0
+                imagem = self.sprite_ranged_ataque_forte[int(self.index_ranged_ataque_forte)]
+                self.image = pygame.transform.flip(imagem, True, False)
+    
+    # def movimenta_ranged(self):
+                      
 class TelaInicial(Jogo):
     def desenha(self):
         self.window.blit(pygame.transform.scale(FUNDO, (self.WIDTH, self.HEIGHT)), (0, 0))
