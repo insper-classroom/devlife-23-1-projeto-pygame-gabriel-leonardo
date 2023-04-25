@@ -305,7 +305,6 @@ class TelaJogo(Jogo):
         for x in range(12):
             for i in self.background:
                 self.window.blit(i, (x * self.WIDTH - self.scroll, 0))
-        self.window.blit(TESTE, (0, 390))
         self.sprites.draw(self.window)
         self.sprites.update()
 
@@ -338,7 +337,7 @@ class TelaJogo(Jogo):
             if self.scroll == 0:
                 self.player.rect.x -= 1
             elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll -= 2
+                self.scroll -= 1
             elif self.scroll == 1000:
                 self.player.rect.x -= 1
             self.player.andando = False
@@ -347,7 +346,7 @@ class TelaJogo(Jogo):
             if self.scroll == 1000:
                 self.player.rect.x += 1
             elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll += 2
+                self.scroll += 1
             elif self.scroll == 0:
                 self.player.rect.x += 1
             self.player.andando = False
