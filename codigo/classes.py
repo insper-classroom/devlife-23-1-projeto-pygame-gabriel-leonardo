@@ -51,6 +51,8 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.sprite_correndo = []
         self.sprite_ataque_forte = []
         self.sprite_ataque_fraco = []
+        self.sprite_pulando = []
+
         for i in range(6):
             img = PLAYER_PARADO.subsurface((85 * i, 0), (85,104))
             self.sprite_parado.append(img)
@@ -66,7 +68,9 @@ class Player(pygame.sprite.Sprite, Jogo):
         for i in range(4):
             img = PLAYER_ATAQUE_FRACO.subsurface((85 * i, 0), (85,104))
             self.sprite_ataque_fraco.append(img)
-        print(self.sprite_parado)
+        for i in range(2,7): 
+            img = PLAYER_PULANDO.subsurface((85 * i, 0), (85,104))
+            self.sprite_pulando.append(img)
         
         # Indexes:
         self.index_parado = 0
@@ -74,6 +78,7 @@ class Player(pygame.sprite.Sprite, Jogo):
         self.index_correndo = 0
         self.index_ataque_forte = 0
         self.index_ataque_fraco = 0
+        self.index_pulando = 0
 
         # Parado:
         self.image = self.sprite_parado[self.index_parado]
@@ -97,6 +102,11 @@ class Player(pygame.sprite.Sprite, Jogo):
 
         # Ataque fraco:
         self.image = self.sprite_ataque_fraco[self.index_ataque_fraco]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        # Pulando:
+        self.image = self.sprite_pulando[self.index_pulando]
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
 
@@ -143,6 +153,9 @@ class Player(pygame.sprite.Sprite, Jogo):
                     self.ataque_fraco = False
                     self.parado = True
                 self.image = self.sprite_ataque_fraco[int(self.index_ataque_fraco)]
+            if self.pulando:
+                self.index_pulando += 0.07
+                self.image = self.sprite_pulando[int(self.index_pulando)]
         
         # Para a esquerda:
         elif self.esquerda:
@@ -180,6 +193,11 @@ class Player(pygame.sprite.Sprite, Jogo):
                     self.parado = True
                 imagem = self.sprite_ataque_fraco[int(self.index_ataque_fraco)]
                 self.image = pygame.transform.flip(imagem, True, False)
+            if self.pulando:
+                self.index_pulando += 0.07
+                imagem = self.sprite_pulando[int(self.index_pulando)]
+                self.image = pygame.transform.flip(imagem, True, False)
+        print(self.index_pulando)
 
     def movimenta_player(self):
         self.gravidade += 0.3
@@ -203,6 +221,8 @@ class Player(pygame.sprite.Sprite, Jogo):
             self.rect.y = 535
             self.pulos = 0
             self.pulando = False
+            self.parado = True
+            self.index_pulando = 0
         
         # Atualiza
         self.rect.x = prox_posicao_x
@@ -313,62 +333,64 @@ class TelaJogo(Jogo):
         key = pygame.key.get_pressed()
 
         # Movimentação do player (e ataque):
-        if key[pygame.K_a]:
-            if self.scroll == 0:
-                self.player.rect.x -= 1
-            elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll -= 1
-            elif self.scroll == 1000:
-                self.player.rect.x -= 1
-            self.player.andando = True
-            self.player.esquerda = True
-            self.player.direita = False
-        if key[pygame.K_d]:
-            if self.scroll == 1000:
-                self.player.rect.x += 1
-            elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll += 1
-            elif self.scroll == 0:
-                self.player.rect.x += 1
-            self.player.andando = True
-            self.player.direita = True
-            self.player.esquerda = False
-        if key[pygame.K_LSHIFT] and key[pygame.K_a]:
-            if self.scroll == 0:
-                self.player.rect.x -= 1
-            elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll -= 1
-            elif self.scroll == 1000:
-                self.player.rect.x -= 1
-            self.player.andando = False
-            self.player.correndo = True
-        if key[pygame.K_LSHIFT] and key[pygame.K_d]: 
-            if self.scroll == 1000:
-                self.player.rect.x += 1
-            elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll += 1
-            elif self.scroll == 0:
-                self.player.rect.x += 1
-            self.player.andando = False
-            self.player.correndo = True
-        if key[pygame.K_SPACE]:
-            if self.player.pulos < self.player.max_pulos:
-                self.player.gravidade = -10
-                self.player.pulos += 1
-                self.player.pulando = True
+        if self.player.ataque_forte == False and self.player.ataque_fraco == False:
+            if key[pygame.K_a]:
+                if self.scroll == 0:
+                    self.player.rect.x -= 1
+                elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
+                    self.scroll -= 1
+                elif self.scroll == 1000:
+                    self.player.rect.x -= 1
+                self.player.andando = True
+                self.player.esquerda = True
+                self.player.direita = False
+            if key[pygame.K_d]:
+                if self.scroll == 1000:
+                    self.player.rect.x += 1
+                elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
+                    self.scroll += 1
+                elif self.scroll == 0:
+                    self.player.rect.x += 1
+                self.player.andando = True
+                self.player.direita = True
+                self.player.esquerda = False
+            if key[pygame.K_LSHIFT] and key[pygame.K_a]:
+                if self.scroll == 0:
+                    self.player.rect.x -= 1
+                elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
+                    self.scroll -= 2
+                elif self.scroll == 1000:
+                    self.player.rect.x -= 1
                 self.player.andando = False
-                self.player.correndo = False
-                self.player.parado = False
+                self.player.correndo = True
+            if key[pygame.K_LSHIFT] and key[pygame.K_d]: 
+                if self.scroll == 1000:
+                    self.player.rect.x += 1
+                elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
+                    self.scroll += 2
+                elif self.scroll == 0:
+                    self.player.rect.x += 1
+                self.player.andando = False
+                self.player.correndo = True
+            if key[pygame.K_SPACE]:
+                if self.player.pulos < self.player.max_pulos:
+                    self.player.gravidade = -10
+                    self.player.pulos += 1
+                    self.player.pulando = True
+                    self.player.andando = False
+                    self.player.correndo = False
+                    self.player.parado = False
         if self.player.correndo == False and self.player.pulando == False:
             if key[pygame.K_q]:
                 self.player.ataque_forte = True
                 if self.player.parado == True:
                     self.player.parado = False
-                
             if key[pygame.K_e]:
                 self.player.ataque_fraco = True
                 if self.player.parado == True:
                     self.player.parado = False
+        if self.scroll < 0:
+            self.scroll = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -383,7 +405,6 @@ class TelaJogo(Jogo):
                     self.player.correndo = False
                 if event.key == pygame.K_LSHIFT:
                     self.player.correndo = False
-
         return self 
     
 class TelaOpcoes(Jogo):
