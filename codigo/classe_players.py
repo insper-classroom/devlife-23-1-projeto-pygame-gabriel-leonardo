@@ -7,6 +7,7 @@ class Player(pygame.sprite.Sprite):
         # Variáveis de estado:
         self.parado = True
         self.andando = False
+        self.defendendo = False
         self.pulando = False
         self.correndo = False
         self.esquerda = False
@@ -23,6 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.sprite_ataque_forte = []
         self.sprite_ataque_fraco = []
         self.sprite_pulando = []
+        self.sprite_defendendo = []
 
         for i in range(6):
             img = PLAYER_PARADO.subsurface((85 * i, 0), (85,104))
@@ -42,6 +44,9 @@ class Player(pygame.sprite.Sprite):
         for i in range(2,7): 
             img = PLAYER_PULANDO.subsurface((85 * i, 0), (85,104))
             self.sprite_pulando.append(img)
+        for i in range(2):
+            img = PLAYER_DEFENDENDO.subsurface((85 * i, 0), (85,104))
+            self.sprite_defendendo.append(img)
         
         # Indexes:
         self.index_parado = 0
@@ -50,6 +55,7 @@ class Player(pygame.sprite.Sprite):
         self.index_ataque_forte = 0
         self.index_ataque_fraco = 0
         self.index_pulando = 0
+        self.index_defendendo = 0
 
         # Parado:
         self.image = self.sprite_parado[self.index_parado]
@@ -78,6 +84,11 @@ class Player(pygame.sprite.Sprite):
 
         # Pulando:
         self.image = self.sprite_pulando[self.index_pulando]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
+
+        # Defendendo:
+        self.image = self.sprite_defendendo[self.index_defendendo]
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
 
@@ -127,6 +138,13 @@ class Player(pygame.sprite.Sprite):
             if self.pulando:
                 self.index_pulando += 0.07
                 self.image = self.sprite_pulando[int(self.index_pulando)]
+            if self.defendendo:
+                self.index_defendendo += 0.05
+                if self.index_defendendo > 1:
+                    self.index_defendendo = 0
+                    self.defendendo = False
+                    self.parado = True
+                self.image = self.sprite_defendendo[int(self.index_defendendo)]
         
         # Para a esquerda:
         elif self.esquerda:
@@ -167,6 +185,14 @@ class Player(pygame.sprite.Sprite):
             if self.pulando:
                 self.index_pulando += 0.07
                 imagem = self.sprite_pulando[int(self.index_pulando)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            if self.defendendo:
+                self.index_defendendo += 0.05
+                if self.index_defendendo > 1:
+                    self.index_defendendo = 0
+                    self.defendendo = False
+                    self.parado = True
+                imagem = self.sprite_defendendo[int(self.index_defendendo)]
                 self.image = pygame.transform.flip(imagem, True, False)
 
     def movimenta_player(self):

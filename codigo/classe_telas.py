@@ -128,12 +128,14 @@ class TelaJogo(Jogo):
         self.sprites.draw(self.window)
         self.sprites.update()
 
+        
+
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
 
         # Movimentação do player (e ataque):
-        if self.player.ataque_forte == False and self.player.ataque_fraco == False:
+        if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:
             if key[pygame.K_a]:
                 if self.scroll == 0:
                     self.player.rect.x -= 1
@@ -180,7 +182,11 @@ class TelaJogo(Jogo):
                     self.player.andando = False
                     self.player.correndo = False
                     self.player.parado = False
-        if self.player.correndo == False and self.player.pulando == False:
+            if key[pygame.K_c]:
+                self.player.defendendo = True
+                if self.player.parado == True:
+                    self.player.parado = False
+       # if self.player.correndo == False and self.player.pulando == False:
             if key[pygame.K_q]:
                 self.player.ataque_forte = True
                 if self.player.parado == True:
