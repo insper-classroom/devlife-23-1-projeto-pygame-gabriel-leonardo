@@ -129,7 +129,7 @@ class Player(pygame.sprite.Sprite):
                     self.parado = True
                 self.image = self.sprite_ataque_forte[int(self.index_ataque_forte)]
             if self.ataque_fraco:
-                self.index_ataque_fraco += 0.07
+                self.index_ataque_fraco += 0.08
                 if self.index_ataque_fraco > 4:
                     self.index_ataque_fraco = 0
                     self.ataque_fraco = False
@@ -168,7 +168,7 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.ataque_forte:
                 self.index_ataque_forte += 0.09
-                if self.index_ataque_forte > 5:
+                if self.index_ataque_forte > 8:
                     self.index_ataque_forte = 0
                     self.ataque_forte = False
                     self.parado = True

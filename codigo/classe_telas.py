@@ -186,7 +186,7 @@ class TelaJogo(Jogo):
                 self.player.defendendo = True
                 if self.player.parado == True:
                     self.player.parado = False
-       # if self.player.correndo == False and self.player.pulando == False:
+        if self.player.pulando == False:
             if key[pygame.K_q]:
                 self.player.ataque_forte = True
                 if self.player.parado == True:
