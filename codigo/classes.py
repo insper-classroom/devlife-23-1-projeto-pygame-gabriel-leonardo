@@ -60,7 +60,7 @@ class Player(pygame.sprite.Sprite, Jogo):
         for i in range(8):
             img = PLAYER_CORRENDO.subsurface((85 * i, 0), (85,104))
             self.sprite_correndo.append(img)
-        for i in range(5):
+        for i in range(8):
             img = PLAYER_ATAQUE_FORTE.subsurface((85 * i, 0), (85,104))
             self.sprite_ataque_forte.append(img)
         for i in range(4):
@@ -102,7 +102,7 @@ class Player(pygame.sprite.Sprite, Jogo):
 
         # Movimentação:
         self.rect.x = 512
-        self.rect.y = 510
+        self.rect.y = 535
         self.velocidade_x = 0
         self.velocidade_y = 0
         self.gravidade = 0
@@ -115,12 +115,12 @@ class Player(pygame.sprite.Sprite, Jogo):
         # Para a direita:
         if self.direita:
             if self.parado:
-                self.index_parado += 0.1
+                self.index_parado += 0.05
                 if self.index_parado > 6:
                     self.index_parado = 0
                 self.image = self.sprite_parado[int(self.index_parado)]
             if self.andando:
-                self.index_andando += 0.1
+                self.index_andando += 0.06
                 if self.index_andando > 9:
                     self.index_andando = 0
                 self.image = self.sprite_andando[int(self.index_andando)]
@@ -130,14 +130,14 @@ class Player(pygame.sprite.Sprite, Jogo):
                     self.index_correndo = 0
                 self.image = self.sprite_correndo[int(self.index_correndo)]
             if self.ataque_forte:
-                self.index_ataque_forte += 0.05
-                if self.index_ataque_forte > 5:
+                self.index_ataque_forte += 0.09
+                if self.index_ataque_forte > 8:
                     self.index_ataque_forte = 0
                     self.ataque_forte = False
                     self.parado = True
                 self.image = self.sprite_ataque_forte[int(self.index_ataque_forte)]
             if self.ataque_fraco:
-                self.index_ataque_fraco += 0.05
+                self.index_ataque_fraco += 0.07
                 if self.index_ataque_fraco > 4:
                     self.index_ataque_fraco = 0
                     self.ataque_fraco = False
@@ -147,13 +147,13 @@ class Player(pygame.sprite.Sprite, Jogo):
         # Para a esquerda:
         elif self.esquerda:
             if self.parado:
-                self.index_parado += 0.1
+                self.index_parado += 0.05
                 if self.index_parado > 6:
                     self.index_parado = 0
                 imagem = self.sprite_parado[int(self.index_parado)]
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.andando:
-                self.index_andando += 0.1
+                self.index_andando += 0.06
                 if self.index_andando > 9:
                     self.index_andando = 0
                 imagem = self.sprite_andando[int(self.index_andando)]
@@ -165,7 +165,7 @@ class Player(pygame.sprite.Sprite, Jogo):
                 imagem = self.sprite_correndo[int(self.index_correndo)]
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.ataque_forte:
-                self.index_ataque_forte += 0.05
+                self.index_ataque_forte += 0.09
                 if self.index_ataque_forte > 5:
                     self.index_ataque_forte = 0
                     self.ataque_forte = False
@@ -173,7 +173,7 @@ class Player(pygame.sprite.Sprite, Jogo):
                 imagem = self.sprite_ataque_forte[int(self.index_ataque_forte)]
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.ataque_fraco:
-                self.index_ataque_fraco += 0.05
+                self.index_ataque_fraco += 0.08
                 if self.index_ataque_fraco > 4:
                     self.index_ataque_fraco = 0
                     self.ataque_fraco = False
@@ -189,18 +189,18 @@ class Player(pygame.sprite.Sprite, Jogo):
         # Verifica borda:
         if prox_posicao_x < 0:
             prox_posicao_x = 0
-            if self.rect.y < 510:
+            if self.rect.y < 535:
                 self.rect.y = self.rect.y
             else:
-                self.rect.y = 510
+                self.rect.y = 535
         elif prox_posicao_x > 896:
             prox_posicao_x = 896
-            if self.rect.y < 510:
+            if self.rect.y < 535:
                 self.rect.y = self.rect.y
             else:
-                self.rect.y = 510
-        elif self.rect.y > 510:
-            self.rect.y = 510
+                self.rect.y = 535
+        elif self.rect.y > 535:
+            self.rect.y = 535
             self.pulos = 0
             self.pulando = False
         
@@ -212,10 +212,11 @@ class TelaInicial(Jogo):
     def desenha(self):
         self.window.blit(pygame.transform.scale(FUNDO, (self.WIDTH, self.HEIGHT)), (0, 0))
         self.window.blit(pygame.transform.scale(NUVEM_1, (self.WIDTH + 100, self.HEIGHT)), (-50 + self.nuvem1_vel, 0))  
-        self.window.blit(pygame.transform.scale(NUVEM_4, (self.WIDTH + 100, self.HEIGHT)), (-50 + self.nuvem4_vel, 0))  
+        self.window.blit(pygame.transform.scale(NUVEM_4, (self.WIDTH + 100, self.HEIGHT)), (-50 + self.nuvem4_vel, 0))
         self.window.blit(pygame.transform.scale_by(LUA, 2.5), (-80, 0))
-        self.window.blit(FONTE_TITULO.render('SHADOW OF THE NINJA', True, BRANCO), (40, self.HEIGHT/2 + 20))
 
+        self.window.blit(FONTE_TITULO.render('SHADOW OF THE NINJA', True, BRANCO), (40, self.HEIGHT/2 + 20))
+        
         if self.botao == 1:
             self.window.blit(FONTE_TEXTO_POPUP.render('Novo jogo', True, BRANCO), (40, self.HEIGHT/2 + 77))
         else:
@@ -298,12 +299,13 @@ class TelaJogo(Jogo):
             img = pygame.image.load(f'../assets/backgrounds/TelaJogo/Backgorund_Floresta/{i}.png').convert_alpha()
             img = pygame.transform.scale(img, (self.WIDTH, self.HEIGHT))
             self.background.append(img)
-
+        
     def desenha(self):
         self.window.fill((255, 255, 255))
         for x in range(12):
             for i in self.background:
                 self.window.blit(i, (x * self.WIDTH - self.scroll, 0))
+        self.window.blit(TESTE, (0, 390))
         self.sprites.draw(self.window)
         self.sprites.update()
 
@@ -316,7 +318,7 @@ class TelaJogo(Jogo):
             if self.scroll == 0:
                 self.player.rect.x -= 1
             elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll -= 2
+                self.scroll -= 1
             elif self.scroll == 1000:
                 self.player.rect.x -= 1
             self.player.andando = True
@@ -326,7 +328,7 @@ class TelaJogo(Jogo):
             if self.scroll == 1000:
                 self.player.rect.x += 1
             elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
-                self.scroll += 2
+                self.scroll += 1
             elif self.scroll == 0:
                 self.player.rect.x += 1
             self.player.andando = True
