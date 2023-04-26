@@ -135,6 +135,7 @@ class TelaJogo(Jogo):
         for x in range(12):
             for i in self.background:
                 self.window.blit(i, (x * self.WIDTH - self.scroll, 0))
+        #self.window.blit(TESTE, (0 - self.scroll, 315))
         self.sprites.draw(self.window)
         self.sprites.update()
         self.meele_sprites.draw(self.window)
@@ -149,19 +150,19 @@ class TelaJogo(Jogo):
             if key[pygame.K_a]:
                 if self.scroll == 0:
                     self.player.rect.x -= 1
-                elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
+                elif self.player.rect.x <= 511 or self.scroll != 0:
                     self.scroll -= 1
                     self.meele.rect.x += 1
-                elif self.scroll == 1000:
-                    self.player.rect.x -= 1
+                # elif self.scroll == 1000:
+                #     self.player.rect.x -= 1
                 self.player.andando = True
                 self.player.esquerda = True
                 self.player.direita = False
             # Movimentação de andar para a direita
             if key[pygame.K_d]:
-                if self.scroll == 1000:
-                    self.player.rect.x += 1
-                elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
+                # if self.scroll == 1000:
+                #     self.player.rect.x += 1
+                if self.player.rect.x >= 511 or self.scroll != 0:
                     self.scroll += 1
                     self.meele.rect.x -= 1
                 elif self.scroll == 0:
@@ -173,7 +174,7 @@ class TelaJogo(Jogo):
             if key[pygame.K_LSHIFT] and key[pygame.K_a]:
                 if self.scroll == 0:
                     self.player.rect.x -= 1
-                elif self.player.rect.x <= 511 or self.scroll != 1000 and self.scroll != 0:
+                elif self.player.rect.x <= 511 or self.scroll != 0:
                     self.scroll -= 2
                     self.meele.rect.x += 2
                 elif self.scroll == 1000:
@@ -184,7 +185,7 @@ class TelaJogo(Jogo):
             if key[pygame.K_LSHIFT] and key[pygame.K_d]: 
                 if self.scroll == 1000:
                     self.player.rect.x += 1
-                elif self.player.rect.x >= 511 or self.scroll != 1000 and self.scroll != 0:
+                elif self.player.rect.x >= 511 or self.scroll != 0:
                     self.scroll += 2
                     self.meele.rect.x -= 2
                 elif self.scroll == 0:
@@ -231,8 +232,8 @@ class TelaJogo(Jogo):
             self.meele.kill()
         if self.scroll < 0:
             self.scroll = 0
-        if self.scroll > 1000:
-            self.scroll = 1000
+        # if self.scroll > 1000:
+        #     self.scroll = 1000
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

@@ -20,7 +20,8 @@ NUVEM_1_VEL = 0.5
 NUVEM_4 = pygame.image.load('../assets/backgrounds/StartScreen/4.png')
 NUVEM_4_VEL = - 0.5
 
-TESTE = pygame.image.load('../assets/backgrounds/TelaJogo/Backgorund_Floresta/título.png')
+TESTE = pygame.image.load('../assets/backgrounds/TelaJogo/Backgorund_Floresta/map.png')
+
 #TelaJogo
 
 
