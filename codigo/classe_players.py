@@ -227,7 +227,7 @@ class Player(pygame.sprite.Sprite):
 class InimigoMeele(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.meele_parado = False
+        self.meele_parado = True
         self.meele_correndo = False
         self.meele_ataque1 = False
         self.meele_ataque2 = False
@@ -303,7 +303,7 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
 
-        self.rect.x = 612
+        self.rect.x = (self.jogo.WIDTH - self.jogo.scroll, 0)
         self.rect.y = 535
         self.velocidade_x = 0
         self.last_update = 0
