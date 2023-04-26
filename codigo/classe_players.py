@@ -24,9 +24,6 @@ class Player(pygame.sprite.Sprite):
         self.max_ataques = 1
         self.pulos = 0
         self.max_pulos = 1
-        # Posição inicial
-        self.rect.x = 512
-        self.rect.y = 535
         # Velociades
         self.velocidade_x = 0
         self.velocidade_y = 0
@@ -111,6 +108,9 @@ class Player(pygame.sprite.Sprite):
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
 
+        # Posição inicial
+        self.rect.x = 512
+        self.rect.y = 535
         # Máscara de colisão:
         self.mask = pygame.mask.from_surface(self.image)
     
@@ -284,9 +284,6 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.meele_direita = False
         # Status
         self.vida = 100
-        # Posição inicial
-        self.rect.x = 1030
-        self.rect.y = 515
         # Velocidade
         self.velocidade_x = 0
         # Outros
@@ -369,6 +366,9 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
         
+        # Posição inicial
+        self.rect.x = 1030
+        self.rect.y = 515
         # Máscara de colisão
         self.mask = pygame.mask.from_surface(self.image)
 
