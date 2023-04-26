@@ -246,26 +246,26 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.sprite_meele_defendendo = []
         
         for i in range(5):
-            img = INIMIGO_MEELE_PARADO.subsurface((85 * i, 0), (85,104))
-            self.sprite_parado.append(img)
+            img = INIMIGO_MEELE_PARADO.subsurface((128 * i, 0), (128,128))
+            self.sprite_meele_parado.append(img)
         for i in range(8):
-            img = INIMIGO_MEELE_CORRENDO.subsurface((85 * i, 0), (85,104))
-            self.sprite_correndo.append(img)
+            img = INIMIGO_MEELE_CORRENDO.subsurface((128 * i, 0), (128,128))
+            self.sprite_meele_correndo.append(img)
         for i in range(4):
-            img = INIMIGO_MEELE_ATAQUE_1.subsurface((85 * i, 0), (85,104))
-            self.sprite_ataque1.append(img)
+            img = INIMIGO_MEELE_ATAQUE_1.subsurface((128 * i, 0), (128,128))
+            self.sprite_meele_ataque1.append(img)
         for i in range(5):
-            img = INIMIGO_MEELE_ATAQUE_2.subsurface((85 * i, 0), (85,104))
-            self.sprite_ataque2.append(img)
+            img = INIMIGO_MEELE_ATAQUE_2.subsurface((128 * i, 0), (128,128))
+            self.sprite_meele_ataque2.append(img)
         for i in range(4):
-            img = INIMIGO_MEELE_ATAQUE_3.subsurface((85 * i, 0), (85,104))
-            self.sprite_ataque3.append(img)
+            img = INIMIGO_MEELE_ATAQUE_3.subsurface((128 * i, 0), (128,128))
+            self.sprite_meele_ataque3.append(img)
         for i in range(6):
-            img = INIMIGO_MEELE_MORRENDO.subsurface((85 * i, 0), (85,104))
-            self.sprite_morrendo.append(img)
+            img = INIMIGO_MEELE_MORRENDO.subsurface((128 * i, 0), (128,128))
+            self.sprite_meele_morrendo.append(img)
         for i in range(2):
-            img = INIMIGO_MEELE_DEFENDENDO.subsurface((85 * i, 0), (85,104))
-            self.sprite_defendendo.append(img)
+            img = INIMIGO_MEELE_DEFENDENDO.subsurface((128 * i, 0), (128,128))
+            self.sprite_meele_defendendo.append(img)
 
         self.index_meele_parado = 0
         self.index_meele_correndo = 0
@@ -302,6 +302,12 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.image = self.sprite_meele_defendendo[self.index_meele_defendendo]
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
+
+        self.rect.x = 612
+        self.rect.y = 535
+        self.velocidade_x = 0
+        self.last_update = 0
+
 
     def update(self):
         if self.meele_direita:
@@ -340,6 +346,8 @@ class InimigoMeele(pygame.sprite.Sprite):
                 if self.index_meele_defendendo > 2:
                     self.index_meele_defendendo = 0
                 self.image = self.sprite_meele_defendendo[int(self.index_meele_defendendo)]
+
+
         elif self.meele_esquerda:
             if self.meele_parado:
                 self.index_meele_parado += 0.08
@@ -383,8 +391,10 @@ class InimigoMeele(pygame.sprite.Sprite):
                     self.index_meele_defendendo = 0
                 imagem = self.sprite_meele_defendendo[int(self.index_meele_defendendo)]
                 self.image = pygame.transform.flip(imagem, True, False)
+    
             
-    # def movimenta_meele(self):
+    def movimenta_meele(self):
+        proximo_x = self.rect.x + self.velocidade_x
  
 class InimigoRanged(pygame.sprite.Sprite):
     def __init__(self):
