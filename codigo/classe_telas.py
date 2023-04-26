@@ -23,10 +23,6 @@ class Jogo:
         # Update na tela(não precisa ficar chamando a funcao pygame.display.update):
         self.desenha()
         pygame.display.update()
-    
-    def update(self):
-        # Define a taxa de atualizacao da tela:
-        pygame.time.Clock().tick(60)
                       
 class TelaInicial(Jogo):
     def desenha(self):
@@ -58,12 +54,8 @@ class TelaInicial(Jogo):
             self.window.blit(FONTE_TEXTO.render('Sair', True, CINZA), (40, self.HEIGHT/2 + 230))
 
     def colisao_ponto_retangulo(self, ponto_x, ponto_y, rect_x, rect_y, rect_w, rect_h):
-        if (
-        rect_x <= ponto_x and 
-        ponto_x <= rect_x + rect_w and 
-        rect_y <= ponto_y and 
-        ponto_y <= rect_y + rect_h
-        ):
+        if (rect_x <= ponto_x and ponto_x <= rect_x + rect_w and 
+        rect_y <= ponto_y and ponto_y <= rect_y + rect_h):
             return True
         else:
             return False
@@ -127,8 +119,6 @@ class TelaJogo(Jogo):
                 self.window.blit(i, (x * self.WIDTH - self.scroll, 0))
         self.sprites.draw(self.window)
         self.sprites.update()
-
-        
 
     def update(self):
         self.player.movimenta_player()
@@ -197,6 +187,8 @@ class TelaJogo(Jogo):
                     self.player.parado = False
         if self.scroll < 0:
             self.scroll = 0
+        if self.scroll > 1000:
+            self.scroll = 1000
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -220,7 +212,6 @@ class TelaOpcoes(Jogo):
         self.window.blit(pygame.transform.scale(NUVEM_4, (self.WIDTH + 100, self.HEIGHT)), (-50 + self.nuvem4_vel, 0))  
         self.window.blit(pygame.transform.scale_by(LUA, 2.5), (-80, 0))
         self.window.blit(FONTE_TITULO.render('OPÇÕES', True, BRANCO), (40, self.HEIGHT/2 + 20))
-
 
         if self.botao == 1:
             if self.musica == True:
@@ -253,10 +244,8 @@ class TelaOpcoes(Jogo):
 
 
     def colisao_ponto_retangulo(self, ponto_x, ponto_y, rect_x, rect_y, rect_w, rect_h):
-        if (
-            ponto_x >= rect_x and ponto_x <= rect_x + rect_w and
-            ponto_y >= rect_y and ponto_y <= rect_y + rect_h
-        ):
+        if (ponto_x >= rect_x and ponto_x <= rect_x + rect_w and
+            ponto_y >= rect_y and ponto_y <= rect_y + rect_h):
             return True
         else:
             return False
