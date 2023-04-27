@@ -1,4 +1,5 @@
 import pygame
+import webbrowser
 from classe_players import Player, InimigoMeele, InimigoRanged
 from constantes import *
 
@@ -124,26 +125,31 @@ class TelaJogo(Jogo):
         self.meele_sprites = pygame.sprite.Group()
         self.meele_sprites.add(self.meele)
 
+
+
         self.background = []
         for i in range(1, 13):
             img = pygame.image.load(f'../assets/backgrounds/TelaJogo/Backgorund_Floresta/{i}.png').convert_alpha()
             img = pygame.transform.scale(img, (self.WIDTH, self.HEIGHT))
             self.background.append(img)
         
+        
     def desenha(self):
         self.window.fill((255, 255, 255))
         for x in range(12):
             for i in self.background:
                 self.window.blit(i, (x * self.WIDTH - self.scroll, 0))
-        #self.window.blit(TESTE, (0 - self.scroll, 315))
-        self.sprites.draw(self.window)
-        self.sprites.update()
+        self.window.blit(TESTE, (720 - self.scroll, 225))
         self.meele_sprites.draw(self.window)
         self.meele_sprites.update()
+        self.sprites.draw(self.window)
+        self.sprites.update()
+
 
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
+
         # Movimentação (e limitação do movimento) do player
         if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:
             # Movimentação de andar para a esquerda
@@ -209,12 +215,17 @@ class TelaJogo(Jogo):
         # Movimentação de combate
         if self.player.pulando == False:
             # Ataque forte
+            
             if key[pygame.K_q]:
                 if self.player.max_atq_forte < self.player.max_ataques:
                     self.player.ataque_forte = True
                     self.player.max_atq_forte += 1
                     if pygame.sprite.collide_mask(self.player, self.meele):
                         self.meele.vida -= 1
+                        self.meele.meele_dano = True
+            #if not pygame.sprite.collide_mask(self.player, self.meele):
+            #    self.meele.meele_dano = False
+                        
                 if self.player.parado == True:
                     self.player.parado = False
             # Ataque fraco
@@ -223,13 +234,18 @@ class TelaJogo(Jogo):
                     self.player.ataque_fraco = True
                     self.player.max_atq_fraco += 1
                     if pygame.sprite.collide_mask(self.player, self.meele):
+                        self.meele.meele_dano = True
                         self.meele.vida -= 1
+                    else:
+                        self.meele.meele_dano = False
                 self.player.ataque_fraco = True
                 if self.player.parado == True:
                     self.player.parado = False
         # Combate em si ( Condições de vida, dano, etc)
         if self.meele.vida <= 0:
-            self.meele.kill()
+            self.meele.meele_dano = False
+            self.meele.meele_morrendo = True
+            
         if self.scroll < 0:
             self.scroll = 0
         # if self.scroll > 1000:
@@ -332,29 +348,90 @@ class TelaOpcoes(Jogo):
 
             elif event.type == pygame.MOUSEMOTION:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 440, 200, 25):
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 440, 105, 25):
                     self.botao = 1
-                elif self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 440, 100, 25) == False:
+                elif self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 440, 105, 25) == False:
                     self.botao = 0
-                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 490, 132, 25):
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 490, 217, 25):
                     self.botao = 2
-                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 540, 85, 25):
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 540, 52, 25):
                     self.botao = 3
-                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 590, 60, 25):
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 590, 85, 25):
                     self.botao = 4
         return self
     
 class TelaCreditos(Jogo):
     def desenha(self):
-        self.window.fill((0, 255, 0))
+        self.window.blit(pygame.transform.scale(FUNDO, (self.WIDTH, self.HEIGHT)), (0, 0))
+        self.window.blit(pygame.transform.scale(NUVEM_1, (self.WIDTH + 100, self.HEIGHT)), (-50 + self.nuvem1_vel, 0))  
+        self.window.blit(pygame.transform.scale(NUVEM_4, (self.WIDTH + 100, self.HEIGHT)), (-50 + self.nuvem4_vel, 0))  
+        self.window.blit(pygame.transform.scale_by(LUA, 2.5), (-80, 0))
+        self.window.blit(FONTE_TITULO.render('Créditos', True, BRANCO), (40, self.HEIGHT/2 + 20))
+        if self.botao == 1:
+            self.window.blit(FONTE_TEXTO_POPUP.render('Gabriel Rodrigues e Leonardo Sterman', True, BRANCO), (40, self.HEIGHT/2 + 77))
+        else:
+            self.window.blit(FONTE_TEXTO.render("Dev's", True, CINZA), (40, self.HEIGHT/2 + 80))
+        if self.botao == 2:
+            self.window.blit(FONTE_TEXTO_POPUP.render('Site do jogo', True, BRANCO), (40, self.HEIGHT/2 + 127))
+        else:
+            self.window.blit(FONTE_TEXTO.render('Site do jogo', True, CINZA), (40, self.HEIGHT/2 + 130))
+        if self.botao == 3:
+            self.window.blit(FONTE_TEXTO_POPUP.render('Doc de Referências', True, BRANCO), (40, self.HEIGHT/2 + 177))
+        else:
+            self.window.blit(FONTE_TEXTO.render('Doc de Referências', True, CINZA), (40, self.HEIGHT/2 + 180))
+        if self.botao == 4:
+            self.window.blit(FONTE_TEXTO_POPUP.render('Voltar', True, BRANCO), (40, self.HEIGHT/2 + 227))
+        else:
+            self.window.blit(FONTE_TEXTO.render('Voltar', True, CINZA), (40, self.HEIGHT/2 + 230))
+
+    def colisao_ponto_retangulo(self, ponto_x, ponto_y, rect_x, rect_y, rect_w, rect_h):
+        if (ponto_x >= rect_x and ponto_x <= rect_x + rect_w and
+            ponto_y >= rect_y and ponto_y <= rect_y + rect_h):
+            return True
+        else:
+            return False
 
     def update(self):
+        if self.nuv_dir == -1:
+            self.nuvem1_vel -= 0.5
+            self.nuvem4_vel += 0.5
+        if self.nuv_dir == 1:
+            self.nuvem1_vel += 0.5
+            self.nuvem4_vel -= 0.5
+        if self.nuvem1_vel == 50:
+            self.nuv_dir = -1
+        if self.nuvem1_vel == 0.5:
+            self.nuv_dir = 1
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                return TelaGameOver()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                #if self.botao == 1:
+
+                if self.botao == 2:
+                    webbrowser.open_new_tab('https://stackoverflow.com/questions/68761290/how-to-insert-url-link-inside-a-pygame')
+
+
+                if self.botao == 3:
+                    webbrowser.open_new_tab('https://docs.google.com/document/d/1WqG90zjR1cBxKDNmpo1__kWCyiw1g8MiH1vKCQGhRsQ/edit?usp=sharingv')
+
+                if self.botao == 4:
+                    return TelaInicial()
+
+            elif event.type == pygame.MOUSEMOTION:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 440, 70, 25):
+                    self.botao = 1
+                elif self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 440, 100, 25) == False:
+                    self.botao = 0
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 490, 170, 26):
+                    self.botao = 2
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 540, 275, 25):
+                    self.botao = 3
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 590, 85, 25):
+                    self.botao = 4
         return self
     
 class TelaGameOver(Jogo):

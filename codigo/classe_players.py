@@ -1,5 +1,6 @@
 import pygame
 from constantes import *
+import time
 
 
 # Classe do jogador
@@ -7,6 +8,15 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         # Variáveis do player
+        # Status
+        self.vivo = True
+        self.max_vida = 5
+        self.vida = 5
+        self.max_atq_forte = 0
+        self.max_atq_fraco = 0
+        self.max_ataques = 1
+        self.pulos = 0
+        self.max_pulos = 1
         # Ações
         self.parado = True
         self.andando = False
@@ -18,12 +28,6 @@ class Player(pygame.sprite.Sprite):
         # Direção
         self.esquerda = False
         self.direita = True
-        # Status
-        self.max_atq_forte = 0
-        self.max_atq_fraco = 0
-        self.max_ataques = 1
-        self.pulos = 0
-        self.max_pulos = 1
         # Velociades
         self.velocidade_x = 0
         self.velocidade_y = 0
@@ -113,6 +117,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = 535
         # Máscara de colisão:
         self.mask = pygame.mask.from_surface(self.image)
+
     
     # Função que atualiza a animação do player:
     def update(self):
@@ -279,11 +284,12 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.meele_ataque3 = False
         self.meele_morrendo = False
         self.meele_defendendo = False
+        self.meele_dano = False
         # Direção
         self.meele_esquerda = True
         self.meele_direita = False
         # Status
-        self.vida = 100
+        self.vida = 5
         # Velocidade
         self.velocidade_x = 0
         # Outros
@@ -298,6 +304,7 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.sprite_ataque3 = []
         self.sprite_morrendo = []
         self.sprite_defendendo = []
+        self.sprite_dano = []
 
         # Cada sprite em sua respectiva lista
         for i in range(5):
@@ -321,6 +328,9 @@ class InimigoMeele(pygame.sprite.Sprite):
         for i in range(2):
             img = INIMIGO_MEELE_DEFENDENDO.subsurface((128 * i, 0), (128,128))
             self.sprite_defendendo.append(img)
+        for i in range(2):
+            img = INIMIGO_MEELE_DANO.subsurface((128 * i, 0), (128,128))
+            self.sprite_dano.append(img)
 
         # Index das sprites
         self.index_parado = 0
@@ -330,6 +340,7 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.index_ataque3 = 0
         self.index_morrendo = 0
         self.index_defendendo = 0
+        self.index_dano = 0
 
         # Parado
         self.image = self.sprite_parado[self.index_parado]
@@ -365,13 +376,17 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.image = self.sprite_defendendo[self.index_defendendo]
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
+
+        # Dano
+        self.image = self.sprite_dano[self.index_dano]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
         
         # Posição inicial
         self.rect.x = 1030
         self.rect.y = 515
         # Máscara de colisão
         self.mask = pygame.mask.from_surface(self.image)
-
 
     # Função para atualizar a animação
     def update(self):
@@ -412,6 +427,7 @@ class InimigoMeele(pygame.sprite.Sprite):
                 self.index_morrendo += 0.08
                 if self.index_morrendo > 6:
                     self.index_morrendo = 0
+                    self.meele_morrendo = False
                 self.image = self.sprite_morrendo[int(self.index_morrendo)]
             # Defendendo
             if self.meele_defendendo:
@@ -419,6 +435,12 @@ class InimigoMeele(pygame.sprite.Sprite):
                 if self.index_defendendo > 2:
                     self.index_defendendo = 0
                 self.image = self.sprite_defendendo[int(self.index_defendendo)]
+            # Dano
+            if self.meele_dano:
+                self.index_dano += 0.08
+                if self.index_dano > 1:
+                    self.index_dano = 0
+                self.image = self.sprite_dano[int(self.index_dano)]
 
         # Para a esquerda
         elif self.meele_esquerda:
@@ -462,6 +484,9 @@ class InimigoMeele(pygame.sprite.Sprite):
                 self.index_morrendo += 0.08
                 if self.index_morrendo > 6:
                     self.index_morrendo = 0
+                    self.meele_morrendo = False
+                    if self.meele_morrendo == False:
+                        self.kill()
                 imagem = self.sprite_morrendo[int(self.index_morrendo)]
                 self.image = pygame.transform.flip(imagem, True, False)
             # Defendendo
@@ -470,6 +495,13 @@ class InimigoMeele(pygame.sprite.Sprite):
                 if self.index_defendendo > 2:
                     self.index_defendendo = 0
                 imagem = self.sprite_defendendo[int(self.index_defendendo)]
+                self.image = pygame.transform.flip(imagem, True, False)
+            # Dano
+            if self.meele_dano:
+                self.index_dano += 0.08
+                if self.index_dano > 1:
+                    self.index_dano = 0
+                imagem = self.sprite_dano[int(self.index_dano)]
                 self.image = pygame.transform.flip(imagem, True, False)
  
 # Classe do inimigo ranged

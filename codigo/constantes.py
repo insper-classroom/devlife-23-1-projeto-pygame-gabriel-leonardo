@@ -22,6 +22,7 @@ NUVEM_4_VEL = - 0.5
 
 TESTE = pygame.image.load('../assets/backgrounds/TelaJogo/Backgorund_Floresta/map.png')
 
+
 #TelaJogo
 
 
@@ -44,6 +45,7 @@ INIMIGO_MEELE_ATAQUE_2 = pygame.image.load('../assets/Inimigo_meele/Ataque_2.png
 INIMIGO_MEELE_ATAQUE_3 = pygame.image.load('../assets/Inimigo_meele/Ataque_3.png')
 INIMIGO_MEELE_MORRENDO = pygame.image.load('../assets/Inimigo_meele/Morrendo.png')
 INIMIGO_MEELE_DEFENDENDO = pygame.image.load('../assets/Inimigo_meele/Defendendo.png')
+INIMIGO_MEELE_DANO = pygame.image.load('../assets/Inimigo_meele/Dano.png')
 
 # Inimigo ranged
 INIMIGO_RANGED_PARADO = pygame.image.load('../assets/inimigo_ranged/Parado.png')
