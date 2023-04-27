@@ -3,4 +3,4 @@ from classe_telas import TelaInicial
 tela_atual = TelaInicial()
 while True:
     tela_atual.roda()
-    tela_atual = tela_atual.update()
+    tela_atual = tela_atual.update()    

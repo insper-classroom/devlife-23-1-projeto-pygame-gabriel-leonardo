@@ -257,6 +257,7 @@ class Player(pygame.sprite.Sprite):
         elif prox_posicao_x > 896:
             prox_posicao_x = 896
             if self.rect.y < 535:
+
                 self.rect.y = self.rect.y
             else:
                 self.rect.y = 535
