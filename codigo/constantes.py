@@ -20,10 +20,8 @@ NUVEM_1_VEL = 0.5
 NUVEM_4 = pygame.image.load('../assets/backgrounds/StartScreen/4.png')
 NUVEM_4_VEL = - 0.5
 
-PLATAFORMA = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/Plataforma.png')
-
-
 #TelaJogo
+PLATAFORMA = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/Plataforma.png')
 
 # Sprites
 # Player
@@ -53,11 +51,6 @@ INIMIGO_RANGED_MORRENDO = pygame.image.load('../assets/inimigo_ranged/Morrendo.p
 INIMIGO_RANGED_ATAQUE_FRACO = pygame.image.load('../assets/inimigo_ranged/Ataque_fraco.png')
 INIMIGO_RANGED_ATAQUE_FORTE = pygame.image.load('../assets/inimigo_ranged/Ataque_forte.png')
 INIMIGO_RANGED_FLECHA = pygame.image.load('../assets/inimigo_ranged/Flecha.png')
-
-
-
-
-
 
 # Cores
 PRETO = (0, 0, 0)
