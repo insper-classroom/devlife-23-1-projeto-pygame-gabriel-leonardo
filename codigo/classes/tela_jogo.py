@@ -1,9 +1,9 @@
 import pygame
-from jogo import Jogo
+from classes.jogo import Jogo
 from classes.player import Player
 from classes.inimigos import InimigoMeele
 from classes.plataforma import Plataforma
-
+from constantes import *
 
 class TelaJogo(Jogo):
     def __init__(self):
@@ -11,7 +11,7 @@ class TelaJogo(Jogo):
         self.player = Player()
         self.sprites = pygame.sprite.Group()
         self.sprites.add(self.player)
-        
+
         self.meele = InimigoMeele()
         self.meele_sprites = pygame.sprite.Group()
         self.meele_sprites.add(self.meele)
@@ -28,10 +28,9 @@ class TelaJogo(Jogo):
         self.BG_3 = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/bg_3.png').convert_alpha()
         self.BG_3 = pygame.transform.scale(self.BG_3, (self.WIDTH, self.HEIGHT))
 
-        
-    def desenha(self):
-        self.window.fill((255, 255, 255))
+        self.jogo = Jogo()
 
+    def desenha(self):
         for i in range(10):
            self.window.blit(self.BG_1, ((0 - self.scroll* 0.5) + i * 1024, 0))
         for i in range(10):
@@ -39,15 +38,16 @@ class TelaJogo(Jogo):
         for i in range(10):
            self.window.blit(self.BG_3, ((0 - self.scroll) + i * 1024, 0))
 
-
         self.meele_sprites.draw(self.window)
         self.meele_sprites.update()
         self.sprites.draw(self.window)
         self.sprites.update()
         self.plataforma_sprites.draw(self.window)
-        
-        
 
+        self.calc_fps()
+        if self.dicionario['show_fps']:
+            imagem_fps = FONTE_TEXTO.render(f'FPS:{self.fps:.2f}', True, (255, 255, 255))
+            self.window.blit(imagem_fps, (5,5))
 
     def update(self):
         self.player.movimenta_player()

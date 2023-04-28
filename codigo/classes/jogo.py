@@ -1,5 +1,6 @@
 import pygame
 from constantes import *
+import json
 
 class Jogo:
     def __init__(self):
@@ -24,7 +25,25 @@ class Jogo:
         self.t0 = -1
         self.deltat = (pygame.time.get_ticks() - self.t0) / 1000
 
+        # Armazena fps
+        self.fps = 0
+
+        with open('../assets/opcoes.json', 'r') as arquivo:
+            conteudo = arquivo.read()
+        self.dicionario = json.loads(conteudo)
+        arquivo.close()
+
     # Update na tela(não precisa ficar chamando a funcao pygame.display.update):
     def roda(self):
         self.desenha()
         pygame.display.update()
+    
+    def calc_fps(self):
+        fps = 0 
+        t0 = self.t0
+        ticks = pygame.time.get_ticks()
+        if t0 >= 0:
+            fps = 1000/(ticks-t0)
+        self.t0 = ticks
+        self.fps = fps
+

@@ -1,5 +1,5 @@
 import pygame
-from jogo import Jogo
+from classes.jogo import Jogo
 
 class TelaGameOver(Jogo):
     def desenha(self):

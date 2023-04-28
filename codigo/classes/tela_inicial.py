@@ -1,6 +1,6 @@
 import pygame
 from constantes import *
-from jogo import Jogo
+from classes.jogo import Jogo
 
 class TelaInicial(Jogo):
     def desenha(self):
@@ -31,6 +31,12 @@ class TelaInicial(Jogo):
             self.window.blit(FONTE_TEXTO_POPUP.render('Sair', True, BRANCO), (40, self.HEIGHT/2 + 227))
         else:
             self.window.blit(FONTE_TEXTO.render('Sair', True, CINZA), (40, self.HEIGHT/2 + 230))
+
+        self.calc_fps()
+        if self.dicionario['show_fps']:
+            imagem_fps = FONTE_TEXTO.render(f'FPS:{self.fps:.0f}',True,(255,255,255))
+            self.window.blit(imagem_fps,(5,5))
+
     # Função que verifica se o mouse está em cima de um botão
     def colisao_ponto_retangulo(self, ponto_x, ponto_y, rect_x, rect_y, rect_w, rect_h):
         if (rect_x <= ponto_x and ponto_x <= rect_x + rect_w and 

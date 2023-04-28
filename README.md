@@ -16,9 +16,13 @@ Basta utilizar as teclas A e D para se mover para a esquerda e para a direita, r
 
 ### Jogando no Windows
 
+Vá nas configurações do VSCode, digite python.terminal e verifique se a caixa Python: Terminal: Execute In File Dir está marcada
+
 Se você não possuir a biblioteca pygame, siga os seguintes passos para instalar: 
 1. Acesse o terminal do python;
 2. Digite o comando 'pip install pygame' e pressione enter;
 3. Pronto!
+
+Para rodar o jogo, vá em play.py e clique para iniciar o arquivo
 
 ### Outros links

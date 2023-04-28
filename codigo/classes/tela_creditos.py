@@ -1,7 +1,7 @@
 import pygame
 import webbrowser
 from constantes import *
-from jogo import Jogo
+from classes.jogo import Jogo
 
 class TelaCreditos(Jogo):
     def desenha(self):
@@ -11,7 +11,7 @@ class TelaCreditos(Jogo):
         self.window.blit(pygame.transform.scale_by(LUA, 2.5), (-80, 0))
         self.window.blit(FONTE_TITULO.render('Créditos', True, BRANCO), (40, self.HEIGHT/2 + 20))
         if self.botao == 1:
-            self.window.blit(FONTE_TEXTO_POPUP.render('Gabriel Rodrigues e Leonardo Sterman', True, BRANCO), (40, self.HEIGHT/2 + 77))
+            self.window.blit(FONTE_TEXTO_POPUP.render('Gabriel Rodrigues e Leonardo Freitas', True, BRANCO), (40, self.HEIGHT/2 + 77))
         else:
             self.window.blit(FONTE_TEXTO.render("Dev's", True, CINZA), (40, self.HEIGHT/2 + 80))
         if self.botao == 2:
@@ -54,7 +54,7 @@ class TelaCreditos(Jogo):
                 #if self.botao == 1:
 
                 if self.botao == 2:
-                    webbrowser.open_new_tab('https://stackoverflow.com/questions/68761290/how-to-insert-url-link-inside-a-pygame')
+                    webbrowser.open_new_tab('https://insper-classroom.github.io/devlife-23-1-projeto-pygame-gabriel-leonardo/')
 
 
                 if self.botao == 3:
