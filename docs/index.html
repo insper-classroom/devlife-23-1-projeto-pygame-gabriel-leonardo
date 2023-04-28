@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="imagens e outros/shortcut-icon.ico" type="image/x-icon">
     <title>Shadow of The Ninja</title>
 </head>
     <body>
@@ -18,6 +19,7 @@
                     <a href="#section-descricao">Jogo</a>
                     <a href="#section-download">Download</a>
                     <a href="#section-desenvolvimento">Desenvolvimento</a>
+                    <a href="#section-heuristica">Heurísticas</a>
                 </div>
         </section>
         
@@ -43,22 +45,22 @@
         
         <!-- Section equipe -->
         <section id="section-download">
-            <a id="imagem" href="">
+            <a id="imagem" href="https://codeload.github.com/insper-classroom/devlife-23-1-projeto-pygame-gabriel-leonardo/zip/refs/heads/main">
                 <img src="imagens e outros/download_icon.png" alt="download" class="download">
             </a>
             <h3 class="descricao-download">
                 Para instalar o jogo, clique no botão de instalar e siga os passos abaixo:
                 <br /><br />
-                • Caso não tenha instalado, baixe o <a href="https://www.python.org/downloads/">Python 3.10</a> e o <a href="https://code.visualstudio.com/">VSCode</a>;
+                -Caso não tenha instalado, baixe o <a href="https://www.python.org/downloads/">Python 3.10</a> e o <a href="https://code.visualstudio.com/">VSCode</a>;
                 <br /><br />
-                • Já dentro do VSCode, certifique-se de que você possui a biblioteca <a href="https://www.pygame.org/news">PyGame</a> instalada.
+                -Já dentro do VSCode, certifique-se de que você possui a biblioteca <a href="https://www.pygame.org/news">PyGame</a> instalada.
                 Caso não tenha, digite o seguinte comando no terminal: <em>pip install pygame</em>;
                 <br /><br />
-                • Após isso, extraia o arquivo .zip instalado, e abra-o pelo VsCode. Clique no arquivo <em>jogo.py</em> e aperte F5 para rodar o jogo;
+                -Após isso, extraia o arquivo .zip instalado, e abra-o pelo VsCode. Clique no arquivo <em>jogo.py</em> e aperte F5 para rodar o jogo;
                 <br /><br />
-                • Caso deseje apenas clonar o repositório, clique <a href="https://github.com/insper-classroom/devlife-23-1-projeto-pygame-gabriel-leonardo.git">aqui</a>;
+                -Caso deseje apenas clonar o repositório, clique <a href="https://github.com/insper-classroom/devlife-23-1-projeto-pygame-gabriel-leonardo.git">aqui</a>;
                 <br /><br />
-                • Aproveite!
+                -Aproveite!
             </h3>
         </section>            
     
@@ -90,7 +92,7 @@
 
                     <h2>24/04 - Leonardo e Gabriel</h2>
                     <ul>
-                        <li>Efeito Parallax no jogo(background movendo junto)</li>
+                        <li>Efeito Parallax no jogo (background movendo junto)</li>
                         <li>Adição de outras animações e animação para ambos os lados</li>
                         <li>Refatoração do código</li>
                         <li>Mais sprites adicionados</li>
@@ -114,6 +116,18 @@
                         <li>Correção de um erro com o efeito Parallax</li>
                         <li>Correção da classe do inimigo meele</li>
                     </ul>
+                    <h2>27/06 - Gabriel</h2>
+                    <ul>
+                        <li>Tela créditos criada</li>
+                        <li>Atualização do CSS e HTML</li>
+                        <li>Refatoração do código e limpeza de arquivos</li>
+                        <li>Otimização e parallax</li>
+                    </ul>
+                    <h2>28/06 - Leonardo</h2>
+                    <ul>
+                        <li>Site finalizado (vídeo do jogo não feito)</li>
+                        <li>Criação de um arquivo que salva as configurações</li>
+                    </ul>
                 </div>
                 <img src="imagens e outros/livro_icon.png">
             </div>
@@ -121,11 +135,54 @@
 
         <!-- section heuristica -->
         <section id="section-heuristica">
-
-
+            <h1 class="titulo-heuristica">Heurísticas</h1>
+            <h3><u>Problema 1: Cores e tela inicial</u><br /><br />Solução - Remoção do header e nova tela inicial</h3>
+            <div class="fotos-heuristica">
+                <div>
+                    <img src="imagens e outros/tela_inicial_antiga.png" width="500px">
+                    <p>Antes</p>
+                </div>
+                <div>
+                    <img src="imagens e outros/tela_inicial_nova.png" width="500px">
+                    <p>Depois</p>
+                </div>
+            </div>
+            <h3><u>Problemas 2, 3 e 4: Baixa visibilidade, cor do texto e vídeo muito destacado</u>
+            <br /><br />Solução - Mudança das cores para melhor visibilidade e estética
+            <br />Solução - Mudança da cor dos textos e vídeo junto com descrição
+            <br />Solução - Vídeo colocado em uma seção junto com a descrição do jogo</h3>
             
-        </section>
+            </h3>
+            <div class="fotos-heuristica">
+                <div>
+                    <img src="imagens e outros/cores_antiga.png" width="500px">
+                    <p>Antes</p>
+                </div>
+                <div>
+                    <img src="imagens e outros/cores_nova.png" width="500px">
+                    <p>Depois</p>
+                </div>
+            </div>
+            <h3><u>Problema 5: Site não possuia footer</u>
+            <br /><br />
+            Solução - Criação de um footer
+            </h3>
+            <div class="fotos-heuristica">
+                <div>
+                    <img src="imagens e outros/cores_antiga.png" width="500px">
+                    <p>Antes</p>
+                </div>
+                <div>
+                    <img src="imagens e outros/tela_footer_depois.png" width="500px">
+                    <p>Depois</p>
+                </div>
 
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <h3>Feito por Leonardo Freitas e Gabriel Rodrigues no INSPER</h3>
+        </footer>
     
     </body>
 </html>

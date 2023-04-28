@@ -15,7 +15,7 @@
     flex-direction: column;
     color: #fff;
     width: 100%;
-    background-image: linear-gradient(rgba(51, 50, 50, 0.65), rgba(27, 25, 25, 0.65)), url('imagens e outros/background.png');
+    background-image: linear-gradient(rgba(51, 50, 50, 0.65),rgba(27, 25, 25, 0.65)), url('imagens e outros/background.png');
     background-size: cover;
     background-position: center;
     
@@ -24,6 +24,7 @@
     justify-content: center;
     z-index: -1;
     right: 0px;
+    
 }
 
 .botoes a {
@@ -50,8 +51,8 @@
 #section-descricao {
     width: 100%;
     border-bottom: 5px solid black;
-    color: #fff;
-    background-color: #16171d;
+    color: white;
+    background-color: rgba(22,23,29,255);
     text-align: justify;
     display: flex;
     flex-direction: row;
@@ -61,9 +62,9 @@
     padding-bottom: 100px;
 }
 
-.descricao-jogo{
+.descricao-jogo {
     max-width: 500px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 iframe{
@@ -88,13 +89,13 @@ a {
     align-items: center;
     justify-content: space-evenly;
     text-align: justify;
-    padding-top: 210px;
-    padding-bottom: 210px;
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
 
-.descricao-download{
+.descricao-download {
     max-width: 500px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 /* section logs */
@@ -106,6 +107,7 @@ a {
     display: flex;
     flex-direction: column;
     padding-bottom: 100px;
+
 }
 
 .titulo-desenvolvimento {
@@ -113,6 +115,7 @@ a {
     padding-bottom: 50px;
     text-transform: uppercase;
     text-align: center;
+
 }
 
 .log-e-imagem {
@@ -136,6 +139,51 @@ a {
     margin-top: 10px;
     text-decoration: underline;
     font-size: medium;
+
 }
 
-/* section heuristica */
+/* section heuristica  */
+#section-heuristica {
+    background-color: #151d24;
+    color: white;
+    width: 100%;
+    border-bottom: 5px solid black;
+    padding-bottom: 100px;
+}
+
+.titulo-heuristica {
+    padding-top: 50px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#section-heuristica h3 {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font-weight: 400;
+}
+
+.fotos-heuristica {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+
+.fotos-heuristica img {
+    border: 3px solid black;
+}
+
+footer {
+    background-color: #16171d;
+    color: white;
+    width: 100%;
+}
+footer h3 {
+    text-align: center;
+    padding: 100px;
+    font-weight: 400;
+
+}
