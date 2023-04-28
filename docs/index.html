@@ -9,62 +9,123 @@
     <link rel="stylesheet" href="style.css">
     <title>Shadow of The Ninja</title>
 </head>
-<body>
-
-    <!-- Header -->
-    <header>
-        <h1 id="titulo-principal">SHADOW OF THE NINJA</h1>
-            <div class="botoes">
-                <a href="#section-video">Vídeo</a>
-                <a href="#section-equipe">Equipe</a>
-                <a href="#section-informacoes">Informações</a>
-                <a href="#section-desenvolvimento">Desenvolvimento</a>
-            </div>
-    </header>
-
-    <main>
-
+    <body>
+    
+    <!-- Section inicial -->
+        <section id="section-inicial">
+            <h1 id="titulo-principal">SHADOW OF THE NINJA</h1>
+                <div class="botoes">
+                    <a href="#section-descricao">Jogo</a>
+                    <a href="#section-download">Download</a>
+                    <a href="#section-desenvolvimento">Desenvolvimento</a>
+                </div>
+        </section>
+        
         <!-- Section descricao -->
         <section id="section-descricao">
-            
-            <div id="caixa-preta">
-
-            </div>
-
-        </section>
-
-        <section id="section-video">
-            <h2 class="titulo-video">Vídeo do Jogo</h2>
-            <iframe src="https://youtube.com/embed/921VbEMAwwY" width="620" height="400"></iframe>
+            <h3 class="descricao-jogo">
+                Shadow of the Ninja é um jogo de plataforma desenvolvido por <a href="https://github.com/leosfreitas">
+                Leonardo Freitas</a> e <a href="https://github.com/rxdrigues">Gabriel Rodrigues</a>
+                durante a disciplina de Developer Life do Instituto de Ensino e Pesquisa INSPER
+                <br /><br />
+                O objetivo do jogo é derrotar os inimigos até chegar no último nível, onde o jogador terá adquirido
+                habilidades novas. O jogo se passa em uma floresta no meio do Japão, onde o Ninja está em busca de vingança
+                <br /><br />
+                O jogo foi desenvolvido em Python, utilizando a biblioteca Pygame. Caso não possua a biblioteca pygame ou não
+                saiba como jogar, clique <a href="#section-download">aqui</a> para instalar!
+                <br /><br />
+                Para jogar, basta utilizar as teclas A e D para se mover para a esquerda e para a direita, respectivamente. Para
+                pular, utilize a tecla ESPAÇO. Para atacar rapidamente, utilize a tecla E. Para atacar lentamente, dando mais dano,
+                utilize a tecla Q.
+                <h3/>
+            <iframe src="https://youtube.com/embed/921VbEMAwwY" width="620" height="400"></iframe>  
         </section>
         
         <!-- Section equipe -->
-        <section id="section-equipe">
-        <h1 class="titulo-equipe">Nossa equipe:</h1>
-            <h2><ul id="nomes">
-                <li><a href="https://github.com/leosfreitas">Leonardo Freitas</a></li>
-                <li><a href="https://github.com/rxdrigues">Gabriel Rodrigues</a></li>
-            </ul></h2>
-
-            <p id="texto-equipe">Nossa equipe é composta por dois alunos de Ciência da Computação do INSPER Instituto de Ensino e Pesquisa. <br>
-                 Estamos no primeiro semestre do nosso curso (2023.1) e esse projeto foi criado para a disciplina Developer Life.<br>
-                Para saber mais clique <a href="https://www.insper.edu.br/graduacao/ciencia-da-computacao/">aqui</a>
-                </p>
-        </section>
+        <section id="section-download">
+            <a id="imagem" href="">
+                <img src="imagens e outros/download_icon.png" alt="download" class="download">
+            </a>
+            <h3 class="descricao-download">
+                Para instalar o jogo, clique no botão de instalar e siga os passos abaixo:
+                <br /><br />
+                -Caso não tenha instalado, baixe o <a href="https://www.python.org/downloads/">Python 3.10</a> e o <a href="https://code.visualstudio.com/">VSCode</a>;
+                <br /><br />
+                -Já dentro do VSCode, certifique-se de que você possui a biblioteca <a href="https://www.pygame.org/news">PyGame</a> instalada.
+                Caso não tenha, digite o seguinte comando no terminal: <em>pip install pygame</em>;
+                <br /><br />
+                -Após isso, extraia o arquivo .zip instalado, e abra-o pelo VsCode. Clique no arquivo <em>jogo.py</em> e aperte F5 para rodar o jogo;
+                <br /><br />
+                -Caso deseje apenas clonar o repositório, clique <a href="https://github.com/insper-classroom/devlife-23-1-projeto-pygame-gabriel-leonardo.git">aqui</a>;
+                <br /><br />
+                -Aproveite!
+            </h3>
+        </section>            
     
-        
-        <!-- Section informacoes -->
-        <section id="section-informacoes">
-            <h2 class="titulo-tutorial">Informações jogo:</h2>
-        </section>
-        
         <!-- Section desenvolvimento -->
         <section id="section-desenvolvimento">
-            <h2 class="titulo-desenvolvimento">Log de desenvolvimento:</h2>
+            <h1 class="titulo-desenvolvimento">Log de desenvolvimento</h1>
+            <div class="log-e-imagem">
+                <div class="logs">
+                    <h2>18/04 - Leonardo e Gabriel</h2>
+                    <ul>
+                        <li>Definição do tema</li>
+                        <li>Esboço do HTML</li>
+                        <li>Esboço do código criado(classes e troca de telas)</li>
+                    </ul>
+
+                    <h2>19/04 - Leonardo e Gabriel</h2>
+                    <ul>
+                        <li>Avanço do site (arquivo CSS)</li>
+                        <li>Criação de telas novas no jogo</li>
+                    </ul>
+                    
+                    <h2>20/04 - Leonardo e Gabriel</h2>
+                    <ul>
+                        <li>Movimentação do jogador</li>
+                        <li>Sprites adicionadas</li>
+                        <li>Imagens adicionadas</li>
+                        <li>Animação do jogador feita</li>
+                    </ul>
+
+                    <h2>24/04 - Leonardo e Gabriel</h2>
+                    <ul>
+                        <li>Efeito Parallax no jogo(background movendo junto)</li>
+                        <li>Adição de outras animações e animação para ambos os lados</li>
+                        <li>Refatoração do código</li>
+                        <li>Mais sprites adicionados</li>
+                        <li>Problema de diretório resolvido</li>
+                    </ul>
+
+                    <h2>25/05 - Leonardo e Gabriel</h2>
+                    <ul>
+                        <li>Imagens mais claras</li>
+                        <li>Mais animações ainda</li>
+                        <li>Arquivo dos inimigos adicionado</li>
+                        <li>Nova funcionalidade: posição de defesa</li>
+                        <li>Criação de um arquivo novo para separação das classes</li>
+                        <li>Classe dos inimigos criada</li>
+                    </ul>
+
+                    <h2>26/06 - Leonardo e Gabriel</h2>
+                    <ul>
+                        <li>Código comentado</li>
+                        <li>Mapa infinito</li>
+                        <li>Correção de um erro com o efeito Parallax</li>
+                        <li>Correção da classe do inimigo meele</li>
+                    </ul>
+                </div>
+                <img src="imagens e outros/livro_icon.png">
+            </div>
         </section>
 
-        
-    </main>
+        <!-- section heuristica -->
+        <section id="section-heuristica">
+
+
+            
+        </section>
+
     
-</body>
+    </body>
 </html>
