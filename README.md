@@ -6,9 +6,13 @@ Este jogo é um projeto de um jogo com base em [jogos de plataforma](https://pt.
 
 ## Descrição do jogo
 
+Shadow of the Ninja é um jogo de plataforma. O objetivo do jogo é derrotar os inimigos até chegar no último nível, onde o jogador terá adquirido habilidades novas. O jogo se passa em uma floresta no meio do Japão, onde o Ninja está em busca de vingança
+
 ## Como Jogar
 
 Para jogar, é necessário ter Python 3 instalado na máquina, além da biblioteca de PyGame. Se você não possui essa biblioteca siga os passos do [guia abaixo](#jogando-no-windows) para conseguir jogar.
+
+Basta utilizar as teclas A e D para se mover para a esquerda e para a direita, respectivamente. Para pular, utilize a tecla ESPAÇO. Para atacar rapidamente, utilize a tecla E. Para atacar lentamente, dando mais dano, utilize a tecla Q. Para se defender, utilize a tecla C.
 
 ### Jogando no Windows
 
