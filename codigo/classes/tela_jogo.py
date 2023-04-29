@@ -64,8 +64,6 @@ class TelaJogo(Jogo):
             self.rect_surface.set_alpha(0)
         self.window.blit(self.rect_surface, (0, 0))
 
-
-
         self.calc_fps()
         if self.dicionario['show_fps']:
             imagem_fps = FONTE_TEXTO.render(f'FPS:{self.fps:.2f}', True, (255, 255, 255))
@@ -75,7 +73,17 @@ class TelaJogo(Jogo):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
 
-
+        # Colisão do player com a plataforma
+        for plataformas in self.plataforma_sprites:
+            if self.player.rect.colliderect(plataformas.rect):
+                if self.player.rect.y < plataformas.rect.y:
+                    self.player.rect.y = 405
+                    self.player.index_pulando = 0
+                    self.player.pulos = 0
+                    self.player.pulando = False
+                    self.player.cima_plataforma = True
+            else:
+                self.player.cima_plataforma = False
 
         # Movimentação (e limitação do movimento) do player
         if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:

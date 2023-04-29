@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.max_ataques = 1
         self.pulos = 0
         self.max_pulos = 1
+        self.cima_plataforma = False
         # Ações
         self.parado = True
         self.andando = False
@@ -165,6 +166,8 @@ class Player(pygame.sprite.Sprite):
             # Pulando
             if self.pulando:
                 self.index_pulando += 0.07
+                if self.index_pulando > len(self.sprite_pulando):
+                    self.index_pulando = 0
                 self.image = self.sprite_pulando[int(self.index_pulando)]
 
             # Defendendo
@@ -225,6 +228,8 @@ class Player(pygame.sprite.Sprite):
             # Pulando
             if self.pulando:
                 self.index_pulando += 0.07
+                if self.index_pulando > len(self.sprite_pulando):
+                    self.index_pulando = 0
                 imagem = self.sprite_pulando[int(self.index_pulando)]
                 self.image = pygame.transform.flip(imagem, True, False)
 
@@ -252,16 +257,16 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.rect.y = 535
                 self.index_pulando = 0
-        elif prox_posicao_x > 896:
-            prox_posicao_x = 896
-            if self.rect.y < 535:
 
-                self.rect.y = self.rect.y
-            else:
-                self.rect.y = 535
-            self.index_pulando = 0
-        elif self.rect.y > 535:
+        elif self.rect.y > 535 and self.cima_plataforma == False:
             self.rect.y = 535
+            self.pulos = 0
+            self.pulando = False
+            self.parado = True
+            self.index_pulando = 0
+
+        elif self.rect.y > 405 and self.cima_plataforma == True:
+            self.rect.y = 405
             self.pulos = 0
             self.pulando = False
             self.parado = True
