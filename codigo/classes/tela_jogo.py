@@ -30,6 +30,11 @@ class TelaJogo(Jogo):
 
         self.jogo = Jogo()
 
+        self.rect_surface = pygame.Surface((1024, 720))
+        self.rect_surface.fill(BRANCO)
+
+
+
     def desenha(self):
         for i in range(10):
            self.window.blit(self.BG_1, ((0 - self.scroll* 0.5) + i * 1024, 0))
@@ -38,11 +43,27 @@ class TelaJogo(Jogo):
         for i in range(10):
            self.window.blit(self.BG_3, ((0 - self.scroll) + i * 1024, 0))
 
+
         self.meele_sprites.draw(self.window)
         self.meele_sprites.update()
         self.sprites.draw(self.window)
         self.sprites.update()
         self.plataforma_sprites.draw(self.window)
+        if self.player.stamina == 6:
+            self.rect_surface.set_alpha(10)
+        elif self.player.stamina == 5:
+            self.rect_surface.set_alpha(15)
+        elif self.player.stamina == 4:
+            self.rect_surface.set_alpha(20)
+        elif self.player.stamina == 3:
+            self.rect_surface.set_alpha(25)
+        elif self.player.stamina <= 2:
+            self.rect_surface.set_alpha(30)
+        else:
+            self.rect_surface.set_alpha(0)
+        self.window.blit(self.rect_surface, (0, 0))
+
+
 
         self.calc_fps()
         if self.dicionario['show_fps']:
@@ -52,6 +73,8 @@ class TelaJogo(Jogo):
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
+
+
 
         # Movimentação (e limitação do movimento) do player
         if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:
@@ -84,40 +107,42 @@ class TelaJogo(Jogo):
                 self.player.direita = True
                 self.player.esquerda = False
             # Movimentação de correr para a esquerda
-            if key[pygame.K_LSHIFT] and key[pygame.K_a]:
-                if self.scroll == 0:
-                    self.player.rect.x -= 1
-                elif self.player.rect.x <= 511 or self.scroll != 0:
-                    self.scroll -= 2
-                    self.meele.rect.x += 2
-                    for plat in self.plataforma_sprites:
-                        plat.rect.x += 2
-                elif self.scroll == 1000:
-                    self.player.rect.x -= 1
-                self.player.andando = False
-                self.player.correndo = True
-            # Movimentação de correr para a direita
-            if key[pygame.K_LSHIFT] and key[pygame.K_d]: 
-                if self.scroll == 1000:
-                    self.player.rect.x += 1
-                elif self.player.rect.x >= 511 or self.scroll != 0:
-                    self.scroll += 2
-                    for plat in self.plataforma_sprites:
-                        plat.rect.x -= 2
-                    self.meele.rect.x -= 2
-                elif self.scroll == 0:
-                    self.player.rect.x += 1
-                self.player.andando = False
-                self.player.correndo = True
-            # Movimentação de pulo
-            if key[pygame.K_SPACE]:
-                if self.player.pulos < self.player.max_pulos:
-                    self.player.gravidade = -10
-                    self.player.pulos += 1
-                    self.player.pulando = True
+            if self.player.stamina > 2:
+                if key[pygame.K_LSHIFT] and key[pygame.K_a]:
+                    if self.scroll == 0:
+                        self.player.rect.x -= 1
+                    elif self.player.rect.x <= 511 or self.scroll != 0:
+                        self.scroll -= 2
+                        self.meele.rect.x += 2
+                        for plat in self.plataforma_sprites:
+                            plat.rect.x += 2
+                    elif self.scroll == 1000:
+                        self.player.rect.x -= 1
                     self.player.andando = False
-                    self.player.correndo = False
-                    self.player.parado = False
+                    self.player.correndo = True
+                # Movimentação de correr para a direita
+                if key[pygame.K_LSHIFT] and key[pygame.K_d]: 
+                    if self.scroll == 1000:
+                        self.player.rect.x += 1
+                    elif self.player.rect.x >= 511 or self.scroll != 0:
+                        self.scroll += 2
+                        for plat in self.plataforma_sprites:
+                            plat.rect.x -= 2
+                        self.meele.rect.x -= 2
+                    elif self.scroll == 0:
+                        self.player.rect.x += 1
+                    self.player.andando = False
+                    self.player.correndo = True
+                # Movimentação de pulo
+                if key[pygame.K_SPACE]:
+                    if self.player.pulos < self.player.max_pulos:
+                        self.player.stamina -= 1
+                        self.player.gravidade = -10
+                        self.player.pulos += 1
+                        self.player.pulando = True
+                        self.player.andando = False
+                        self.player.correndo = False
+                        self.player.parado = False
             # Ação de defesa
             if key[pygame.K_c]:
                 self.player.defendendo = True
@@ -128,30 +153,34 @@ class TelaJogo(Jogo):
             # Ataque forte
             
             if key[pygame.K_q]:
-                if self.player.max_atq_forte < self.player.max_ataques:
-                    self.player.ataque_forte = True
-                    self.player.max_atq_forte += 1
-                    if pygame.sprite.collide_mask(self.player, self.meele):
-                        self.meele.vida -= 1
-                        self.meele.meele_dano = True
+                if self.player.stamina >= 2:
+                    if self.player.max_atq_forte < self.player.max_ataques:
+                        self.player.stamina -= 2
+                        self.player.ataque_forte = True
+                        self.player.max_atq_forte += 1
+                        if pygame.sprite.collide_mask(self.player, self.meele):
+                            self.meele.vida -= 1
+                            self.meele.meele_dano = True
             #if not pygame.sprite.collide_mask(self.player, self.meele):
             #    self.meele.meele_dano = False
                         
-                if self.player.parado == True:
-                    self.player.parado = False
+                    if self.player.parado == True:
+                        self.player.parado = False
             # Ataque fraco
             if key[pygame.K_e]:
-                if self.player.max_atq_fraco < self.player.max_ataques:
+                if self.player.stamina >= 1:
+                    if self.player.max_atq_fraco < self.player.max_ataques:
+                        self.player.stamina -= 1
+                        self.player.ataque_fraco = True
+                        self.player.max_atq_fraco += 1
+                        if pygame.sprite.collide_mask(self.player, self.meele):
+                            self.meele.meele_dano = True
+                            self.meele.vida -= 1
+                        else:
+                            self.meele.meele_dano = False
                     self.player.ataque_fraco = True
-                    self.player.max_atq_fraco += 1
-                    if pygame.sprite.collide_mask(self.player, self.meele):
-                        self.meele.meele_dano = True
-                        self.meele.vida -= 1
-                    else:
-                        self.meele.meele_dano = False
-                self.player.ataque_fraco = True
-                if self.player.parado == True:
-                    self.player.parado = False
+                    if self.player.parado == True:
+                        self.player.parado = False
         # Combate em si ( Condições de vida, dano, etc)
         if self.meele.vida <= 0:
             self.meele.meele_dano = False
@@ -165,6 +194,9 @@ class TelaJogo(Jogo):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.type == pygame.USEREVENT:
+                if self.player.stamina < 10:
+                    self.player.stamina += 1
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     from classes.tela_gameover import TelaGameOver
@@ -176,4 +208,5 @@ class TelaJogo(Jogo):
                     self.player.correndo = False
                 if event.key == pygame.K_LSHIFT:
                     self.player.correndo = False
+
         return self 

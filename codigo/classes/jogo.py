@@ -24,6 +24,8 @@ class Jogo:
         # Outros
         self.t0 = -1
         self.deltat = (pygame.time.get_ticks() - self.t0) / 1000
+        self.clock = pygame.time.Clock()
+        pygame.time.set_timer(pygame.USEREVENT, 2000)
 
         # Armazena fps
         self.fps = 0
