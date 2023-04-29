@@ -17,10 +17,6 @@ class Jogo:
         self.scroll = 0
         # Variáveis de controle
         self.botao = 0
-        # Variáveis das opções
-        self.musica = True
-        self.sons = True
-        self.show_fps = False
         # Outros
         self.t0 = -1
         self.deltat = (pygame.time.get_ticks() - self.t0) / 1000
