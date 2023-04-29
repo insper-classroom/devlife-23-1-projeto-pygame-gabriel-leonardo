@@ -23,7 +23,6 @@ NUVEM_4_VEL = - 0.5
 #TelaJogo
 PLATAFORMA = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/Plataforma.png')
 
-
 # Sprites
 # Player
 PLAYER_PARADO = pygame.image.load('../assets/player/parado/Parado.png')

@@ -2,7 +2,7 @@ import pygame
 from classes.jogo import Jogo
 from classes.player import Player
 from classes.inimigos import InimigoMeele
-from classes.plataforma import Plataforma
+from classes.plataforma import *
 from constantes import *
 
 class TelaJogo(Jogo):
@@ -18,9 +18,72 @@ class TelaJogo(Jogo):
         self.meele_sprites.add(self.meele)
 
         self.plataforma_sprites = pygame.sprite.Group()
-        for i in range (8):
-            self.plataforma = Plataforma(2048 + (i * 480), 637 - 128)
-            self.plataforma_sprites.add(self.plataforma)
+
+        self.plataforma = Plataforma1_1(2048, 509)
+        self.plataforma_sprites.add(self.plataforma)
+
+        self.plataforma = Plataforma1_2(2528, 381)
+        self.plataforma_sprites.add(self.plataforma)
+
+        self.plataforma = Plataforma2_1(4448, 509)
+        self.plataforma_sprites.add(self.plataforma)
+
+        self.plataforma = Plataforma1_2(4928, 381)
+        self.plataforma_sprites.add(self.plataforma)
+
+        self.plataforma = Plataforma2_1(9728, 509)
+        self.plataforma_sprites.add(self.plataforma)
+
+        self.plataforma = Plataforma1_2(10208, 381)
+        self.plataforma_sprites.add(self.plataforma)
+
+        
+        # self.plataforma = Plataforma2(2528, 509)
+        # self.plataforma_sprites.add(self.plataforma)
+
+        # self.plataforma = Plataforma3(3008, 381)
+        # self.plataforma_sprites.add(self.plataforma)
+
+        # for i in range (2):
+        #     self.plataforma = Plataforma(2048 + (i * 480), 509)
+        #     self.plataforma_sprites.add(self.plataforma)
+        # for i in range (2):
+        #     self.plataforma = Plataforma(3008 + (i * 480), 381)
+        #     self.plataforma_sprites.add(self.plataforma)
+        # for i in range (0, 3, 2):
+        #     self.plataforma = Plataforma(4448 + (i * 480), 509)
+        #     self.plataforma_sprites.add(self.plataforma)
+        # for i in range(0, 8, 7):
+        #     self.plataforma = Plataforma(4928 + (i * 480), 381)
+        #     self.plataforma_sprites.add(self.plataforma)
+        # for i in range (0, 3, 2):
+        #     self.plataforma = Plataforma(6848 + (i * 480), 509)
+        #     self.plataforma_sprites.add(self.plataforma)
+        # for i in range (2):
+        #     self.plataforma = Plataforma(9728 + (i * 480), 509)
+        #     self.plataforma_sprites.add(self.plataforma)
+            
+        # for i in range (0, 11, 5):
+        #     self.quina = Quina_Esquerda(2048 + (i * 480), 509)
+        #     self.plataforma_sprites.add(self.quina)
+        # for i in range (0, 5, 4):
+        #     self.quina = Quina_Esquerda(3008 + (i * 480), 381)
+        #     self.plataforma_sprites.add(self.quina)
+        # for i in range (0, 5, 4):
+        #     self.quina = Quina_Esquerda(7808 + (i * 480), 509)
+        #     self.plataforma_sprites.add(self.quina)
+        # self.quina = Quina_Esquerda(8288, 381)
+        # self.plataforma_sprites.add(self.quina)
+
+        # for i in range(0, 4, 3):
+        #     self.plataforma = Quina_Direita(3488 + 480 - 64 + (i * 480), 381)
+        #     self.plataforma_sprites.add(self.plataforma)
+        # self.quina = Quina_Direita(8288 + 480 - 64, 381)
+        # for i in range(0, 4, 3):
+        #     self.plataforma = Quina_Direita(5408 + 480 - 64 + (i * 480), 509)
+        #     self.plataforma_sprites.add(self.plataforma)
+        # self.plataforma = Quina_Direita(8288 + 480 - 64, 381)
+        # self.plataforma_sprites.add(self.quina)
 
         self.BG_1 = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/bg_1.png').convert_alpha()
         self.BG_1 = pygame.transform.scale(self.BG_1, (self.WIDTH, self.HEIGHT))
@@ -37,11 +100,11 @@ class TelaJogo(Jogo):
 
 
     def desenha(self):
-        for i in range(10):
+        for i in range(7):
            self.window.blit(self.BG_1, ((0 - self.scroll* 0.5) + i * 1024, 0))
-        for i in range(10):
+        for i in range(9):
            self.window.blit(self.BG_2, ((0 - self.scroll * 0.7) + i * 1024, 0))
-        for i in range(10):
+        for i in range(12):
            self.window.blit(self.BG_3, ((0 - self.scroll) + i * 1024, 0))
 
 
@@ -72,7 +135,7 @@ class TelaJogo(Jogo):
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
-
+        print(self.scroll)
         # Colisão do player com a plataforma
         for plataformas in self.plataforma_sprites:
             if self.player.rect.colliderect(plataformas.rect):
@@ -96,15 +159,15 @@ class TelaJogo(Jogo):
                     self.meele.rect.x += 1
                     for plat in self.plataforma_sprites:
                         plat.rect.x += 1
-                # elif self.scroll == 1000:
-                #     self.player.rect.x -= 1
+                elif self.scroll == 11000:
+                    self.player.rect.x -= 1
                 self.player.andando = True
                 self.player.esquerda = True
                 self.player.direita = False
             # Movimentação de andar para a direita
             if key[pygame.K_d]:
-                # if self.scroll == 1000:
-                #     self.player.rect.x += 1
+                if self.scroll == 11000:
+                    self.player.rect.x += 1
                 if self.player.rect.x >= 511 or self.scroll != 0:
                     self.scroll += 1
                     self.meele.rect.x -= 1
@@ -125,13 +188,13 @@ class TelaJogo(Jogo):
                         self.meele.rect.x += 2
                         for plat in self.plataforma_sprites:
                             plat.rect.x += 2
-                    elif self.scroll == 1000:
+                    if self.scroll == 11000:
                         self.player.rect.x -= 1
                     self.player.andando = False
                     self.player.correndo = True
                 # Movimentação de correr para a direita
                 if key[pygame.K_LSHIFT] and key[pygame.K_d]:
-                    if self.scroll == 1000:
+                    if self.scroll == 11000:
                         self.player.rect.x += 1
                     elif self.player.rect.x >= 511 or self.scroll != 0:
                         self.scroll += 2
