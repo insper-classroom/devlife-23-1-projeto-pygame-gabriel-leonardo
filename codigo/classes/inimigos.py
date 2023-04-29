@@ -216,6 +216,7 @@ class InimigoMeele(pygame.sprite.Sprite):
                     self.meele_morrendo = False
                     if self.meele_morrendo == False:
                         self.kill()
+                        
                 imagem = self.sprite_morrendo[int(self.index_morrendo)]
                 self.image = pygame.transform.flip(imagem, True, False)
             # Defendendo

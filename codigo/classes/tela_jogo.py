@@ -7,6 +7,7 @@ from constantes import *
 
 class TelaJogo(Jogo):
     def __init__(self):
+        
         super().__init__()
         self.player = Player()
         self.sprites = pygame.sprite.Group()
@@ -121,7 +122,7 @@ class TelaJogo(Jogo):
                     self.player.andando = False
                     self.player.correndo = True
                 # Movimentação de correr para a direita
-                if key[pygame.K_LSHIFT] and key[pygame.K_d]: 
+                if key[pygame.K_LSHIFT] and key[pygame.K_d]:
                     if self.scroll == 1000:
                         self.player.rect.x += 1
                     elif self.player.rect.x >= 511 or self.scroll != 0:
@@ -133,6 +134,7 @@ class TelaJogo(Jogo):
                         self.player.rect.x += 1
                     self.player.andando = False
                     self.player.correndo = True
+                    
                 # Movimentação de pulo
                 if key[pygame.K_SPACE]:
                     if self.player.pulos < self.player.max_pulos:
@@ -151,14 +153,19 @@ class TelaJogo(Jogo):
         # Movimentação de combate
         if self.player.pulando == False:
             # Ataque forte
-            
             if key[pygame.K_q]:
                 if self.player.stamina >= 2:
                     if self.player.max_atq_forte < self.player.max_ataques:
                         self.player.stamina -= 2
                         self.player.ataque_forte = True
                         self.player.max_atq_forte += 1
+                        pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q.mp3')
+                        pygame.mixer.music.set_volume(0.5)
+                        pygame.mixer.music.play()
                         if pygame.sprite.collide_mask(self.player, self.meele):
+                            pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
+                            pygame.mixer.music.set_volume(0.5)
+                            pygame.mixer.music.play()
                             self.meele.vida -= 1
                             self.meele.meele_dano = True
             #if not pygame.sprite.collide_mask(self.player, self.meele):
@@ -172,11 +179,17 @@ class TelaJogo(Jogo):
                     if self.player.max_atq_fraco < self.player.max_ataques:
                         self.player.stamina -= 1
                         self.player.ataque_fraco = True
+                        pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e.mp3')
+                        pygame.mixer.music.set_volume(0.5)
+                        pygame.mixer.music.play()
                         self.player.max_atq_fraco += 1
                         if pygame.sprite.collide_mask(self.player, self.meele):
+                            pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3')
+                            pygame.mixer.music.set_volume(0.5)
+                            pygame.mixer.music.play()
                             self.meele.meele_dano = True
                             self.meele.vida -= 1
-                        else:
+                        else:    
                             self.meele.meele_dano = False
                     self.player.ataque_fraco = True
                     if self.player.parado == True:
