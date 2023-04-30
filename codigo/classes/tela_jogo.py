@@ -111,8 +111,8 @@ class TelaJogo(Jogo):
         self.meele_sprites.draw(self.window)
         self.meele_sprites.update()
         self.sprites.draw(self.window)
-        self.sprites.update()
         self.plataforma_sprites.draw(self.window)
+        self.sprites.update()
         if self.player.stamina == 6:
             self.rect_surface.set_alpha(10)
         elif self.player.stamina == 5:
@@ -136,17 +136,24 @@ class TelaJogo(Jogo):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
         print(self.scroll)
+        
         # Colisão do player com a plataforma
         for plataformas in self.plataforma_sprites:
             if self.player.rect.colliderect(plataformas.rect):
                 if self.player.rect.y < plataformas.rect.y:
-                    self.player.rect.y = 405
+                    self.player.rect.y = plataformas.rect.y - self.player.rect.height
                     self.player.index_pulando = 0
                     self.player.pulos = 0
                     self.player.pulando = False
-                    self.player.cima_plataforma = True
+                    self.player.cima_plataforma1 = True
             else:
-                self.player.cima_plataforma = False
+                self.player.cima_plataforma1 = False
+            if self.player.rect.y > (plataformas.rect.y - self.player.rect.height) and self.player.cima_plataforma1 == True:
+                self.player.rect.y = plataformas.rect.y - self.player.rect.height
+                self.player.pulos = 0
+                self.player.pulando = False
+                self.player.parado = True
+                self.player.index_pulando = 0
 
         # Movimentação (e limitação do movimento) do player
         if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:

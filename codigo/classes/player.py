@@ -15,7 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.max_ataques = 1
         self.pulos = 0
         self.max_pulos = 1
-        self.cima_plataforma = False
+        self.cima_plataforma1 = False
         # Ações
         self.parado = True
         self.andando = False
@@ -258,15 +258,8 @@ class Player(pygame.sprite.Sprite):
                 self.rect.y = 535
                 self.index_pulando = 0
 
-        elif self.rect.y > 535 and self.cima_plataforma == False:
+        elif self.rect.y > 535 and self.cima_plataforma1 == False:
             self.rect.y = 535
-            self.pulos = 0
-            self.pulando = False
-            self.parado = True
-            self.index_pulando = 0
-
-        elif self.rect.y > 405 and self.cima_plataforma == True:
-            self.rect.y = 405
             self.pulos = 0
             self.pulando = False
             self.parado = True
