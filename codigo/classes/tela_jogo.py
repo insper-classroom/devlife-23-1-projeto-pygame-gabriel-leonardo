@@ -107,12 +107,11 @@ class TelaJogo(Jogo):
         for i in range(12):
            self.window.blit(self.BG_3, ((0 - self.scroll) + i * 1024, 0))
 
-
         self.meele_sprites.draw(self.window)
         self.meele_sprites.update()
         self.sprites.draw(self.window)
         self.plataforma_sprites.draw(self.window)
-        self.sprites.update()
+        
         if self.player.stamina == 6:
             self.rect_surface.set_alpha(10)
         elif self.player.stamina == 5:
@@ -132,28 +131,23 @@ class TelaJogo(Jogo):
             imagem_fps = FONTE_TEXTO.render(f'FPS:{self.fps:.2f}', True, (255, 255, 255))
             self.window.blit(imagem_fps, (5,5))
 
+        self.sprites.update()
+
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
-        print(self.scroll)
         
         # Colisão do player com a plataforma
         for plataformas in self.plataforma_sprites:
-            if self.player.rect.colliderect(plataformas.rect):
-                if self.player.rect.y < plataformas.rect.y:
-                    self.player.rect.y = plataformas.rect.y - self.player.rect.height
+            if pygame.sprite.collide_mask(self.player, plataformas):
+                if self.player.rect.y < plataformas.rect.top: 
+                    self.player.rect.bottom = plataformas.rect.top
                     self.player.index_pulando = 0
                     self.player.pulos = 0
                     self.player.pulando = False
-                    self.player.cima_plataforma1 = True
+                    self.player.cima_plataforma = True
             else:
-                self.player.cima_plataforma1 = False
-            if self.player.rect.y > (plataformas.rect.y - self.player.rect.height) and self.player.cima_plataforma1 == True:
-                self.player.rect.y = plataformas.rect.y - self.player.rect.height
-                self.player.pulos = 0
-                self.player.pulando = False
-                self.player.parado = True
-                self.player.index_pulando = 0
+                self.player.cima_plataforma = False
 
         # Movimentação (e limitação do movimento) do player
         if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:

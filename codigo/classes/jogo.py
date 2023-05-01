@@ -34,7 +34,7 @@ class Jogo:
     # Update na tela(não precisa ficar chamando a funcao pygame.display.update):
     def roda(self):
         self.desenha()
-        pygame.time.Clock().tick(240)
+        pygame.time.Clock().tick(280)
         pygame.display.update()
     
     def calc_fps(self):
