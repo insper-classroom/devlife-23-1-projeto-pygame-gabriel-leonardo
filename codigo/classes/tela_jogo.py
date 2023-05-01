@@ -105,7 +105,7 @@ class TelaJogo(Jogo):
         for i in range(9):
            self.window.blit(self.BG_2, ((0 - self.scroll * 0.7) + i * 1024, 0))
         for i in range(12):
-           self.window.blit(self.BG_3, ((0 - self.scroll) + i * 1024, 0))
+            self.window.blit(self.BG_3,(((0 - self.scroll) + i * 1024), 0))
 
         self.meele_sprites.draw(self.window)
         self.meele_sprites.update()
@@ -136,8 +136,24 @@ class TelaJogo(Jogo):
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
-        
+
         # Colisão do player com a plataforma
+        self.colidindo_direita = False
+        self.colidindo_esquerda = False
+        player_x_direita = self.scroll - 900
+
+        # Define uma variável para a posição esquerda do player, já que ele se move para a direita e o background é desenhado em sentido contrário:
+        if self.scroll < 4000: 
+            player_x_esquerda = self.scroll - 1970
+        if self.scroll > 4000:
+            player_x_esquerda = self.scroll - 4370
+        if self.scroll > 5000:
+            player_x_esquerda = self.scroll - 4850
+        if self.scroll > 10000:
+            player_x_esquerda = self.scroll - 9650
+        if self.scroll > 10500:
+            player_x_esquerda = self.scroll - 10130
+
         for plataformas in self.plataforma_sprites:
             if pygame.sprite.collide_mask(self.player, plataformas):
                 if self.player.rect.y < plataformas.rect.top: 
@@ -145,35 +161,43 @@ class TelaJogo(Jogo):
                     self.player.index_pulando = 0
                     self.player.pulos = 0
                     self.player.pulando = False
-                    self.player.cima_plataforma = True
-            else:
-                self.player.cima_plataforma = False
-
+                if self.player.rect.y > plataformas.rect.top:
+                    if self.player.direita and player_x_direita > plataformas.rect.x:
+                        self.colidindo_direita = True
+                    elif self.player.esquerda and player_x_esquerda < plataformas.rect.right:
+                        self.colidindo_esquerda = True
+                    else:
+                        self.colidindo_direita = False
+                        self.colidindo_esquerda = False
+        
         # Movimentação (e limitação do movimento) do player
         if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:
             # Movimentação de andar para a esquerda
             if key[pygame.K_a]:
                 if self.scroll == 0:
                     self.player.rect.x -= 1
-                elif self.player.rect.x <= 511 or self.scroll != 0:
-                    self.scroll -= 1
-                    self.meele.rect.x += 1
-                    for plat in self.plataforma_sprites:
-                        plat.rect.x += 1
+                elif self.player.rect.x <= 511 or self.scroll != 11000 and self.scroll != 0:
+                    if self.colidindo_esquerda == False:
+                        self.meele.rect.x += 1
+                        self.scroll -= 1
+                        for plat in self.plataforma_sprites:
+                            plat.rect.x += 1
                 elif self.scroll == 11000:
                     self.player.rect.x -= 1
                 self.player.andando = True
                 self.player.esquerda = True
                 self.player.direita = False
+
             # Movimentação de andar para a direita
             if key[pygame.K_d]:
                 if self.scroll == 11000:
                     self.player.rect.x += 1
-                if self.player.rect.x >= 511 or self.scroll != 0:
-                    self.scroll += 1
-                    self.meele.rect.x -= 1
-                    for plat in self.plataforma_sprites:
-                        plat.rect.x -= 1
+                elif self.player.rect.x >= 511 or self.scroll != 11000 and self.scroll != 0:
+                    if self.colidindo_direita == False:
+                        self.scroll += 1
+                        self.meele.rect.x -= 1
+                        for plat in self.plataforma_sprites:
+                            plat.rect.x -= 1 
                 elif self.scroll == 0:
                     self.player.rect.x += 1
                 self.player.andando = True
@@ -184,12 +208,13 @@ class TelaJogo(Jogo):
                 if key[pygame.K_LSHIFT] and key[pygame.K_a]:
                     if self.scroll == 0:
                         self.player.rect.x -= 1
-                    elif self.player.rect.x <= 511 or self.scroll != 0:
-                        self.scroll -= 2
-                        self.meele.rect.x += 2
-                        for plat in self.plataforma_sprites:
-                            plat.rect.x += 2
-                    if self.scroll == 11000:
+                    elif self.player.rect.x <= 511 or self.scroll != 11000 and self.scroll != 0:
+                        if self.colidindo_esquerda == False:
+                            self.scroll -= 2
+                            self.meele.rect.x += 2
+                            for plat in self.plataforma_sprites:
+                                plat.rect.x += 2
+                    elif self.scroll == 11000:
                         self.player.rect.x -= 1
                     self.player.andando = False
                     self.player.correndo = True
@@ -197,16 +222,16 @@ class TelaJogo(Jogo):
                 if key[pygame.K_LSHIFT] and key[pygame.K_d]:
                     if self.scroll == 11000:
                         self.player.rect.x += 1
-                    elif self.player.rect.x >= 511 or self.scroll != 0:
-                        self.scroll += 2
-                        for plat in self.plataforma_sprites:
-                            plat.rect.x -= 2
-                        self.meele.rect.x -= 2
+                    elif self.player.rect.x >= 511 or self.scroll != 11000 and self.scroll != 0:
+                        if self.colidindo_direita == False:
+                            self.scroll += 2
+                            self.meele.rect.x -= 2
+                            for plat in self.plataforma_sprites:
+                                plat.rect.x -= 2
                     elif self.scroll == 0:
                         self.player.rect.x += 1
                     self.player.andando = False
                     self.player.correndo = True
-                    
                 # Movimentação de pulo
                 if key[pygame.K_SPACE]:
                     if self.player.pulos < self.player.max_pulos:
@@ -244,7 +269,6 @@ class TelaJogo(Jogo):
                             self.meele.meele_dano = True
             #if not pygame.sprite.collide_mask(self.player, self.meele):
             #    self.meele.meele_dano = False
-                        
                     if self.player.parado == True:
                         self.player.parado = False
             # Ataque fraco
@@ -274,9 +298,13 @@ class TelaJogo(Jogo):
         if self.meele.vida <= 0:
             self.meele.meele_dano = False
             self.meele.meele_morrendo = True
-            
+
+        # Verificacao da borda do scroll(extra para que nao haja bugs):
         if self.scroll < 0:
             self.scroll = 0
+        if self.scroll > 11000:
+            self.scroll = 11000
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -295,5 +323,4 @@ class TelaJogo(Jogo):
                     self.player.correndo = False
                 if event.key == pygame.K_LSHIFT:
                     self.player.correndo = False
-
         return self 
