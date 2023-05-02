@@ -15,6 +15,7 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.meele_defendendo = False
         self.meele_dano = False
         self.colisao = False
+        self.dano = 0
 
         # Direção
         self.meele_esquerda = True
@@ -187,6 +188,7 @@ class InimigoMeele(pygame.sprite.Sprite):
                 self.index_ataque1 += 0.08
                 if self.index_ataque1 > 4:
                     self.index_ataque1 = 0
+                    self.dano = 1
                     if self.colisao == True:
                         self.meele_ataque3 = True
                         self.meele_ataque1 = False
@@ -195,14 +197,17 @@ class InimigoMeele(pygame.sprite.Sprite):
             # Ataque 2
             elif self.meele_ataque2:
                 self.index_ataque2 += 0.08
+                self.dano = 2
                 if self.index_ataque2 > 5:
                     self.index_ataque2 = 0
+                    self.meele_ataque2 = False
                     
                 imagem = self.sprite_ataque2[int(self.index_ataque2)]
                 self.image = pygame.transform.flip(imagem, True, False)
             # Ataque 3
             elif self.meele_ataque3:
                 self.index_ataque3 += 0.08
+                self.dano = 1
                 if self.index_ataque3 > 4:
                     self.index_ataque3 = 0
                     self.meele_ataque2 = True

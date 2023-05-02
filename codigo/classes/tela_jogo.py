@@ -108,6 +108,8 @@ class TelaJogo(Jogo):
         # Função que mexe o player quando a tela não se mexe e o player se mexe
         self.player.movimenta_player()
 
+        print(self.player.vida)
+
         # Função que verifica se uma tecla esta sendo clicada
         key = pygame.key.get_pressed()
 
@@ -152,7 +154,7 @@ class TelaJogo(Jogo):
                 self.meele.meele_ataque1 = True
             if pygame.sprite.collide_mask(self.meele, self.player):
                 self.meele.colisao = True
-                self.player.vida -= 1
+                self.player.vida -= self.meele.dano
         else:
             self.meele.meele_ataque1 = False
             self.meele.meele_ataque3 = False
@@ -291,9 +293,12 @@ class TelaJogo(Jogo):
                         if self.player.parado == True:
                             self.player.parado = False
         # Combate em si ( Condições de vida, dano, etc)
-        if self.meele.vida <= 0:
-            self.meele.meele_dano = False
-            self.meele.meele_morrendo = True
+            if self.meele.vida <= 0:
+                self.meele.meele_dano = False
+                self.meele.meele_morrendo = True
+            if self.player.vida <= 0:
+                self.player.morrendo = True
+                self.player.vivo = False
 
         # Verificacao da borda do scroll (verificação extra para que nao haja bugs):
         if self.scroll < 0:
