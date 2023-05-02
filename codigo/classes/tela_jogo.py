@@ -97,7 +97,21 @@ class TelaJogo(Jogo):
         self.colidindo_esquerda = False
         player_x_direita = self.scroll - 850
 
-        # Define uma variável para a posição relativa (a tela) esquerda do player, já que ele se move para a direita e o background é desenhado em sentido contrário:
+        if pygame.Rect.colliderect(self.player.rect, self.meele.rect):
+            if self.meele.meele_ataque2 == False and self.meele.meele_ataque3 == False:
+                self.meele.meele_ataque1 = True
+            if pygame.sprite.collide_mask(self.meele, self.player):
+                self.meele.colisao = True
+                self.player.vida -= 1
+        else:
+            self.meele.meele_ataque1 = False
+            self.meele.meele_ataque3 = False
+            self.meele.meele_ataque2 = False
+
+        if self.meele.meele_dano == True:
+            if self.player.ataque_forte == False:
+                self.meele.meele_dano = False
+        # Define uma variável para a posição esquerda do player, já que ele se move para a direita e o background é desenhado em sentido contrário:
         if self.scroll < 4000: 
             player_x_esquerda = self.scroll - 1980
         if self.scroll > 4000:
@@ -127,138 +141,147 @@ class TelaJogo(Jogo):
                         self.colidindo_direita = False
                         self.colidindo_esquerda = False
                 
+        if pygame.Rect.colliderect(self.player.rect, self.meele.rect):
+            if self.meele.meele_ataque2 == False and self.meele.meele_ataque3 == False:
+                self.meele.meele_ataque1 = True
+            if pygame.sprite.collide_mask(self.meele, self.player):
+                self.meele.colisao = True
+                self.player.vida -= 1
+        else:
+            self.meele.meele_ataque1 = False
+            self.meele.meele_ataque3 = False
+            self.meele.meele_ataque2 = False
+
+        if self.meele.meele_dano == True:
+            if self.player.ataque_forte == False:
+                self.meele.meele_dano = False
+
         # Movimentação (e limitação do movimento) do player
-        if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:
+        if self.player.vivo == True:
+            if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:
 
-            # Movimentação de andar para a esquerda
-            if key[pygame.K_a]:
-                if self.scroll == 0:
-                    self.player.rect.x -= 1
-                elif self.player.rect.x <= 511 or self.scroll != 11000 and self.scroll != 0:
-                    if self.colidindo_esquerda == False:
-                        self.meele.rect.x += 1
-                        self.scroll -= 1
-                        for plat in self.plataforma_sprites:
-                            plat.rect.x += 1
-                elif self.scroll == 11000:
-                    self.player.rect.x -= 1
-                self.player.andando = True
-                self.player.esquerda = True
-                self.player.direita = False
-
-            # Movimentação de andar para a direita
-            if key[pygame.K_d]:
-                if self.scroll == 11000:
-                    self.player.rect.x += 1
-                elif self.player.rect.x >= 511 or self.scroll != 11000 and self.scroll != 0:
-                    if self.colidindo_direita == False:
-                        self.scroll += 1
-                        self.meele.rect.x -= 1
-                        for plat in self.plataforma_sprites:
-                            plat.rect.x -= 1 
-                elif self.scroll == 0:
-                    self.player.rect.x += 1
-                self.player.andando = True
-                self.player.direita = True
-                self.player.esquerda = False
-
-            # Movimentação de correr para a esquerda
-            if self.player.stamina > 2:
-                if key[pygame.K_LSHIFT] and key[pygame.K_a]:
+                # Movimentação de andar para a esquerda
+                if key[pygame.K_a]:
                     if self.scroll == 0:
                         self.player.rect.x -= 1
                     elif self.player.rect.x <= 511 or self.scroll != 11000 and self.scroll != 0:
                         if self.colidindo_esquerda == False:
-                            self.scroll -= 2
-                            self.meele.rect.x += 2
+                            self.meele.rect.x += 1
+                            self.scroll -= 1
                             for plat in self.plataforma_sprites:
-                                plat.rect.x += 2
+                                plat.rect.x += 1
                     elif self.scroll == 11000:
                         self.player.rect.x -= 1
-                    self.player.andando = False
-                    self.player.correndo = True
+                    self.player.andando = True
+                    self.player.esquerda = True
+                    self.player.direita = False
 
-                # Movimentação de correr para a direita
-                if key[pygame.K_LSHIFT] and key[pygame.K_d]:
+                # Movimentação de andar para a direita
+                if key[pygame.K_d]:
                     if self.scroll == 11000:
                         self.player.rect.x += 1
                     elif self.player.rect.x >= 511 or self.scroll != 11000 and self.scroll != 0:
                         if self.colidindo_direita == False:
-                            self.scroll += 2
-                            self.meele.rect.x -= 2
+                            self.scroll += 1
+                            self.meele.rect.x -= 1
                             for plat in self.plataforma_sprites:
-                                plat.rect.x -= 2
+                                plat.rect.x -= 1 
                     elif self.scroll == 0:
                         self.player.rect.x += 1
-                    self.player.andando = False
-                    self.player.correndo = True
-
-                # Movimentação de pulo
-                if key[pygame.K_SPACE]:
-                    if self.player.pulos < self.player.max_pulos:
-                        self.player.stamina -= 1
-                        self.player.gravidade = -10
-                        self.player.pulos += 1
-                        self.player.pulando = True
+                    self.player.andando = True
+                    self.player.direita = True
+                    self.player.esquerda = False
+                # Movimentação de correr para a esquerda
+                if self.player.stamina > 2:
+                    if key[pygame.K_LSHIFT] and key[pygame.K_a]:
+                        if self.scroll == 0:
+                            self.player.rect.x -= 1
+                        elif self.player.rect.x <= 511 or self.scroll != 11000 and self.scroll != 0:
+                            if self.colidindo_esquerda == False:
+                                self.scroll -= 2
+                                self.meele.rect.x += 2
+                                for plat in self.plataforma_sprites:
+                                    plat.rect.x += 2
+                        elif self.scroll == 11000:
+                            self.player.rect.x -= 1
                         self.player.andando = False
-                        self.player.correndo = False
-                        self.player.parado = False
-
-            # Ação de defesa
-            if key[pygame.K_c]:
-                self.player.defendendo = True
-                if self.player.parado == True:
-                    self.player.parado = False
-
-        # Movimentação de combate
-        if self.player.pulando == False:
-
-            # Ataque forte
-            if key[pygame.K_q]:
-                if self.player.stamina >= 2:
-                    if self.player.max_atq_forte < self.player.max_ataques:
-                        self.player.stamina -= 2
-                        self.player.ataque_forte = True
-                        self.player.max_atq_forte += 1
-                        if self.dicionario['sons']:
-                            pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q.mp3')
-                            pygame.mixer.music.set_volume(0.5)
-                            pygame.mixer.music.play()
-                        if pygame.sprite.collide_mask(self.player, self.meele):
-                            if self.dicionario['sons']:
-                                pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
-                                pygame.mixer.music.set_volume(0.5)
-                                pygame.mixer.music.play()
-                            self.meele.vida -= 1
-                            self.meele.meele_dano = True
+                        self.player.correndo = True
+                    # Movimentação de correr para a direita
+                    if key[pygame.K_LSHIFT] and key[pygame.K_d]:
+                        if self.scroll == 11000:
+                            self.player.rect.x += 1
+                        elif self.player.rect.x >= 511 or self.scroll != 11000 and self.scroll != 0:
+                            if self.colidindo_direita == False:
+                                self.scroll += 2
+                                self.meele.rect.x -= 2
+                                for plat in self.plataforma_sprites:
+                                    plat.rect.x -= 2
+                        elif self.scroll == 0:
+                            self.player.rect.x += 1
+                        self.player.andando = False
+                        self.player.correndo = True
+                    # Movimentação de pulo
+                    if key[pygame.K_SPACE]:
+                        if self.player.pulos < self.player.max_pulos:
+                            self.player.stamina -= 1
+                            self.player.gravidade = -10
+                            self.player.pulos += 1
+                            self.player.pulando = True
+                            self.player.andando = False
+                            self.player.correndo = False
+                            self.player.parado = False
+                # Ação de defesa
+                if key[pygame.K_c]:
+                    self.player.defendendo = True
                     if self.player.parado == True:
                         self.player.parado = False
+            # Movimentação de combate
+            if self.player.pulando == False:
+                # Ataque forte
+                if key[pygame.K_q]:
+                    if self.player.stamina >= 2:
+                        if self.player.max_atq_forte < self.player.max_ataques:
+                            self.player.stamina -= 2
+                            self.player.ataque_forte = True
+                            self.player.max_atq_forte += 1
+                            if self.dicionario['sons']:
+                                pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q.mp3')
+                                pygame.mixer.music.set_volume(0.5)
+                                pygame.mixer.music.play()
+                            if pygame.sprite.collide_mask(self.player, self.meele):
+                                if self.dicionario['sons']:
+                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
+                                    pygame.mixer.music.set_volume(0.5)
+                                    pygame.mixer.music.play()
+                                self.meele.vida -= 1
+                                self.meele.meele_dano = True
 
-            # Ataque fraco
-            if key[pygame.K_e]:
-                if self.player.stamina >= 1:
-                    if self.player.max_atq_fraco < self.player.max_ataques:
-                        self.player.stamina -= 1
+                #if not pygame.sprite.collide_mask(self.player, self.meele):
+                #    self.meele.meele_dano = False
+                        if self.player.parado == True:
+                            self.player.parado = False
+                # Ataque fraco
+                if key[pygame.K_e]:
+                    if self.player.stamina >= 1:
+                        if self.player.max_atq_fraco < self.player.max_ataques:
+                            self.player.stamina -= 1
+                            self.player.ataque_fraco = True
+                            if self.dicionario['sons']:
+                                pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e.mp3')
+                                pygame.mixer.music.set_volume(0.5)
+                                pygame.mixer.music.play()
+                            self.player.max_atq_fraco += 1
+                            if pygame.sprite.collide_mask(self.player, self.meele):
+                                if self.dicionario['sons']:
+                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3')
+                                    pygame.mixer.music.set_volume(0.5)
+                                    pygame.mixer.music.play()
+                                self.meele.meele_dano = True
+                                self.meele.vida -= 1
                         self.player.ataque_fraco = True
-                        if self.dicionario['sons']:
-                            pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e.mp3')
-                            pygame.mixer.music.set_volume(0.5)
-                            pygame.mixer.music.play()
-                        self.player.max_atq_fraco += 1
-                        if pygame.sprite.collide_mask(self.player, self.meele):
-                            if self.dicionario['sons']:
-                                pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3')
-                                pygame.mixer.music.set_volume(0.5)
-                                pygame.mixer.music.play()
-                            self.meele.meele_dano = True
-                            self.meele.vida -= 1
-                        else:    
-                            self.meele.meele_dano = False
-                    self.player.ataque_fraco = True
-                    if self.player.parado == True:
-                        self.player.parado = False
-
-        # Combate em si (Condições de vida, dano, etc)
+                        if self.player.parado == True:
+                            self.player.parado = False
+        # Combate em si ( Condições de vida, dano, etc)
         if self.meele.vida <= 0:
             self.meele.meele_dano = False
             self.meele.meele_morrendo = True
@@ -288,4 +311,7 @@ class TelaJogo(Jogo):
                     self.player.correndo = False
                 if event.key == pygame.K_LSHIFT:
                     self.player.correndo = False
+            if self.player.index_morrendo == 5:
+                from classes.tela_gameover import TelaGameOver
+                return TelaGameOver()
         return self 

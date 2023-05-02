@@ -14,6 +14,8 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.meele_morrendo = False
         self.meele_defendendo = False
         self.meele_dano = False
+        self.colisao = False
+
         # Direção
         self.meele_esquerda = True
         self.meele_direita = False
@@ -125,24 +127,30 @@ class InimigoMeele(pygame.sprite.Sprite):
                 self.index_ataque1 += 0.08
                 if self.index_ataque1 > 4:
                     self.index_ataque1 = 0
+                    if self.colisao == True:
+                        self.meele_ataque2 = True
+                        self.meele_ataque1 = False
+
                 self.image = self.sprite_ataque1[int(self.index_ataque1)]
             # Ataque 2
-            if self.meele_ataque2:
+            elif self.meele_ataque2:
                 self.index_ataque2 += 0.08
                 if self.index_ataque2 > 5:
                     self.index_ataque2 = 0
+                    self.meele_ataque3 = True
+                    self.meele_ataque2 = False
                 self.image = self.sprite_ataque2[int(self.index_ataque2)]
             # Ataque 3
-            if self.meele_ataque3:
+            elif self.meele_ataque3:
                 self.index_ataque3 += 0.08
                 if self.index_ataque3 > 4:
                     self.index_ataque3 = 0
                 self.image = self.sprite_ataque3[int(self.index_ataque3)]
             # Morrendo
             if self.meele_morrendo:
-                self.index_morrendo += 0.08
+                self.index_morrendo += 0.05
                 if self.index_morrendo > 6:
-                    self.index_morrendo = 0
+                    self.index_morrendo = 6
                     self.meele_morrendo = False
                 self.image = self.sprite_morrendo[int(self.index_morrendo)]
             # Defendendo
@@ -179,20 +187,26 @@ class InimigoMeele(pygame.sprite.Sprite):
                 self.index_ataque1 += 0.08
                 if self.index_ataque1 > 4:
                     self.index_ataque1 = 0
+                    if self.colisao == True:
+                        self.meele_ataque3 = True
+                        self.meele_ataque1 = False
                 imagem = self.sprite_ataque1[int(self.index_ataque1)]
                 self.image = pygame.transform.flip(imagem, True, False)
             # Ataque 2
-            if self.meele_ataque2:
+            elif self.meele_ataque2:
                 self.index_ataque2 += 0.08
                 if self.index_ataque2 > 5:
                     self.index_ataque2 = 0
+                    
                 imagem = self.sprite_ataque2[int(self.index_ataque2)]
                 self.image = pygame.transform.flip(imagem, True, False)
             # Ataque 3
-            if self.meele_ataque3:
+            elif self.meele_ataque3:
                 self.index_ataque3 += 0.08
                 if self.index_ataque3 > 4:
                     self.index_ataque3 = 0
+                    self.meele_ataque2 = True
+                    self.meele_ataque3 = False
                 imagem = self.sprite_ataque3[int(self.index_ataque3)]
                 self.image = pygame.transform.flip(imagem, True, False)
             # Morrendo

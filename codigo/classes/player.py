@@ -24,6 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.correndo = False
         self.ataque_forte = False
         self.ataque_fraco = False
+        self.morrendo = False
         # Direção
         self.esquerda = False
         self.direita = True
@@ -40,6 +41,7 @@ class Player(pygame.sprite.Sprite):
         self.sprite_ataque_fraco = []
         self.sprite_pulando = []
         self.sprite_defendendo = []
+        self.sprite_morrendo = []
 
         # Cada sprite em sua respectiva lista
         for i in range(6):
@@ -63,6 +65,9 @@ class Player(pygame.sprite.Sprite):
         for i in range(2):
             img = PLAYER_DEFENDENDO.subsurface((85 * i, 0), (85,104))
             self.sprite_defendendo.append(img)
+        for i in range(6):
+            img = PLAYER_MORRENDO.subsurface((85 * i, 0), (85,104))
+            self.sprite_morrendo.append(img)
         
         # Index das sprites
         self.index_parado = 0
@@ -72,6 +77,7 @@ class Player(pygame.sprite.Sprite):
         self.index_ataque_fraco = 0
         self.index_pulando = 0
         self.index_defendendo = 0
+        self.index_morrendo = 0
 
         # Parado:
         self.image = self.sprite_parado[self.index_parado]
@@ -98,6 +104,11 @@ class Player(pygame.sprite.Sprite):
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
+
+        # Morrendo:
+        self.image = self.sprite_morrendo[self.index_morrendo]
+        self.image = self.image.convert_alpha()
+        self.rect = self.image.get_rect()
 
         # Posição inicial
         self.rect.x = 512
@@ -164,6 +175,15 @@ class Player(pygame.sprite.Sprite):
                     self.defendendo = False
                     self.parado = True
                 self.image = self.sprite_defendendo[int(self.index_defendendo)]
+
+            # Morrendo
+            if self.morrendo:
+                self.index_morrendo += 0.05
+                if self.index_morrendo > 6:
+                    self.vivo = False
+                    self.image = self.sprite_morrendo[5]
+                else:
+                    self.image = self.sprite_morrendo[int(self.index_morrendo)]
         
         # Para a esquerda:
         elif self.esquerda:
@@ -227,6 +247,16 @@ class Player(pygame.sprite.Sprite):
                     self.defendendo = False
                     self.parado = True
                 imagem = self.sprite_defendendo[int(self.index_defendendo)]
+                self.image = pygame.transform.flip(imagem, True, False)
+
+            # Morrendo
+            if self.morrendo:
+                self.index_morrendo += 0.05
+                if self.index_morrendo > 5:
+                    self.index_morrendo = 0
+                    self.morrendo = False
+                    self.parado = True
+                imagem = self.sprite_morrendo[int(self.index_morrendo)]
                 self.image = pygame.transform.flip(imagem, True, False)
 
     # Função que verifica a movimentaçãoo do player
