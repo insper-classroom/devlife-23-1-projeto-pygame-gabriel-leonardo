@@ -237,49 +237,36 @@ class InimigoMeele(pygame.sprite.Sprite):
  
 # Classe do inimigo ranged
 class InimigoRanged(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(self, x, y):
+        super().__init__()
         # Variáveis do inimigo ranged
         # Ações	
         self.ranged_parado = True
         self.ranged_atirando = False
         self.ranged_morrendo = False
-        self.ranged_ataque_fraco = False
-        self.ranged_ataque_forte = False
         # Direção
         self.ranged_esquerda = True
         self.ranged_direita = False
         # Status 
         self.ranged_vida = 100
-
-        
         self.sprite_ranged_parado = []
         self.sprite_ranged_atirando = []
         self.sprite_ranged_morrendo = []
-        self.sprite_ranged_ataque_fraco = []
-        self.sprite_ranged_ataque_forte = []
 
         for i in range(9):
-            img = INIMIGO_RANGED_PARADO.subsurface((85 * i, 0), (85,104))
+            img = INIMIGO_RANGED_PARADO.subsurface((128 * i, 0), (128,128))
             self.sprite_ranged_parado.append(img)
         for i in range(14):
-            img = INIMIGO_RANGED_ATIRANDO.subsurface((85 * i, 0), (85,104))
+            img = INIMIGO_RANGED_ATIRANDO.subsurface((128 * i, 0), (128,128))
             self.sprite_ranged_atirando.append(img)
         for i in range(4):
-            img = INIMIGO_RANGED_MORRENDO.subsurface((85 * i, 0), (85,104))
+            img = INIMIGO_RANGED_MORRENDO.subsurface((128 * i, 0), (128,128))
             self.sprite_ranged_morrendo.append(img)
-        for i in range(5):
-            img = INIMIGO_RANGED_ATAQUE_FRACO.subsurface((85 * i, 0), (85,104))
-            self.sprite_ranged_ataque_fraco.append(img)
-        for i in range(5):
-            img = INIMIGO_RANGED_ATAQUE_FORTE.subsurface((85 * i, 0), (85,104))
-            self.sprite_ranged_ataque_forte.append(img)
 
         self.index_ranged_parado = 0
         self.index_ranged_atirando = 0
         self.index_ranged_morrendo = 0
-        self.index_ranged_ataque_fraco = 0
-        self.index_ranged_ataque_forte = 0
+
 
         self.image = self.sprite_ranged_parado[self.index_ranged_parado]
 
@@ -287,15 +274,13 @@ class InimigoRanged(pygame.sprite.Sprite):
 
         self.image = self.sprite_ranged_morrendo[self.index_ranged_morrendo]
 
-        self.image = self.sprite_ranged_ataque_fraco[self.index_ranged_ataque_fraco]
-
-        self.image = self.sprite_ranged_ataque_forte[self.index_ranged_ataque_forte]
-
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
 
-    def update(self):
+        self.rect.x = x
+        self.rect.y = y
+
         if self.ranged_direita:
             if self.ranged_parado:
                 self.index_ranged_parado += 0.08
@@ -312,16 +297,6 @@ class InimigoRanged(pygame.sprite.Sprite):
                 if self.index_ranged_morrendo > 4:
                     self.index_ranged_morrendo = 0
                 self.image = self.sprite_ranged_morrendo[int(self.index_ranged_morrendo)]
-            if self.ranged_ataque_fraco:
-                self.index_ranged_ataque_fraco += 0.08
-                if self.index_ranged_ataque_fraco > 5:
-                    self.index_ranged_ataque_fraco = 0
-                self.image = self.sprite_ranged_ataque_fraco[int(self.index_ranged_ataque_fraco)]
-            if self.ranged_ataque_forte:
-                self.index_ranged_ataque_forte += 0.08
-                if self.index_ranged_ataque_forte > 5:
-                    self.index_ranged_ataque_forte = 0
-                self.image = self.sprite_ranged_ataque_forte[int(self.index_ranged_ataque_forte)]
         elif self.ranged_esquerda:
             if self.ranged_parado:
                 self.index_ranged_parado += 0.08
@@ -340,16 +315,4 @@ class InimigoRanged(pygame.sprite.Sprite):
                 if self.index_ranged_morrendo > 4:
                     self.index_ranged_morrendo = 0
                 imagem = self.sprite_ranged_morrendo[int(self.index_ranged_morrendo)]
-                self.image = pygame.transform.flip(imagem, True, False)
-            if self.ranged_ataque_fraco:
-                self.index_ranged_ataque_fraco += 0.08
-                if self.index_ranged_ataque_fraco > 5:
-                    self.index_ranged_ataque_fraco = 0
-                imagem = self.sprite_ranged_ataque_fraco[int(self.index_ranged_ataque_fraco)]
-                self.image = pygame.transform.flip(imagem, True, False)
-            if self.ranged_ataque_forte:
-                self.index_ranged_ataque_forte += 0.08
-                if self.index_ranged_ataque_forte > 5:
-                    self.index_ranged_ataque_forte = 0
-                imagem = self.sprite_ranged_ataque_forte[int(self.index_ranged_ataque_forte)]
                 self.image = pygame.transform.flip(imagem, True, False)

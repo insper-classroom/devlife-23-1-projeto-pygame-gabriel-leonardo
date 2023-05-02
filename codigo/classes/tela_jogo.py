@@ -1,7 +1,7 @@
 import pygame
 from classes.jogo import Jogo
 from classes.player import Player
-from classes.inimigos import InimigoMeele
+from classes.inimigos import InimigoMeele, InimigoRanged
 from classes.plataforma import *
 from constantes import *
 
@@ -31,6 +31,23 @@ class TelaJogo(Jogo):
         self.meele_sprites = pygame.sprite.Group()
         self.meele = InimigoMeele(2225, 382)
         self.meele_sprites.add(self.meele)
+        self.meele = InimigoMeele(5105, 254)
+        self.meele_sprites.add(self.meele)
+        self.meele = InimigoMeele(9885, 382)
+        self.meele_sprites.add(self.meele)
+        self.meele = InimigoMeele(8000, 510)
+        self.meele_sprites.add(self.meele)
+
+        self.ranged_sprites = pygame.sprite.Group()
+        self.ranged = InimigoRanged(4250, 510)
+        self.ranged_sprites.add(self.ranged)
+        self.ranged = InimigoRanged(5800, 382)
+        self.ranged_sprites.add(self.ranged)
+        self.ranged = InimigoRanged(10550, 254)
+        self.ranged_sprites.add(self.ranged)
+        self.ranged = InimigoRanged(7000, 510)
+        self.ranged_sprites.add(self.ranged)
+
 
         # Inicia o background
         self.BG_1 = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/bg_1.png').convert_alpha()
@@ -58,6 +75,7 @@ class TelaJogo(Jogo):
         self.meele_sprites.draw(self.window)
         self.sprites.draw(self.window)
         self.plataforma_sprites.draw(self.window)
+        self.ranged_sprites.draw(self.window)
         
         # Muda a tela com base na stamina
         if self.player.stamina == 6:
@@ -84,6 +102,7 @@ class TelaJogo(Jogo):
         self.meele_sprites.update()
         self.sprites.update()
         self.plataforma_sprites.update()
+        self.ranged_sprites.update()
 
     def update(self):
         # Função que mexe o player quando a tela não se mexe e o player se mexe
@@ -153,6 +172,7 @@ class TelaJogo(Jogo):
                     elif self.player.rect.x <= 511 or self.scroll != 11000 and self.scroll != 0:
                         if self.colidindo_esquerda == False:
                             self.meele.rect.x += 1
+                            self.ranged.rect.x += 1
                             self.scroll -= 1
                             for plat in self.plataforma_sprites:
                                 plat.rect.x += 1
@@ -170,6 +190,7 @@ class TelaJogo(Jogo):
                         if self.colidindo_direita == False:
                             self.scroll += 1
                             self.meele.rect.x -= 1
+                            self.ranged.rect.x -= 1
                             for plat in self.plataforma_sprites:
                                 plat.rect.x -= 1 
                     elif self.scroll == 0:
@@ -186,6 +207,7 @@ class TelaJogo(Jogo):
                             if self.colidindo_esquerda == False:
                                 self.scroll -= 2
                                 self.meele.rect.x += 2
+                                self.ranged.rect.x += 2
                                 for plat in self.plataforma_sprites:
                                     plat.rect.x += 2
                         elif self.scroll == 11000:
@@ -200,6 +222,7 @@ class TelaJogo(Jogo):
                             if self.colidindo_direita == False:
                                 self.scroll += 2
                                 self.meele.rect.x -= 2
+                                self.ranged.rect.x -= 2
                                 for plat in self.plataforma_sprites:
                                     plat.rect.x -= 2
                         elif self.scroll == 0:
