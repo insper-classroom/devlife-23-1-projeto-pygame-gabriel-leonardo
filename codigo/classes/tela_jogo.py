@@ -158,7 +158,7 @@ class TelaJogo(Jogo):
                     self.meele_sprites.sprites()[i].meele_ataque1 = True
                 if pygame.sprite.collide_mask(self.meele_sprites.sprites()[i], self.player):
                     self.meele_sprites.sprites()[i].colisao = True
-                    self.player.vida -= 0.01
+                    self.player.vida -= 0.04
                     print(self.player.vida)
             else:
                 self.meele_sprites.sprites()[i].meele_ataque1 = False
@@ -191,7 +191,7 @@ class TelaJogo(Jogo):
         self.tempo_passado = pygame.time.get_ticks() - self.tempo
         if self.tempo_passado > 3500:
             self.tempo = pygame.time.get_ticks()
-            for i in range(1):
+            for i in range(4):
                 if self.ranged_sprites.sprites()[i].ranged_esquerda:
                     self.ranged_sprites.sprites()[i].ranged_atirando = True
                     if self.ranged_sprites.sprites()[i].ranged_esquerda: 
@@ -362,7 +362,7 @@ class TelaJogo(Jogo):
             self.scroll = 0
         if self.scroll > 11000:
             self.scroll = 11000
-        if self.player.rect.x == 950:
+        if self.player.rect.x == 940:
             return TelaWin()
         
         # Verifica o evento, se for de sair do jogo, sai, se for de uma tecla pressionada para cima, cancela o movimento
@@ -382,11 +382,10 @@ class TelaJogo(Jogo):
                     self.meele_sprites.sprites()[i].rect.x += 1 * self.direcao
                     if self.scroll == 0:
                         self.direcao = 1
-                
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    from classes.tela_gameover import TelaGameOver
-                    return TelaGameOver()
+            if self.player.vivo == False:
+                from classes.tela_gameover import TelaGameOver
+                return TelaGameOver()
+            
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a or event.key == pygame.K_d:
                     self.player.andando = False

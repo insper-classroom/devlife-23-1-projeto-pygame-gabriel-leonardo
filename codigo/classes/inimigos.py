@@ -137,7 +137,6 @@ class InimigoMeele(pygame.sprite.Sprite):
             # Ataque 1
             if self.meele_ataque1:
                 self.index_ataque1 += 0.08
-                self.dano = 1
                 if self.index_ataque1 > 4:
                     self.index_ataque1 = 0
                     if self.colisao == True:
@@ -147,7 +146,6 @@ class InimigoMeele(pygame.sprite.Sprite):
             # Ataque 2
             elif self.meele_ataque2:
                 self.index_ataque2 += 0.08
-                self.dano = 2
                 if self.index_ataque2 > 5:
                     self.index_ataque2 = 0
                     self.meele_ataque3 = True
@@ -155,7 +153,6 @@ class InimigoMeele(pygame.sprite.Sprite):
                 self.image = self.sprite_ataque2[int(self.index_ataque2)]
             # Ataque 3
             elif self.meele_ataque3:
-                self.dano = 1
                 self.index_ataque3 += 0.08
                 if self.index_ataque3 > 4:
                     self.index_ataque3 = 0
@@ -199,7 +196,6 @@ class InimigoMeele(pygame.sprite.Sprite):
             # Ataque 1
             if self.meele_ataque1:
                 self.index_ataque1 += 0.08
-                self.dano = 1
                 if self.index_ataque1 > 4:
                     self.index_ataque1 = 0
                     if self.colisao == True:
@@ -210,7 +206,6 @@ class InimigoMeele(pygame.sprite.Sprite):
             # Ataque 2
             elif self.meele_ataque2:
                 self.index_ataque2 += 0.08
-                self.dano = 2
                 if self.index_ataque2 > 5:
                     self.index_ataque2 = 0
                     self.meele_ataque2 = False
@@ -219,7 +214,6 @@ class InimigoMeele(pygame.sprite.Sprite):
             # Ataque 3
             elif self.meele_ataque3:
                 self.index_ataque3 += 0.08
-                self.dano = 1
                 if self.index_ataque3 > 4:
                     self.index_ataque3 = 0
                     self.meele_ataque2 = True
@@ -233,8 +227,7 @@ class InimigoMeele(pygame.sprite.Sprite):
                     self.index_morrendo = 0
                     self.meele_morrendo = False
                     if self.meele_morrendo == False:
-                        self.kill()
-                        
+                        self.kill()    
                 imagem = self.sprite_morrendo[int(self.index_morrendo)]
                 self.image = pygame.transform.flip(imagem, True, False)
             # Defendendo

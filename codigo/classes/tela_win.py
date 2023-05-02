@@ -2,7 +2,6 @@ import pygame
 import webbrowser
 from classes.jogo import Jogo
 from classes.tela_inicial import TelaInicial
-from classes.tela_creditos import TelaCreditos
 from constantes import *
 
 class TelaWin(Jogo):
