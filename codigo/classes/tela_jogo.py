@@ -158,7 +158,8 @@ class TelaJogo(Jogo):
                     self.meele_sprites.sprites()[i].meele_ataque1 = True
                 if pygame.sprite.collide_mask(self.meele_sprites.sprites()[i], self.player):
                     self.meele_sprites.sprites()[i].colisao = True
-                    self.player.vida -= self.meele_sprites.sprites()[i].dano
+                    self.player.vida -= 0.01
+                    print(self.player.vida)
             else:
                 self.meele_sprites.sprites()[i].meele_ataque1 = False
                 self.meele_sprites.sprites()[i].meele_ataque3 = False
