@@ -8,8 +8,8 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.max = max
         # Variáveis do Inimigo Meele
         # Ações
-        self.meele_parado = True
-        self.meele_correndo = False
+        self.meele_parado = False
+        self.meele_correndo = True
         self.meele_ataque1 = False
         self.meele_ataque2 = False
         self.meele_ataque3 = False
@@ -112,13 +112,13 @@ class InimigoMeele(pygame.sprite.Sprite):
     # Função para atualizar a animação
     def update(self):
         # if self.rect.x < self.min:
-        #     self.rect.x = self.min
-        #     self.meele_esquerda = False
-        #     self.meele_direita = True
+            # self.rect.x = self.min
+            # self.meele_esquerda = False
+            # self.meele_direita = True
         # if self.rect.x > self.max:
-        #     self.rect.x = self.max
-        #     self.meele_esquerda = True
-        #     self.meele_direita = False
+            # self.rect.x = self.max
+            # self.meele_esquerda = True
+            # self.meele_direita = False
             
         # Para a direita
         if self.meele_direita:

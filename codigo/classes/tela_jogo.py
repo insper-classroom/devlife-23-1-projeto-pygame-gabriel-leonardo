@@ -13,6 +13,7 @@ class TelaJogo(Jogo):
         self.player = Player()
         self.sprites = pygame.sprite.Group()
         self.sprites.add(self.player)
+        self.direcao = 0
 
         # Desenha as plataformas
         self.plataforma_sprites = pygame.sprite.Group()
@@ -147,52 +148,52 @@ class TelaJogo(Jogo):
                         self.colidindo_esquerda = False
 
         # Verifica a colisão entre o player e o meele
-        for meeles in self.meele_sprites:
-            if pygame.Rect.colliderect(self.player.rect, meeles.rect):
-                if meeles.meele_ataque2 == False and meeles.meele_ataque3 == False:
-                    meeles.meele_ataque1 = True
-                if pygame.sprite.collide_mask(meeles, self.player):
-                    meeles.colisao = True
-                    self.player.vida -= meeles.dano
+        for i in range(4):
+            if pygame.Rect.colliderect(self.player.rect, self.meele_sprites.sprites()[i].rect):
+                if self.meele_sprites.sprites()[i].meele_ataque2 == False and self.meele_sprites.sprites()[i].meele_ataque3 == False:
+                    self.meele_sprites.sprites()[i].meele_ataque1 = True
+                if pygame.sprite.collide_mask(self.meele_sprites.sprites()[i], self.player):
+                    self.meele_sprites.sprites()[i].colisao = True
+                    self.player.vida -= self.meele_sprites.sprites()[i].dano
             else:
-                meeles.meele_ataque1 = False
-                meeles.meele_ataque3 = False
-                meeles.meele_ataque2 = False
-            if meeles.meele_dano == True:
+                self.meele_sprites.sprites()[i].meele_ataque1 = False
+                self.meele_sprites.sprites()[i].meele_ataque3 = False
+                self.meele_sprites.sprites()[i].meele_ataque2 = False
+            if self.meele_sprites.sprites()[i].meele_dano == True:
                 if self.player.ataque_forte == False:
-                    meeles.meele_dano = False
+                    self.meele_sprites.sprites()[i].meele_dano = False
 
         # Se o player estiver na frente do meele, ele muda de direção
         player_x_relacao_inimigo = 500
-        for meeles in self.meele_sprites:
-            if player_x_relacao_inimigo > meeles.rect.x:
-                meeles.meele_direita = True
-                meeles.meele_esquerda = False
+        for i in range(4):
+            if player_x_relacao_inimigo > self.meele_sprites.sprites()[i].rect.x:
+                self.meele_sprites.sprites()[i].meele_direita = True
+                self.meele_sprites.sprites()[i].meele_esquerda = False
             else:
-                meeles.meele_direita = False
-                meeles.meele_esquerda = True
-        for rangeds in self.ranged_sprites:
-            if player_x_relacao_inimigo > rangeds.rect.x:
-                rangeds.ranged_direita = True
-                rangeds.ranged_esquerda = False
+                self.meele_sprites.sprites()[i].meele_direita = False
+                self.meele_sprites.sprites()[i].meele_esquerda = True
+        for i in range(4):
+            if player_x_relacao_inimigo > self.ranged_sprites.sprites()[i].rect.x:
+                self.ranged_sprites.sprites()[i].ranged_direita = True
+                self.ranged_sprites.sprites()[i].ranged_esquerda = False
             else:
-                rangeds.ranged_direita = False
-                rangeds.ranged_esquerda = True
+                self.ranged_sprites.sprites()[i].ranged_direita = False
+                self.ranged_sprites.sprites()[i].ranged_esquerda = True
 
         # Ranged atirando: 
         self.tempo_passado = pygame.time.get_ticks() - self.tempo
         if self.tempo_passado > 3000:
             self.tempo = pygame.time.get_ticks()
-            for rangeds in self.ranged_sprites:
-                rangeds.ranged_atirando = True
-                if rangeds.ranged_direita:
+            for i in range(4):
+                self.ranged_sprites.sprites()[i].ranged_atirando = True
+                if self.ranged_sprites.sprites()[i].ranged_direita:
                     flecha = INIMIGO_RANGED_FLECHA
-                    self.window.blit(flecha, (rangeds.rect.right , rangeds.rect.y + 20))
+                    self.window.blit(flecha, (self.ranged_sprites.sprites()[i].rect.right , self.ranged_sprites.sprites()[i].rect.y + 20))
                     flecha.get_rect().x += 1
                     
-                elif rangeds.ranged_esquerda:
+                elif self.ranged_sprites.sprites()[i].ranged_esquerda:
                     flecha = pygame.transform.flip(INIMIGO_RANGED_FLECHA, True, False)
-                    self.window.blit(flecha, (rangeds.rect.left, rangeds.rect.y + 20))
+                    self.window.blit(flecha, (self.ranged_sprites.sprites()[i].rect.left, self.ranged_sprites.sprites()[i].rect.y + 20))
                     flecha.get_rect().x -= 1
 
         # Movimentação (e limitação do movimento) do player
@@ -207,10 +208,10 @@ class TelaJogo(Jogo):
                         if self.colidindo_esquerda == False:
                             self.scroll -= 1
                             player_x_relacao_inimigo -= 1
-                            for meeles in self.meele_sprites:
-                                meeles.rect.x += 1
-                            for rangeds in self.ranged_sprites:
-                                rangeds.rect.x += 1
+                            for i in range(4):
+                                self.meele_sprites.sprites()[i].rect.x += 1
+                            for i in range(4):
+                                self.ranged_sprites.sprites()[i].rect.x += 1
                             for plat in self.plataforma_sprites:
                                 plat.rect.x += 1
                     elif self.scroll == 11000:
@@ -227,10 +228,10 @@ class TelaJogo(Jogo):
                         if self.colidindo_direita == False:
                             self.scroll += 1
                             player_x_relacao_inimigo += 1
-                            for meeles in self.meele_sprites:
-                                meeles.rect.x -= 1
-                            for rangeds in self.ranged_sprites:
-                                rangeds.rect.x -= 1
+                            for i in range(4):
+                                self.meele_sprites.sprites()[i].rect.x -= 1
+                            for i in range(4):
+                                self.ranged_sprites.sprites()[i].rect.x -= 1
                             for plat in self.plataforma_sprites:
                                 plat.rect.x -= 1 
                     elif self.scroll == 0:
@@ -247,10 +248,10 @@ class TelaJogo(Jogo):
                             if self.colidindo_esquerda == False:
                                 self.scroll -= 2
                                 player_x_relacao_inimigo -= 2
-                                for meeles in self.meele_sprites:
-                                    meeles.rect.x += 2
-                                for rangeds in self.ranged_sprites:
-                                    rangeds.rect.x += 2
+                                for i in range(4):
+                                    self.meele_sprites.sprites()[i].rect.x += 2
+                                for i in range(4):
+                                    self.ranged_sprites.sprites()[i].rect.x += 2
                                 for plat in self.plataforma_sprites:
                                     plat.rect.x += 2
                         elif self.scroll == 11000:
@@ -265,10 +266,10 @@ class TelaJogo(Jogo):
                             if self.colidindo_direita == False:
                                 self.scroll += 2
                                 player_x_relacao_inimigo += 2
-                                for meeles in self.meele_sprites:
-                                    meeles.rect.x -= 2
-                                for rangeds in self.ranged_sprites:
-                                    rangeds.rect.x -= 2
+                                for i in range(4):
+                                    self.meele_sprites.sprites()[i].rect.x -= 2
+                                for i in range(4):
+                                    self.ranged_sprites.sprites()[i].rect.x -= 2
                                 for plat in self.plataforma_sprites:
                                     plat.rect.x -= 2
                         elif self.scroll == 0:
@@ -308,9 +309,9 @@ class TelaJogo(Jogo):
                                     pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
                                     pygame.mixer.music.set_volume(0.5)
                                     pygame.mixer.music.play()
-                                for meeles in self.meele_sprites:
-                                    meeles.vida -= 1
-                                    meeles.meele_dano = True
+                                for i in range(4):
+                                    self.meele_sprites.sprites()[i].vida -= 1
+                                    self.meele_sprites.sprites()[i].meele_dano = True
 
                 #if not pygame.sprite.collide_mask(self.player, self.meele):
                 #    self.meele.meele_dano = False
@@ -332,17 +333,17 @@ class TelaJogo(Jogo):
                                     pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3')
                                     pygame.mixer.music.set_volume(0.5)
                                     pygame.mixer.music.play()
-                                for meeles in self.meele_sprites:
-                                    meeles.meele_dano = True
-                                    meeles.vida -= 1
+                                for i in range(4):
+                                    self.meele_sprites.sprites()[i].meele_dano = True
+                                    self.meele_sprites.sprites()[i].vida -= 1
                         self.player.ataque_fraco = True
                         if self.player.parado == True:
                             self.player.parado = False
         # Combate em si ( Condições de vida, dano, etc)
-            for meeles in self.meele_sprites:
-                if meeles.vida <= 0:
-                    meeles.meele_dano = False
-                    meeles.meele_morrendo = True
+            for i in range(4):
+                if self.meele_sprites.sprites()[i].vida <= 0:
+                    self.meele_sprites.sprites()[i].meele_dano = False
+                    self.meele_sprites.sprites()[i].meele_morrendo = True
             if self.player.vida <= 0:
                 self.player.morrendo = True
                 self.player.vivo = False
@@ -363,6 +364,16 @@ class TelaJogo(Jogo):
             if event.type == pygame.USEREVENT:
                 if self.player.stamina < 10:
                     self.player.stamina += 1
+            if event.type == pygame.USEREVENT + 1:
+                for i in range(4):
+                    if self.meele_sprites.sprites()[i].rect.x == 2080 - self.scroll - 90:
+                        self.direcao = 1
+                    if self.meele_sprites.sprites()[i].rect.x == 2510 - self.scroll - 90:
+                        self.direcao = -1
+                    self.meele_sprites.sprites()[i].rect.x += 1 * self.direcao
+                    if self.scroll == 0:
+                        self.direcao = 1
+                
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     from classes.tela_gameover import TelaGameOver
