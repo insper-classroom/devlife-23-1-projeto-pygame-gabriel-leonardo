@@ -2,8 +2,8 @@ import pygame
 from constantes import *
 
 class InimigoMeele(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(self, x, y):
+        super().__init__()
         # Variáveis do Inimigo Meele
         # Ações
         self.meele_parado = True
@@ -73,49 +73,36 @@ class InimigoMeele(pygame.sprite.Sprite):
 
         # Parado
         self.image = self.sprite_parado[self.index_parado]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Correndo
         self.image = self.sprite_correndo[self.index_correndo]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Ataque 1
         self.image = self.sprite_ataque1[self.index_ataque1]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Ataque 2
         self.image = self.sprite_ataque2[self.index_ataque2]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Ataque 3
         self.image = self.sprite_ataque3[self.index_ataque3]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Morrendo
         self.image = self.sprite_morrendo[self.index_morrendo]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Defendendo
         self.image = self.sprite_defendendo[self.index_defendendo]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Dano
         self.image = self.sprite_dano[self.index_dano]
+
+        # Pega as imagens
         self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
-        
-        # Posição inicial
-        self.rect.x = 1030
-        self.rect.y = 515
-        # Máscara de colisão
         self.mask = pygame.mask.from_surface(self.image)
+
+        # Posiciona o inimigo
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
     # Função para atualizar a animação
     def update(self):
@@ -281,24 +268,18 @@ class InimigoRanged(pygame.sprite.Sprite):
         self.index_ranged_ataque_forte = 0
 
         self.image = self.sprite_ranged_parado[self.index_ranged_parado]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         self.image = self.sprite_ranged_atirando[self.index_ranged_atirando]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         self.image = self.sprite_ranged_morrendo[self.index_ranged_morrendo]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         self.image = self.sprite_ranged_ataque_fraco[self.index_ranged_ataque_fraco]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         self.image = self.sprite_ranged_ataque_forte[self.index_ranged_ataque_forte]
+
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         if self.ranged_direita:

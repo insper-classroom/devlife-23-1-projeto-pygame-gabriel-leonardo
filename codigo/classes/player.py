@@ -75,44 +75,33 @@ class Player(pygame.sprite.Sprite):
 
         # Parado:
         self.image = self.sprite_parado[self.index_parado]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Andando:
         self.image = self.sprite_andando[self.index_andando]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Correndo:
         self.image = self.sprite_correndo[self.index_correndo]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Ataque forte:
         self.image = self.sprite_ataque_forte[self.index_ataque_forte]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Ataque fraco:
         self.image = self.sprite_ataque_fraco[self.index_ataque_fraco]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Pulando:
         self.image = self.sprite_pulando[self.index_pulando]
-        self.image = self.image.convert_alpha()
-        self.rect = self.image.get_rect()
 
         # Defendendo:
         self.image = self.sprite_defendendo[self.index_defendendo]
+
+        # Pega as imagens
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
 
         # Posição inicial
         self.rect.x = 512
         self.rect.y = 535
-        # Máscara de colisão:
-        self.mask = pygame.mask.from_surface(self.image)
 
     
     # Função que atualiza a animação do player:

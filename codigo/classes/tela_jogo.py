@@ -7,84 +7,32 @@ from constantes import *
 
 class TelaJogo(Jogo):
     def __init__(self):
-        
         super().__init__()
+        # Inicia as sprites
         self.player = Player()
         self.sprites = pygame.sprite.Group()
         self.sprites.add(self.player)
 
-        self.meele = InimigoMeele()
-        self.meele_sprites = pygame.sprite.Group()
-        self.meele_sprites.add(self.meele)
-
+        # Desenha as plataformas
         self.plataforma_sprites = pygame.sprite.Group()
-
         self.plataforma = Plataforma1_1(2048, 509)
         self.plataforma_sprites.add(self.plataforma)
-
         self.plataforma = Plataforma1_2(2528, 381)
         self.plataforma_sprites.add(self.plataforma)
-
         self.plataforma = Plataforma2_1(4448, 509)
         self.plataforma_sprites.add(self.plataforma)
-
         self.plataforma = Plataforma1_2(4928, 381)
         self.plataforma_sprites.add(self.plataforma)
-
         self.plataforma = Plataforma2_1(9728, 509)
         self.plataforma_sprites.add(self.plataforma)
-
         self.plataforma = Plataforma1_2(10208, 381)
         self.plataforma_sprites.add(self.plataforma)
 
-        
-        # self.plataforma = Plataforma2(2528, 509)
-        # self.plataforma_sprites.add(self.plataforma)
+        self.meele_sprites = pygame.sprite.Group()
+        self.meele = InimigoMeele(2225, 382)
+        self.meele_sprites.add(self.meele)
 
-        # self.plataforma = Plataforma3(3008, 381)
-        # self.plataforma_sprites.add(self.plataforma)
-
-        # for i in range (2):
-        #     self.plataforma = Plataforma(2048 + (i * 480), 509)
-        #     self.plataforma_sprites.add(self.plataforma)
-        # for i in range (2):
-        #     self.plataforma = Plataforma(3008 + (i * 480), 381)
-        #     self.plataforma_sprites.add(self.plataforma)
-        # for i in range (0, 3, 2):
-        #     self.plataforma = Plataforma(4448 + (i * 480), 509)
-        #     self.plataforma_sprites.add(self.plataforma)
-        # for i in range(0, 8, 7):
-        #     self.plataforma = Plataforma(4928 + (i * 480), 381)
-        #     self.plataforma_sprites.add(self.plataforma)
-        # for i in range (0, 3, 2):
-        #     self.plataforma = Plataforma(6848 + (i * 480), 509)
-        #     self.plataforma_sprites.add(self.plataforma)
-        # for i in range (2):
-        #     self.plataforma = Plataforma(9728 + (i * 480), 509)
-        #     self.plataforma_sprites.add(self.plataforma)
-            
-        # for i in range (0, 11, 5):
-        #     self.quina = Quina_Esquerda(2048 + (i * 480), 509)
-        #     self.plataforma_sprites.add(self.quina)
-        # for i in range (0, 5, 4):
-        #     self.quina = Quina_Esquerda(3008 + (i * 480), 381)
-        #     self.plataforma_sprites.add(self.quina)
-        # for i in range (0, 5, 4):
-        #     self.quina = Quina_Esquerda(7808 + (i * 480), 509)
-        #     self.plataforma_sprites.add(self.quina)
-        # self.quina = Quina_Esquerda(8288, 381)
-        # self.plataforma_sprites.add(self.quina)
-
-        # for i in range(0, 4, 3):
-        #     self.plataforma = Quina_Direita(3488 + 480 - 64 + (i * 480), 381)
-        #     self.plataforma_sprites.add(self.plataforma)
-        # self.quina = Quina_Direita(8288 + 480 - 64, 381)
-        # for i in range(0, 4, 3):
-        #     self.plataforma = Quina_Direita(5408 + 480 - 64 + (i * 480), 509)
-        #     self.plataforma_sprites.add(self.plataforma)
-        # self.plataforma = Quina_Direita(8288 + 480 - 64, 381)
-        # self.plataforma_sprites.add(self.quina)
-
+        # Inicia o background
         self.BG_1 = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/bg_1.png').convert_alpha()
         self.BG_1 = pygame.transform.scale(self.BG_1, (self.WIDTH, self.HEIGHT))
         self.BG_2 = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/bg_2.png').convert_alpha()
@@ -92,14 +40,13 @@ class TelaJogo(Jogo):
         self.BG_3 = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/bg_3.png').convert_alpha()
         self.BG_3 = pygame.transform.scale(self.BG_3, (self.WIDTH, self.HEIGHT))
 
+        # Variáveis
         self.jogo = Jogo()
-
         self.rect_surface = pygame.Surface((1024, 720))
         self.rect_surface.fill(BRANCO)
 
-
-
     def desenha(self):
+        # Desenha o background
         for i in range(7):
            self.window.blit(self.BG_1, ((0 - self.scroll* 0.5) + i * 1024, 0))
         for i in range(9):
@@ -107,11 +54,12 @@ class TelaJogo(Jogo):
         for i in range(12):
             self.window.blit(self.BG_3,(((0 - self.scroll) + i * 1024), 0))
 
+        # Desenha os sprites
         self.meele_sprites.draw(self.window)
-        self.meele_sprites.update()
         self.sprites.draw(self.window)
         self.plataforma_sprites.draw(self.window)
         
+        # Muda a tela com base na stamina
         if self.player.stamina == 6:
             self.rect_surface.set_alpha(10)
         elif self.player.stamina == 5:
@@ -126,23 +74,30 @@ class TelaJogo(Jogo):
             self.rect_surface.set_alpha(0)
         self.window.blit(self.rect_surface, (0, 0))
 
+        # Calcula e desenha o FPS
         self.calc_fps()
         if self.dicionario['show_fps']:
             imagem_fps = FONTE_TEXTO.render(f'FPS:{self.fps:.2f}', True, (255, 255, 255))
             self.window.blit(imagem_fps, (5,5))
 
+        # Atualiza os sprites
+        self.meele_sprites.update()
         self.sprites.update()
+        self.plataforma_sprites.update()
 
     def update(self):
+        # Função que mexe o player quando a tela não se mexe e o player se mexe
         self.player.movimenta_player()
+
+        # Função que verifica se uma tecla esta sendo clicada
         key = pygame.key.get_pressed()
 
-        # Colisão do player com a plataforma
+        # Variável da colisão do player com a plataforma
         self.colidindo_direita = False
         self.colidindo_esquerda = False
         player_x_direita = self.scroll - 850
 
-        # Define uma variável para a posição esquerda do player, já que ele se move para a direita e o background é desenhado em sentido contrário:
+        # Define uma variável para a posição relativa (a tela) esquerda do player, já que ele se move para a direita e o background é desenhado em sentido contrário:
         if self.scroll < 4000: 
             player_x_esquerda = self.scroll - 1980
         if self.scroll > 4000:
@@ -154,6 +109,7 @@ class TelaJogo(Jogo):
         if self.scroll > 10500:
             player_x_esquerda = self.scroll - 10150
 
+        # Verifica a colisão entre o player e as plataformas
         for plataformas in self.plataforma_sprites:
             if pygame.sprite.collide_mask(self.player, plataformas):
                 if self.player.rect.y < plataformas.rect.top: 
@@ -173,6 +129,7 @@ class TelaJogo(Jogo):
                 
         # Movimentação (e limitação do movimento) do player
         if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:
+
             # Movimentação de andar para a esquerda
             if key[pygame.K_a]:
                 if self.scroll == 0:
@@ -204,6 +161,7 @@ class TelaJogo(Jogo):
                 self.player.andando = True
                 self.player.direita = True
                 self.player.esquerda = False
+
             # Movimentação de correr para a esquerda
             if self.player.stamina > 2:
                 if key[pygame.K_LSHIFT] and key[pygame.K_a]:
@@ -219,6 +177,7 @@ class TelaJogo(Jogo):
                         self.player.rect.x -= 1
                     self.player.andando = False
                     self.player.correndo = True
+
                 # Movimentação de correr para a direita
                 if key[pygame.K_LSHIFT] and key[pygame.K_d]:
                     if self.scroll == 11000:
@@ -233,6 +192,7 @@ class TelaJogo(Jogo):
                         self.player.rect.x += 1
                     self.player.andando = False
                     self.player.correndo = True
+
                 # Movimentação de pulo
                 if key[pygame.K_SPACE]:
                     if self.player.pulos < self.player.max_pulos:
@@ -243,13 +203,16 @@ class TelaJogo(Jogo):
                         self.player.andando = False
                         self.player.correndo = False
                         self.player.parado = False
+
             # Ação de defesa
             if key[pygame.K_c]:
                 self.player.defendendo = True
                 if self.player.parado == True:
                     self.player.parado = False
+
         # Movimentação de combate
         if self.player.pulando == False:
+
             # Ataque forte
             if key[pygame.K_q]:
                 if self.player.stamina >= 2:
@@ -268,10 +231,9 @@ class TelaJogo(Jogo):
                                 pygame.mixer.music.play()
                             self.meele.vida -= 1
                             self.meele.meele_dano = True
-            #if not pygame.sprite.collide_mask(self.player, self.meele):
-            #    self.meele.meele_dano = False
                     if self.player.parado == True:
                         self.player.parado = False
+
             # Ataque fraco
             if key[pygame.K_e]:
                 if self.player.stamina >= 1:
@@ -295,17 +257,19 @@ class TelaJogo(Jogo):
                     self.player.ataque_fraco = True
                     if self.player.parado == True:
                         self.player.parado = False
-        # Combate em si ( Condições de vida, dano, etc)
+
+        # Combate em si (Condições de vida, dano, etc)
         if self.meele.vida <= 0:
             self.meele.meele_dano = False
             self.meele.meele_morrendo = True
 
-        # Verificacao da borda do scroll(extra para que nao haja bugs):
+        # Verificacao da borda do scroll (verificação extra para que nao haja bugs):
         if self.scroll < 0:
             self.scroll = 0
         if self.scroll > 11000:
             self.scroll = 11000
-
+        
+        # Verifica o evento, se for de sair do jogo, sai, se for de uma tecla pressionada para cima, cancela o movimento
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
