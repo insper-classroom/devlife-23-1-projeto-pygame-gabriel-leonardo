@@ -2,6 +2,7 @@ import pygame
 from classes.jogo import Jogo
 from classes.player import Player
 from classes.inimigos import InimigoMeele, InimigoRanged
+from classes.tela_win import TelaWin
 from classes.plataforma import *
 from constantes import *
 
@@ -107,9 +108,6 @@ class TelaJogo(Jogo):
     def update(self):
         # Função que mexe o player quando a tela não se mexe e o player se mexe
         self.player.movimenta_player()
-
-        print(self.player.vida)
-
         # Função que verifica se uma tecla esta sendo clicada
         key = pygame.key.get_pressed()
 
@@ -305,6 +303,8 @@ class TelaJogo(Jogo):
             self.scroll = 0
         if self.scroll > 11000:
             self.scroll = 11000
+        if self.player.rect.x == 950:
+            return TelaWin()
         
         # Verifica o evento, se for de sair do jogo, sai, se for de uma tecla pressionada para cima, cancela o movimento
         for event in pygame.event.get():

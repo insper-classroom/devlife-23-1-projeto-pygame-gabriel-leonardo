@@ -272,14 +272,6 @@ class Player(pygame.sprite.Sprite):
         # Verifica as bordas
         if prox_posicao_x < 0:
             prox_posicao_x = 0
-
-        if prox_posicao_x > 950:
-            prox_posicao_x = 950
-            if self.rect.y < 535:
-                self.rect.y = self.rect.y
-            else:
-                self.rect.y = 535
-                self.index_pulando = 0
         
         # Verifica o fim do pulo:
         elif self.rect.y > 535:
