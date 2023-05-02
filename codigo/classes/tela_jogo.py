@@ -97,20 +97,6 @@ class TelaJogo(Jogo):
         self.colidindo_esquerda = False
         player_x_direita = self.scroll - 850
 
-        if pygame.Rect.colliderect(self.player.rect, self.meele.rect):
-            if self.meele.meele_ataque2 == False and self.meele.meele_ataque3 == False:
-                self.meele.meele_ataque1 = True
-            if pygame.sprite.collide_mask(self.meele, self.player):
-                self.meele.colisao = True
-                self.player.vida -= 1
-        else:
-            self.meele.meele_ataque1 = False
-            self.meele.meele_ataque3 = False
-            self.meele.meele_ataque2 = False
-
-        if self.meele.meele_dano == True:
-            if self.player.ataque_forte == False:
-                self.meele.meele_dano = False
         # Define uma variável para a posição esquerda do player, já que ele se move para a direita e o background é desenhado em sentido contrário:
         if self.scroll < 4000: 
             player_x_esquerda = self.scroll - 1980
@@ -140,7 +126,8 @@ class TelaJogo(Jogo):
                     else:
                         self.colidindo_direita = False
                         self.colidindo_esquerda = False
-                
+
+        # Verifica a colisão entre o player e o meele
         if pygame.Rect.colliderect(self.player.rect, self.meele.rect):
             if self.meele.meele_ataque2 == False and self.meele.meele_ataque3 == False:
                 self.meele.meele_ataque1 = True
@@ -151,7 +138,6 @@ class TelaJogo(Jogo):
             self.meele.meele_ataque1 = False
             self.meele.meele_ataque3 = False
             self.meele.meele_ataque2 = False
-
         if self.meele.meele_dano == True:
             if self.player.ataque_forte == False:
                 self.meele.meele_dano = False
