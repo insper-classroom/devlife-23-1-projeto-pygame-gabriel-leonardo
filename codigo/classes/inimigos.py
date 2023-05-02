@@ -111,14 +111,14 @@ class InimigoMeele(pygame.sprite.Sprite):
 
     # Função para atualizar a animação
     def update(self):
-        if self.rect.x < self.min:
-            self.rect.x = self.min
-            self.meele_esquerda = False
-            self.meele_direita = True
-        if self.rect.x > self.max:
-            self.rect.x = self.max
-            self.meele_esquerda = True
-            self.meele_direita = False
+        # if self.rect.x < self.min:
+        #     self.rect.x = self.min
+        #     self.meele_esquerda = False
+        #     self.meele_direita = True
+        # if self.rect.x > self.max:
+        #     self.rect.x = self.max
+        #     self.meele_esquerda = True
+        #     self.meele_direita = False
             
         # Para a direita
         if self.meele_direita:
@@ -305,12 +305,14 @@ class InimigoRanged(pygame.sprite.Sprite):
                 self.index_ranged_atirando += 0.08
                 if self.index_ranged_atirando > 14:
                     self.index_ranged_atirando = 0
+                    self.ranged_atirando = False
                 self.image = self.sprite_ranged_atirando[int(self.index_ranged_atirando)]
             if self.ranged_morrendo:
                 self.index_ranged_morrendo += 0.08
                 if self.index_ranged_morrendo > 4:
                     self.index_ranged_morrendo = 0
                 self.image = self.sprite_ranged_morrendo[int(self.index_ranged_morrendo)]
+
         elif self.ranged_esquerda:
             if self.ranged_parado:
                 self.index_ranged_parado += 0.08
@@ -322,6 +324,7 @@ class InimigoRanged(pygame.sprite.Sprite):
                 self.index_ranged_atirando += 0.08
                 if self.index_ranged_atirando > 14:
                     self.index_ranged_atirando = 0
+                    self.ranged_atirando = False
                 imagem = self.sprite_ranged_atirando[int(self.index_ranged_atirando)]
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.ranged_morrendo:
