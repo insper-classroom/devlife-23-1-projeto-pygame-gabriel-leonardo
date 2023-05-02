@@ -24,4 +24,30 @@ class Plataforma2_1(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+class FlechaEsq(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.image.load('../assets/inimigo_ranged/FlechaESQ.png')
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = x
+        self.rect.y = y
+    
+    def update(self):
+        self.rect.x -= 5
+        self.mask = pygame.mask.from_surface(self.image)
+        
+class FlechaDir(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.image.load('../assets/inimigo_ranged/Flecha.png')
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = x
+        self.rect.y = y
+    
+    def update(self):
+        self.rect.x += 5
+        self.mask = pygame.mask.from_surface(self.image)
         

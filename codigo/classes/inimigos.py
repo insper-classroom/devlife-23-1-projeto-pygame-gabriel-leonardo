@@ -137,16 +137,17 @@ class InimigoMeele(pygame.sprite.Sprite):
             # Ataque 1
             if self.meele_ataque1:
                 self.index_ataque1 += 0.08
+                self.dano = 1
                 if self.index_ataque1 > 4:
                     self.index_ataque1 = 0
                     if self.colisao == True:
                         self.meele_ataque2 = True
                         self.meele_ataque1 = False
-
                 self.image = self.sprite_ataque1[int(self.index_ataque1)]
             # Ataque 2
             elif self.meele_ataque2:
                 self.index_ataque2 += 0.08
+                self.dano = 2
                 if self.index_ataque2 > 5:
                     self.index_ataque2 = 0
                     self.meele_ataque3 = True
@@ -154,6 +155,7 @@ class InimigoMeele(pygame.sprite.Sprite):
                 self.image = self.sprite_ataque2[int(self.index_ataque2)]
             # Ataque 3
             elif self.meele_ataque3:
+                self.dano = 1
                 self.index_ataque3 += 0.08
                 if self.index_ataque3 > 4:
                     self.index_ataque3 = 0
@@ -197,9 +199,9 @@ class InimigoMeele(pygame.sprite.Sprite):
             # Ataque 1
             if self.meele_ataque1:
                 self.index_ataque1 += 0.08
+                self.dano = 1
                 if self.index_ataque1 > 4:
                     self.index_ataque1 = 0
-                    self.dano = 1
                     if self.colisao == True:
                         self.meele_ataque3 = True
                         self.meele_ataque1 = False
@@ -212,7 +214,6 @@ class InimigoMeele(pygame.sprite.Sprite):
                 if self.index_ataque2 > 5:
                     self.index_ataque2 = 0
                     self.meele_ataque2 = False
-                    
                 imagem = self.sprite_ataque2[int(self.index_ataque2)]
                 self.image = pygame.transform.flip(imagem, True, False)
             # Ataque 3
@@ -250,6 +251,7 @@ class InimigoMeele(pygame.sprite.Sprite):
                     self.index_dano = 0
                 imagem = self.sprite_dano[int(self.index_dano)]
                 self.image = pygame.transform.flip(imagem, True, False)
+        self.mask = pygame.mask.from_surface(self.image)
  
 # Classe do inimigo ranged
 class InimigoRanged(pygame.sprite.Sprite):
@@ -272,7 +274,7 @@ class InimigoRanged(pygame.sprite.Sprite):
         for i in range(9):
             img = INIMIGO_RANGED_PARADO.subsurface((128 * i, 0), (128,128))
             self.sprite_ranged_parado.append(img)
-        for i in range(14):
+        for i in range(4,12):
             img = INIMIGO_RANGED_ATIRANDO.subsurface((128 * i, 0), (128,128))
             self.sprite_ranged_atirando.append(img)
         for i in range(4):
@@ -303,7 +305,7 @@ class InimigoRanged(pygame.sprite.Sprite):
                 self.image = self.sprite_ranged_parado[int(self.index_ranged_parado)]
             if self.ranged_atirando:
                 self.index_ranged_atirando += 0.08
-                if self.index_ranged_atirando > 14:
+                if self.index_ranged_atirando > 8:
                     self.index_ranged_atirando = 0
                     self.ranged_atirando = False
                 self.image = self.sprite_ranged_atirando[int(self.index_ranged_atirando)]
@@ -322,7 +324,7 @@ class InimigoRanged(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(imagem, True, False)
             if self.ranged_atirando:
                 self.index_ranged_atirando += 0.08
-                if self.index_ranged_atirando > 14:
+                if self.index_ranged_atirando > 8:
                     self.index_ranged_atirando = 0
                     self.ranged_atirando = False
                 imagem = self.sprite_ranged_atirando[int(self.index_ranged_atirando)]
@@ -333,3 +335,4 @@ class InimigoRanged(pygame.sprite.Sprite):
                     self.index_ranged_morrendo = 0
                 imagem = self.sprite_ranged_morrendo[int(self.index_ranged_morrendo)]
                 self.image = pygame.transform.flip(imagem, True, False)
+        self.mask = pygame.mask.from_surface(self.image)

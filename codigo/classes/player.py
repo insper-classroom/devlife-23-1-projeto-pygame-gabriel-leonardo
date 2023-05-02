@@ -258,6 +258,8 @@ class Player(pygame.sprite.Sprite):
                     self.parado = True
                 imagem = self.sprite_morrendo[int(self.index_morrendo)]
                 self.image = pygame.transform.flip(imagem, True, False)
+        self.mask = pygame.mask.from_surface(self.image)
+
 
     # Função que verifica a movimentaçãoo do player
     def movimenta_player(self):
