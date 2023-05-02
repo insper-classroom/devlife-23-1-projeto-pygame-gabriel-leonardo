@@ -1,4 +1,5 @@
 from classes.tela_inicial import TelaInicial
+from classes.tela_instrucoes import TelaInstrucoes
 
 if __name__ == '__main__':
     tela_atual = TelaInicial()
