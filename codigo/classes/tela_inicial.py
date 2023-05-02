@@ -65,8 +65,8 @@ class TelaInicial(Jogo):
             # Verifica se algum botão da tela foi clicado
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if self.botao == 1:
-                    from classes.tela_jogo import TelaJogo
-                    return TelaJogo()
+                    from classes.tela_instrucoes import TelaInstrucoes
+                    return TelaInstrucoes()
                 elif self.botao == 2:
                     from classes.tela_opcoes import TelaOpcoes
                     return TelaOpcoes()
