@@ -30,13 +30,13 @@ class TelaJogo(Jogo):
         self.plataforma_sprites.add(self.plataforma)
 
         self.meele_sprites = pygame.sprite.Group()
-        self.meele = InimigoMeele(2225, 382)
+        self.meele = InimigoMeele(2225, 382, 2080, 2510)
         self.meele_sprites.add(self.meele)
-        self.meele = InimigoMeele(5105, 254)
+        self.meele = InimigoMeele(5105, 254, 4940, 5400)
         self.meele_sprites.add(self.meele)
-        self.meele = InimigoMeele(9885, 382)
+        self.meele = InimigoMeele(9885, 382, 9740, 10200)
         self.meele_sprites.add(self.meele)
-        self.meele = InimigoMeele(8000, 510)
+        self.meele = InimigoMeele(8000, 510, 7700, 8150)
         self.meele_sprites.add(self.meele)
 
         self.ranged_sprites = pygame.sprite.Group()
@@ -44,11 +44,10 @@ class TelaJogo(Jogo):
         self.ranged_sprites.add(self.ranged)
         self.ranged = InimigoRanged(5800, 382)
         self.ranged_sprites.add(self.ranged)
-        self.ranged = InimigoRanged(10550, 254)
-        self.ranged_sprites.add(self.ranged)
         self.ranged = InimigoRanged(7000, 510)
         self.ranged_sprites.add(self.ranged)
-
+        self.ranged = InimigoRanged(10550, 254)
+        self.ranged_sprites.add(self.ranged)
 
         # Inicia o background
         self.BG_1 = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/bg_1.png').convert_alpha()
@@ -147,19 +146,20 @@ class TelaJogo(Jogo):
                         self.colidindo_esquerda = False
 
         # Verifica a colisão entre o player e o meele
-        if pygame.Rect.colliderect(self.player.rect, self.meele.rect):
-            if self.meele.meele_ataque2 == False and self.meele.meele_ataque3 == False:
-                self.meele.meele_ataque1 = True
-            if pygame.sprite.collide_mask(self.meele, self.player):
-                self.meele.colisao = True
-                self.player.vida -= self.meele.dano
-        else:
-            self.meele.meele_ataque1 = False
-            self.meele.meele_ataque3 = False
-            self.meele.meele_ataque2 = False
-        if self.meele.meele_dano == True:
-            if self.player.ataque_forte == False:
-                self.meele.meele_dano = False
+        for meeles in self.meele_sprites:
+            if pygame.Rect.colliderect(self.player.rect, meeles.rect):
+                if meeles.meele_ataque2 == False and meeles.meele_ataque3 == False:
+                    meeles.meele_ataque1 = True
+                if pygame.sprite.collide_mask(meeles, self.player):
+                    meeles.colisao = True
+                    self.player.vida -= meeles.dano
+            else:
+                meeles.meele_ataque1 = False
+                meeles.meele_ataque3 = False
+                meeles.meele_ataque2 = False
+            if meeles.meele_dano == True:
+                if self.player.ataque_forte == False:
+                    meeles.meele_dano = False
 
         # Movimentação (e limitação do movimento) do player
         if self.player.vivo == True:
@@ -171,8 +171,10 @@ class TelaJogo(Jogo):
                         self.player.rect.x -= 1
                     elif self.player.rect.x <= 511 or self.scroll != 11000 and self.scroll != 0:
                         if self.colidindo_esquerda == False:
-                            self.meele.rect.x += 1
-                            self.ranged.rect.x += 1
+                            for meeles in self.meele_sprites:
+                                meeles.rect.x += 1
+                            for rangeds in self.ranged_sprites:
+                                rangeds.rect.x += 1
                             self.scroll -= 1
                             for plat in self.plataforma_sprites:
                                 plat.rect.x += 1
@@ -189,8 +191,10 @@ class TelaJogo(Jogo):
                     elif self.player.rect.x >= 511 or self.scroll != 11000 and self.scroll != 0:
                         if self.colidindo_direita == False:
                             self.scroll += 1
-                            self.meele.rect.x -= 1
-                            self.ranged.rect.x -= 1
+                            for meeles in self.meele_sprites:
+                                meeles.rect.x -= 1
+                            for rangeds in self.ranged_sprites:
+                                rangeds.rect.x -= 1
                             for plat in self.plataforma_sprites:
                                 plat.rect.x -= 1 
                     elif self.scroll == 0:
@@ -206,8 +210,10 @@ class TelaJogo(Jogo):
                         elif self.player.rect.x <= 511 or self.scroll != 11000 and self.scroll != 0:
                             if self.colidindo_esquerda == False:
                                 self.scroll -= 2
-                                self.meele.rect.x += 2
-                                self.ranged.rect.x += 2
+                                for meeles in self.meele_sprites:
+                                    meeles.rect.x += 2
+                                for rangeds in self.ranged_sprites:
+                                    rangeds.rect.x += 2
                                 for plat in self.plataforma_sprites:
                                     plat.rect.x += 2
                         elif self.scroll == 11000:
@@ -221,8 +227,10 @@ class TelaJogo(Jogo):
                         elif self.player.rect.x >= 511 or self.scroll != 11000 and self.scroll != 0:
                             if self.colidindo_direita == False:
                                 self.scroll += 2
-                                self.meele.rect.x -= 2
-                                self.ranged.rect.x -= 2
+                                for meeles in self.meele_sprites:
+                                    meeles.rect.x -= 2
+                                for rangeds in self.ranged_sprites:
+                                    rangeds.rect.x -= 2
                                 for plat in self.plataforma_sprites:
                                     plat.rect.x -= 2
                         elif self.scroll == 0:

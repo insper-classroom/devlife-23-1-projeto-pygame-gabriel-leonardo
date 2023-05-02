@@ -2,8 +2,10 @@ import pygame
 from constantes import *
 
 class InimigoMeele(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, min, max):
         super().__init__()
+        self.min = min
+        self.max = max
         # Variáveis do Inimigo Meele
         # Ações
         self.meele_parado = True
@@ -109,6 +111,15 @@ class InimigoMeele(pygame.sprite.Sprite):
 
     # Função para atualizar a animação
     def update(self):
+        if self.rect.x < self.min:
+            self.rect.x = self.min
+            self.meele_esquerda = False
+            self.meele_direita = True
+        if self.rect.x > self.max:
+            self.rect.x = self.max
+            self.meele_esquerda = True
+            self.meele_direita = False
+            
         # Para a direita
         if self.meele_direita:
             # Parado
