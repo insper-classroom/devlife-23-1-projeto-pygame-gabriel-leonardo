@@ -8,7 +8,7 @@ class Player(pygame.sprite.Sprite):
         # Status
         self.vivo = True
         self.max_vida = 5
-        self.vida = 5
+        self.vida = 1
         self.stamina = 10
         self.max_atq_forte = 0
         self.max_atq_fraco = 0
