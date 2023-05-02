@@ -136,16 +136,15 @@ class TelaJogo(Jogo):
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
-        print(self.player.gravidade)
 
         # Colisão do player com a plataforma
         self.colidindo_direita = False
         self.colidindo_esquerda = False
-        player_x_direita = self.scroll - 900
+        player_x_direita = self.scroll - 850
 
         # Define uma variável para a posição esquerda do player, já que ele se move para a direita e o background é desenhado em sentido contrário:
         if self.scroll < 4000: 
-            player_x_esquerda = self.scroll - 1970
+            player_x_esquerda = self.scroll - 1980
         if self.scroll > 4000:
             player_x_esquerda = self.scroll - 4370
         if self.scroll > 5000:
@@ -159,7 +158,6 @@ class TelaJogo(Jogo):
             if pygame.sprite.collide_mask(self.player, plataformas):
                 if self.player.rect.y < plataformas.rect.top: 
                     self.player.rect.bottom = plataformas.rect.top
-                    self.player.gravidade = 0
                     self.player.index_pulando = 0
                     self.player.pulos = 0
                     self.player.pulando = False
