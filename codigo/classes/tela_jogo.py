@@ -136,6 +136,7 @@ class TelaJogo(Jogo):
     def update(self):
         self.player.movimenta_player()
         key = pygame.key.get_pressed()
+        print(self.player.gravidade)
 
         # Colisão do player com a plataforma
         self.colidindo_direita = False
@@ -150,17 +151,19 @@ class TelaJogo(Jogo):
         if self.scroll > 5000:
             player_x_esquerda = self.scroll - 4850
         if self.scroll > 10000:
-            player_x_esquerda = self.scroll - 9650
+            player_x_esquerda = self.scroll - 9670
         if self.scroll > 10500:
-            player_x_esquerda = self.scroll - 10130
+            player_x_esquerda = self.scroll - 10150
 
         for plataformas in self.plataforma_sprites:
             if pygame.sprite.collide_mask(self.player, plataformas):
                 if self.player.rect.y < plataformas.rect.top: 
                     self.player.rect.bottom = plataformas.rect.top
+                    self.player.gravidade = 0
                     self.player.index_pulando = 0
                     self.player.pulos = 0
                     self.player.pulando = False
+                    self.player.parado = True
                 if self.player.rect.y > plataformas.rect.top:
                     if self.player.direita and player_x_direita > plataformas.rect.x:
                         self.colidindo_direita = True
@@ -169,7 +172,7 @@ class TelaJogo(Jogo):
                     else:
                         self.colidindo_direita = False
                         self.colidindo_esquerda = False
-        
+                
         # Movimentação (e limitação do movimento) do player
         if self.player.ataque_forte == False and self.player.ataque_fraco == False and self.player.defendendo == False:
             # Movimentação de andar para a esquerda

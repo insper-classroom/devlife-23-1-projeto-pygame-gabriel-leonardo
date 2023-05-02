@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.max_ataques = 1
         self.pulos = 0
         self.max_pulos = 1
+        self.cima_plataforma = False
         # Ações
         self.parado = True
         self.andando = False
@@ -28,10 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.direita = True
         # Velociades
         self.velocidade_x = 0
-        self.velocidade_y = 0
         self.gravidade = 0
-        # Outros
-        self.last_updated = 0
 
         # Animação das Sprites
         # Definindo as listas de sprites
@@ -244,25 +242,19 @@ class Player(pygame.sprite.Sprite):
 
     # Função que verifica a movimentaçãoo do player
     def movimenta_player(self):
-        self.gravidade += 0.3
+        if not self.pulando:
+            self.gravidade = 0
+        else:
+            self.gravidade += 0.3
+            
         self.rect.y += self.gravidade
         prox_posicao_x = self.rect.x + self.velocidade_x
 
         # Verifica as bordas
         if prox_posicao_x < 0:
             prox_posicao_x = 0
-            if self.rect.y < 535:
-                self.rect.y = self.rect.y
-            else:
-                self.rect.y = 535
-                self.index_pulando = 0
-        if prox_posicao_x > 975:
-            prox_posicao_x = 975
-            if self.rect.y < 535:
-                self.rect.y = self.rect.y
-            else:
-                self.rect.y = 535
-                self.index_pulando = 0
+        if prox_posicao_x > 965:
+            prox_posicao_x = 965
         
         # Verifica o fim do pulo:
         elif self.rect.y > 535:
