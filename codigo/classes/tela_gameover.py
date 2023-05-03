@@ -10,23 +10,23 @@ class TelaGameOver(Jogo):
         self.window.blit(pygame.transform.scale(NUVEM_1, (self.WIDTH + 100, self.HEIGHT)), (-50 + self.nuvem1_vel, 0))  
         self.window.blit(pygame.transform.scale(NUVEM_4, (self.WIDTH + 100, self.HEIGHT)), (-50 + self.nuvem4_vel, 0))  
         self.window.blit(pygame.transform.scale_by(LUA, 2.5), (-80, 0))
-        self.window.blit(FONTE_TITULO.render('Game Over! Você Morreu!', True, BRANCO), (40, self.HEIGHT/2 + 20))
+        self.window.blit(FONTE_TITULO.render('Você Morreu!', True, BRANCO), (self.WIDTH/2 - len('voce morreu!') * 11, self.HEIGHT/2 + 20))
         if self.botao == 1:
-            self.window.blit(FONTE_TEXTO_POPUP.render('Novo Jogo', True, BRANCO), (40, self.HEIGHT/2 + 77))
+            self.window.blit(FONTE_TEXTO_POPUP.render('Novo Jogo', True, BRANCO), (self.WIDTH/2 - len('novo jogo') * 10, self.HEIGHT/2 + 77))
         else:
-            self.window.blit(FONTE_TEXTO.render("Novo Jogo", True, CINZA), (40, self.HEIGHT/2 + 80))
+            self.window.blit(FONTE_TEXTO.render("Novo Jogo", True, CINZA), (self.WIDTH/2 - len('novo jogo') * 9, self.HEIGHT/2 + 80))
         if self.botao == 2:
-            self.window.blit(FONTE_TEXTO_POPUP.render('Tela Inicial', True, BRANCO), (40, self.HEIGHT/2 + 127))
+            self.window.blit(FONTE_TEXTO_POPUP.render('Tela Inicial', True, BRANCO), (self.WIDTH/2 - len('tela inicial') * 8, self.HEIGHT/2 + 127))
         else:
-            self.window.blit(FONTE_TEXTO.render('Tela Inicial', True, CINZA), (40, self.HEIGHT/2 + 130))
+            self.window.blit(FONTE_TEXTO.render('Tela Inicial', True, CINZA), (self.WIDTH/2 - len('tela inicial') * 7, self.HEIGHT/2 + 130))
         if self.botao == 3:
-            self.window.blit(FONTE_TEXTO_POPUP.render('Site', True, BRANCO), (40, self.HEIGHT/2 + 177))
+            self.window.blit(FONTE_TEXTO_POPUP.render('Site', True, BRANCO), (self.WIDTH/2 - len('site') * 9, self.HEIGHT/2 + 177))
         else:
-            self.window.blit(FONTE_TEXTO.render('Site', True, CINZA), (40, self.HEIGHT/2 + 180))
+            self.window.blit(FONTE_TEXTO.render('Site', True, CINZA), (self.WIDTH/2 - len('site') * 8, self.HEIGHT/2 + 180))
         if self.botao == 4:
-            self.window.blit(FONTE_TEXTO_POPUP.render('Sair', True, BRANCO), (40, self.HEIGHT/2 + 227))
+            self.window.blit(FONTE_TEXTO_POPUP.render('Sair', True, BRANCO), (self.WIDTH/2 - len('sair') * 9, self.HEIGHT/2 + 227))
         else:
-            self.window.blit(FONTE_TEXTO.render('Sair', True, CINZA), (40, self.HEIGHT/2 + 230))
+            self.window.blit(FONTE_TEXTO.render('Sair', True, CINZA), (self.WIDTH/2 - len('sair') * 8, self.HEIGHT/2 + 230))
 
     def colisao_ponto_retangulo(self, ponto_x, ponto_y, rect_x, rect_y, rect_w, rect_h):
         if ponto_x >= rect_x and ponto_x <= rect_x + rect_w and ponto_y >= rect_y and ponto_y <= rect_y + rect_h:
@@ -64,14 +64,14 @@ class TelaGameOver(Jogo):
 
             elif event.type == pygame.MOUSEMOTION:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 440, 70, 25):
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, self.WIDTH/2 - len('novo jogo') * 11, self.HEIGHT/2 + 80, 145, 25):
                     self.botao = 1
                 elif self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 440, 100, 25) == False:
                     self.botao = 0
-                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 490, 170, 26):
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, self.WIDTH/2 - len('tela inicial') * 7, self.HEIGHT/2 + 130, 170, 26):
                     self.botao = 2
-                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 540, 275, 25):
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, self.WIDTH/2 - len('site') * 9, self.HEIGHT/2 + 180, 60, 25):
                     self.botao = 3
-                if self.colisao_ponto_retangulo(mouse_x, mouse_y, 42, 590, 85, 25):
+                if self.colisao_ponto_retangulo(mouse_x, mouse_y, self.WIDTH/2 - len('sair') * 9, self.HEIGHT/2 + 230, 60, 25):
                     self.botao = 4
         return self
