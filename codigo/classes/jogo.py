@@ -23,7 +23,8 @@ class Jogo:
         self.clock = pygame.time.Clock()
         self.tempo_stamina = pygame.time.set_timer(pygame.USEREVENT, 2000)
         self.tempo_meele = pygame.time.set_timer(pygame.USEREVENT + 1, 10)
-
+        self.kills = 0
+        self.index_morto = 0
         # Armazena fps
         self.fps = 0
 

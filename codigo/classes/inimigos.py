@@ -8,6 +8,7 @@ class InimigoMeele(pygame.sprite.Sprite):
         self.max = max
         # Variáveis do Inimigo Meele
         # Ações
+        self.meele_combate = False
         self.meele_parado = False
         self.meele_correndo = True
         self.meele_ataque1 = False
@@ -161,7 +162,7 @@ class InimigoMeele(pygame.sprite.Sprite):
             if self.meele_morrendo:
                 self.index_morrendo += 0.05
                 if self.index_morrendo > 6:
-                    self.index_morrendo = 6
+                    self.index_morrendo = 0
                     self.meele_morrendo = False
                 self.image = self.sprite_morrendo[int(self.index_morrendo)]
             # Defendendo
@@ -227,7 +228,7 @@ class InimigoMeele(pygame.sprite.Sprite):
                     self.index_morrendo = 0
                     self.meele_morrendo = False
                     if self.meele_morrendo == False:
-                        self.kill()    
+                        self.rect.y += 500
                 imagem = self.sprite_morrendo[int(self.index_morrendo)]
                 self.image = pygame.transform.flip(imagem, True, False)
             # Defendendo
