@@ -23,7 +23,7 @@ class TelaInicial(Jogo):
             self.window.blit(FONTE_TEXTO.render('Opções', True, CINZA), (40, self.HEIGHT/2 + 130))
 
         if self.botao == 3:
-            self.window.blit(FONTE_TEXTO_POPUP.render('Creditos', True, BRANCO), (40, self.HEIGHT/2 + 177))
+            self.window.blit(FONTE_TEXTO_POPUP.render('Créditos', True, BRANCO), (40, self.HEIGHT/2 + 177))
         else:
             self.window.blit(FONTE_TEXTO.render('Créditos', True, CINZA), (40, self.HEIGHT/2 + 180))
 
