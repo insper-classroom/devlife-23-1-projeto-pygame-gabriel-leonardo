@@ -1,7 +1,7 @@
 import pygame
 from classes.jogo import Jogo
 from classes.player import Player
-from classes.inimigos import InimigoMeele, InimigoRanged
+from classes.inimigos import InimigoMeele
 from classes.tela_win import TelaWin
 from classes.plataforma import *
 from constantes import *
@@ -15,7 +15,7 @@ class TelaJogo(Jogo):
         self.sprites.add(self.player)
         self.direcao = 0
 
-        # Desenha as plataformas
+        # Inicia as plataformas
         self.plataforma_sprites = pygame.sprite.Group()
         self.plataforma = Plataforma1_1(2048, 509)
         self.plataforma_sprites.add(self.plataforma)
@@ -30,25 +30,17 @@ class TelaJogo(Jogo):
         self.plataforma = Plataforma1_2(10208, 381)
         self.plataforma_sprites.add(self.plataforma)
 
-        self.meele_sprites = pygame.sprite.Group()
-        self.meele1 = InimigoMeele(2225, 382, 2080, 2510)
-        self.meele_sprites.add(self.meele1)
-        self.meele2 = InimigoMeele(5105, 254, 4940, 5400)
-        self.meele_sprites.add(self.meele2)
-        self.meele3 = InimigoMeele(9885, 382, 9740, 10200)
-        self.meele_sprites.add(self.meele3)
-        self.meele4 = InimigoMeele(8000, 510, 7700, 8150)
-        self.meele_sprites.add(self.meele4)
 
-        # self.ranged_sprites = pygame.sprite.Group()
-        # self.ranged = InimigoRanged(4250, 510)
-        # self.ranged_sprites.add(self.ranged)
-        # self.ranged = InimigoRanged(5800, 382)
-        # self.ranged_sprites.add(self.ranged)
-        # self.ranged = InimigoRanged(7000, 510)
-        # self.ranged_sprites.add(self.ranged)
-        # self.ranged = InimigoRanged(10550, 254)
-        # self.ranged_sprites.add(self.ranged)
+        # Inicia os inimigos
+        self.meele_sprites = pygame.sprite.Group()
+        self.meele1 = InimigoMeele(2225, 382)
+        self.meele_sprites.add(self.meele1)
+        self.meele2 = InimigoMeele(5105, 254)
+        self.meele_sprites.add(self.meele2)
+        self.meele3 = InimigoMeele(9885, 382)
+        self.meele_sprites.add(self.meele3)
+        self.meele4 = InimigoMeele(8000, 510)
+        self.meele_sprites.add(self.meele4)
 
         # Inicia o background
         self.BG_1 = pygame.image.load('../assets/backgrounds/TelaJogo/Background_Parallax/bg_1.png').convert_alpha()
@@ -63,6 +55,12 @@ class TelaJogo(Jogo):
         self.rect_surface = pygame.Surface((1024, 720))
         self.rect_surface.fill(BRANCO)
         self.tempo = pygame.time.get_ticks()
+
+        # Som de fundo (musica)
+        if self.dicionario['musica']:                                
+            pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/ES_Forest Wind - SFX Producer.mp3')
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play()
 
     def desenha(self):
         # Desenha o background
@@ -213,7 +211,7 @@ class TelaJogo(Jogo):
             self.meele3.meele_combate = True
             if self.player.ataque_forte == False:
                 self.meele3.meele_dano = False
-            #
+            
         if pygame.Rect.colliderect(self.player.rect, self.meele4.rect):
             self.meele4.meele_combate = True
             self.meele4.meele_parado = True
@@ -234,7 +232,7 @@ class TelaJogo(Jogo):
             self.meele4.meele_combate = True
             if self.player.ataque_forte == False:
                 self.meele4.meele_dano = False
-            #
+            
         # Se o player estiver na frente do meele, ele muda de direção
         player_x_relacao_inimigo = 500
         if player_x_relacao_inimigo > self.meele1.rect.x:
@@ -264,34 +262,6 @@ class TelaJogo(Jogo):
         else:
             self.meele4.meele_direita = False
             self.meele4.meele_esquerda = True
-            #
-
-        #     if player_x_relacao_inimigo > self.ranged_sprites.sprites()[i].rect.x:
-        #         self.ranged_sprites.sprites()[i].ranged_direita = True
-        #         self.ranged_sprites.sprites()[i].ranged_esquerda = False
-        #     else:
-        #         self.ranged_sprites.sprites()[i].ranged_direita = False
-        #         self.ranged_sprites.sprites()[i].ranged_esquerda = True
-
-        # Ranged atirando: 
-            # self.flecha_esq = FlechaEsq(self.ranged_sprites.sprites()[i].rect.left, self.ranged_sprites.sprites()[i].rect.y + 40 )
-            # self.flecha_dir = FlechaDir(self.ranged_sprites.sprites()[i].rect.right, self.ranged_sprites.sprites()[i].rect.y + 40 )
-            # self.tempo_passado = pygame.time.get_ticks() - self.tempo
-            # if self.tempo_passado > 3500:
-            #     self.tempo = pygame.time.get_ticks()
-            # 
-            #         if self.ranged_sprites.sprites()[i].ranged_esquerda:
-            #             self.ranged_sprites.sprites()[i].ranged_atirando = True
-            #             if self.ranged_sprites.sprites()[i].ranged_esquerda: 
-            #                 self.ranged_sprites.add(self.flecha_esq)
-            #         if self.ranged_sprites.sprites()[i].ranged_direita:
-            #             self.ranged_sprites.sprites()[i].ranged_atirando = True
-            #             if self.ranged_sprites.sprites()[i].ranged_direita: 
-            #                 self.ranged_sprites.add(self.flecha_dir)
-        
-        # if pygame.sprite.collide_mask(self.flecha, self.player):
-        #     self.flecha.kill()
-        #     self.player.vida -= 1
 
         # Movimentação (e limitação do movimento) do player
         if self.player.vivo == True:
@@ -407,38 +377,28 @@ class TelaJogo(Jogo):
                             self.player.ataque_forte = True
                             self.player.max_atq_forte += 1
                             if self.dicionario['sons']:
-                                pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q.mp3')
-                                pygame.mixer.music.set_volume(0.5)
-                                pygame.mixer.music.play()
+                                pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q.mp3').play()
                             if pygame.sprite.collide_mask(self.player, self.meele1):
                                 if self.dicionario['sons']:
-                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
-                                    pygame.mixer.music.set_volume(0.5)
-                                    pygame.mixer.music.play()
+                                    pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3').play()
                                     self.meele1.vida -= 1
                                     self.meele1.meele_dano = True
                                     #
                             if pygame.sprite.collide_mask(self.player, self.meele2):
                                 if self.dicionario['sons']:
-                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
-                                    pygame.mixer.music.set_volume(0.5)
-                                    pygame.mixer.music.play()
+                                    pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3').play()
                                     self.meele2.vida -= 1
                                     self.meele2.meele_dano = True
                                     #
                             if pygame.sprite.collide_mask(self.player, self.meele3):
                                 if self.dicionario['sons']:
-                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
-                                    pygame.mixer.music.set_volume(0.5)
-                                    pygame.mixer.music.play()
+                                    pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3').play()
                                     self.meele3.vida -= 1
                                     self.meele3.meele_dano = True
                                     #
                             if pygame.sprite.collide_mask(self.player, self.meele4):
                                 if self.dicionario['sons']:
-                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
-                                    pygame.mixer.music.set_volume(0.5)
-                                    pygame.mixer.music.play()
+                                    pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3').play()
                                     self.meele4.vida -= 1
                                     self.meele4.meele_dano = True
                                     #
@@ -454,39 +414,29 @@ class TelaJogo(Jogo):
                             self.player.stamina -= 1
                             self.player.ataque_fraco = True
                             if self.dicionario['sons']:
-                                pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e.mp3')
-                                pygame.mixer.music.set_volume(0.5)
-                                pygame.mixer.music.play()
+                                pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e.mp3').play()
                             self.player.max_atq_fraco += 1
                             if pygame.sprite.collide_mask(self.player, self.meele1):
                                 if self.dicionario['sons']:
-                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3')
-                                    pygame.mixer.music.set_volume(0.5)
-                                    pygame.mixer.music.play()
+                                    pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3').play()
                                     self.meele1.meele_dano = True
                                     self.meele1.vida -= 1
                                     #
                             if pygame.sprite.collide_mask(self.player, self.meele2):
                                 if self.dicionario['sons']:
-                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3')
-                                    pygame.mixer.music.set_volume(0.5)
-                                    pygame.mixer.music.play()
+                                    pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3').play()
                                     self.meele2.meele_dano = True
                                     self.meele2.vida -= 1
                                     #
                             if pygame.sprite.collide_mask(self.player, self.meele3):
                                 if self.dicionario['sons']:
-                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3')
-                                    pygame.mixer.music.set_volume(0.5)
-                                    pygame.mixer.music.play()
+                                    pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3').play()
                                     self.meele3.meele_dano = True
                                     self.meele3.vida -= 1
                                     #
                             if pygame.sprite.collide_mask(self.player, self.meele4):
                                 if self.dicionario['sons']:
-                                    pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3')
-                                    pygame.mixer.music.set_volume(0.5)
-                                    pygame.mixer.music.play()
+                                    pygame.mixer.Sound('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/e_dano.mp3').play()
                                     self.meele4.meele_dano = True
                                     self.meele4.vida -= 1
                                     #
@@ -523,7 +473,7 @@ class TelaJogo(Jogo):
             self.scroll = 0
         if self.scroll > 11000:
             self.scroll = 11000
-        if self.player.rect.x == 940:
+        if self.player.rect.x >= 940:
             return TelaWin()
         
         # Verifica o evento, se for de sair do jogo, sai, se for de uma tecla pressionada para cima, cancela o movimento
@@ -536,9 +486,9 @@ class TelaJogo(Jogo):
                     self.player.stamina += 1
             if event.type == pygame.USEREVENT + 1:
                 if self.meele1.meele_combate == False:
-                        if self.meele1.rect.x == 2080 - self.scroll - 50:
+                        if self.meele1.rect.x == 2060 - self.scroll - 50:
                             self.direcao = 1
-                        if self.meele1.rect.x == 2510 - self.scroll + 128:
+                        if self.meele1.rect.x == 2650 - self.scroll + 128:
                             self.direcao = -1
                         self.meele1.rect.x += 1 * self.direcao
                         if self.scroll == 0:

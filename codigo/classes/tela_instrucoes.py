@@ -26,12 +26,12 @@ class TelaInstrucoes(Jogo):
             self.window.blit(FONTE_TEXTO_POPUP.render("Movimentação", True, (BRANCO)), (self.WIDTH//4 - len('movimentação') * 10 , 430))
             self.window.blit(FONTE_TEXTO.render("[A] - Andar para esquerda", True, (CINZA)), (self.WIDTH//2, 30))
             self.window.blit(FONTE_TEXTO.render("[A]", True, (BRANCO)), (self.WIDTH//2, 30))
-            self.window.blit(FONTE_TEXTO.render("[CTRL] + [A] - Correr para esquerda", True, (CINZA)), (self.WIDTH//2, 70))
-            self.window.blit(FONTE_TEXTO.render("[CTRL] + [A]", True, (BRANCO)), (self.WIDTH//2, 70))
+            self.window.blit(FONTE_TEXTO.render("[SHIFT] + [A] - Correr para esquerda", True, (CINZA)), (self.WIDTH//2, 70))
+            self.window.blit(FONTE_TEXTO.render("[SHIFT] + [A]", True, (BRANCO)), (self.WIDTH//2, 70))
             self.window.blit(FONTE_TEXTO.render("[D] - Andar para direita", True, (CINZA)), (self.WIDTH//2, 110))
             self.window.blit(FONTE_TEXTO.render("[D]", True, (BRANCO)), (self.WIDTH//2, 110))
-            self.window.blit(FONTE_TEXTO.render("[CTRL] + [D] - Correr para direita", True, (CINZA)), (self.WIDTH//2, 150))
-            self.window.blit(FONTE_TEXTO.render("[CTRL] + [D]", True, (BRANCO)), (self.WIDTH//2, 150))
+            self.window.blit(FONTE_TEXTO.render("[SHIFT] + [D] - Correr para direita", True, (CINZA)), (self.WIDTH//2, 150))
+            self.window.blit(FONTE_TEXTO.render("[SHIFT] + [D]", True, (BRANCO)), (self.WIDTH//2, 150))
             self.window.blit(FONTE_TEXTO.render("[ESPAÇO] - Pular", True, (CINZA)), (self.WIDTH//2, 190))
             self.window.blit(FONTE_TEXTO.render("[ESPAÇO]", True, (BRANCO)), (self.WIDTH//2, 190))
         else:
@@ -68,13 +68,8 @@ class TelaInstrucoes(Jogo):
         else:
             self.window.blit(FONTE_TEXTO.render("Interações", True, (CINZA)), (self.WIDTH//4 - len('interacoes') * 8, 530))
 
-            
-
-
-
     def colisao_ponto_retangulo(self, ponto_x, ponto_y, rect_x, rect_y, rect_w, rect_h):
-        if (ponto_x >= rect_x and ponto_x <= rect_x + rect_w and
-            ponto_y >= rect_y and ponto_y <= rect_y + rect_h):
+        if ponto_x >= rect_x and ponto_x <= rect_x + rect_w and ponto_y >= rect_y and ponto_y <= rect_y + rect_h:
             return True
         else:
             return False

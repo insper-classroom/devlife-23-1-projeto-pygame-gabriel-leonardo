@@ -5,6 +5,7 @@ import json
 class Jogo:
     def __init__(self):
         # Inicialização do jogo:
+        pygame.init()
         # Tamaho da tela
         self.WIDTH = 1024
         self.HEIGHT =  720

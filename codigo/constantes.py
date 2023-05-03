@@ -44,14 +44,6 @@ INIMIGO_MEELE_MORRENDO = pygame.image.load('../assets/Inimigo_meele/Morrendo.png
 INIMIGO_MEELE_DEFENDENDO = pygame.image.load('../assets/Inimigo_meele/Defendendo.png')
 INIMIGO_MEELE_DANO = pygame.image.load('../assets/Inimigo_meele/Dano.png')
 
-# Inimigo ranged
-INIMIGO_RANGED_PARADO = pygame.image.load('../assets/inimigo_ranged/Parado.png')
-INIMIGO_RANGED_ATIRANDO = pygame.image.load('../assets/inimigo_ranged/Atirando.png')
-INIMIGO_RANGED_MORRENDO = pygame.image.load('../assets/inimigo_ranged/Morrendo.png')
-INIMIGO_RANGED_ATAQUE_FRACO = pygame.image.load('../assets/inimigo_ranged/Ataque_fraco.png')
-INIMIGO_RANGED_ATAQUE_FORTE = pygame.image.load('../assets/inimigo_ranged/Ataque_forte.png')
-INIMIGO_RANGED_FLECHA = pygame.image.load('../assets/inimigo_ranged/Flecha.png')
-
 # Cores
 PRETO = (0, 0, 0)
 BRANCO = (255, 255, 255)
