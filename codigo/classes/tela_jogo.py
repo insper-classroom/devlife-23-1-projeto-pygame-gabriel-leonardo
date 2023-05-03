@@ -52,8 +52,10 @@ class TelaJogo(Jogo):
 
         # Variáveis
         self.jogo = Jogo()
-        self.rect_surface = pygame.Surface((1024, 720))
-        self.rect_surface.fill(BRANCO)
+        self.rect_surface_stamina = pygame.Surface((1024, 720))
+        self.rect_surface_stamina.fill(BRANCO)
+        self.rect_surface_vida = pygame.Surface((1024, 720))
+        self.rect_surface_vida.fill(VERMELHO)
         self.tempo = pygame.time.get_ticks()
 
         # Som de fundo (musica)
@@ -79,18 +81,32 @@ class TelaJogo(Jogo):
         
         # Muda a tela com base na stamina
         if self.player.stamina == 6:
-            self.rect_surface.set_alpha(10)
+            self.rect_surface_stamina.set_alpha(10)
         elif self.player.stamina == 5:
-            self.rect_surface.set_alpha(15)
+            self.rect_surface_stamina.set_alpha(25)
         elif self.player.stamina == 4:
-            self.rect_surface.set_alpha(20)
+            self.rect_surface_stamina.set_alpha(40)
         elif self.player.stamina == 3:
-            self.rect_surface.set_alpha(25)
+            self.rect_surface_stamina.set_alpha(55)
         elif self.player.stamina <= 2:
-            self.rect_surface.set_alpha(30)
+            self.rect_surface_stamina.set_alpha(70)
         else:
-            self.rect_surface.set_alpha(0)
-        self.window.blit(self.rect_surface, (0, 0))
+            self.rect_surface_stamina.set_alpha(0)
+        self.window.blit(self.rect_surface_stamina, (0, 0))
+
+        if self.player.vida <= 40 and self.player.vida > 30:
+            self.rect_surface_vida.set_alpha(10)
+        elif self.player.vida <= 30 and self.player.vida > 20:
+            self.rect_surface_vida.set_alpha(15)
+        elif self.player.vida <= 20 and self.player.vida > 10:
+            self.rect_surface_vida.set_alpha(20)
+        elif self.player.vida <= 10 and self.player.vida > 5:
+            self.rect_surface_vida.set_alpha(25)
+        elif self.player.vida <= 5 and self.player.vida > 0:
+            self.rect_surface_vida.set_alpha(30)
+        else:
+            self.rect_surface_vida.set_alpha(0)
+        self.window.blit(self.rect_surface_vida, (0, 0))
 
         # Calcula e desenha o FPS
         self.calc_fps()
