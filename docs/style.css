@@ -67,7 +67,7 @@
     font-weight: 400;
 }
 
-iframe{
+#imagem-principal {
     border: black solid 10px;
     border-radius: 7px;
 }
