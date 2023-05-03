@@ -265,7 +265,7 @@ class TelaJogo(Jogo):
             self.meele4.meele_direita = False
             self.meele4.meele_esquerda = True
             #
-        # for i in range(self.kills, 4):
+
         #     if player_x_relacao_inimigo > self.ranged_sprites.sprites()[i].rect.x:
         #         self.ranged_sprites.sprites()[i].ranged_direita = True
         #         self.ranged_sprites.sprites()[i].ranged_esquerda = False
@@ -279,7 +279,7 @@ class TelaJogo(Jogo):
             # self.tempo_passado = pygame.time.get_ticks() - self.tempo
             # if self.tempo_passado > 3500:
             #     self.tempo = pygame.time.get_ticks()
-            #     for i in range(self.kills, 4):
+            # 
             #         if self.ranged_sprites.sprites()[i].ranged_esquerda:
             #             self.ranged_sprites.sprites()[i].ranged_atirando = True
             #             if self.ranged_sprites.sprites()[i].ranged_esquerda: 
@@ -310,7 +310,7 @@ class TelaJogo(Jogo):
                             self.meele2.rect.x += 1
                             self.meele3.rect.x += 1
                             self.meele4.rect.x += 1
-                            # for i in range(self.kills, 4):
+                    
                             #     self.ranged_sprites.sprites()[i].rect.x += 1
                             for plat in self.plataforma_sprites:
                                 plat.rect.x += 1
@@ -332,7 +332,7 @@ class TelaJogo(Jogo):
                             self.meele2.rect.x -= 1
                             self.meele3.rect.x -= 1
                             self.meele4.rect.x -= 1
-                            # for i in range(self.kills, 4):
+                    
                             #     self.ranged_sprites.sprites()[i].rect.x -= 1
                             for plat in self.plataforma_sprites:
                                 plat.rect.x -= 1 
@@ -354,7 +354,7 @@ class TelaJogo(Jogo):
                                 self.meele2.rect.x += 2
                                 self.meele3.rect.x += 2
                                 self.meele4.rect.x += 2
-                                # for i in range(self.kills, 4):
+                        
                                 #     self.ranged_sprites.sprites()[i].rect.x += 2
                                 for plat in self.plataforma_sprites:
                                     plat.rect.x += 2
@@ -374,7 +374,7 @@ class TelaJogo(Jogo):
                                 self.meele2.rect.x -= 2
                                 self.meele3.rect.x -= 2
                                 self.meele4.rect.x -= 2
-                                # for i in range(self.kills, 4):
+                        
                                 #     self.ranged_sprites.sprites()[i].rect.x -= 2
                                 for plat in self.plataforma_sprites:
                                     plat.rect.x -= 2
@@ -415,7 +415,6 @@ class TelaJogo(Jogo):
                                     pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
                                     pygame.mixer.music.set_volume(0.5)
                                     pygame.mixer.music.play()
-                                for i in range(self.kills, 4):
                                     self.meele1.vida -= 1
                                     self.meele1.meele_dano = True
                                     #
@@ -424,7 +423,6 @@ class TelaJogo(Jogo):
                                     pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
                                     pygame.mixer.music.set_volume(0.5)
                                     pygame.mixer.music.play()
-                                for i in range(self.kills, 4):
                                     self.meele2.vida -= 1
                                     self.meele2.meele_dano = True
                                     #
@@ -433,7 +431,6 @@ class TelaJogo(Jogo):
                                     pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
                                     pygame.mixer.music.set_volume(0.5)
                                     pygame.mixer.music.play()
-                                for i in range(self.kills, 4):
                                     self.meele3.vida -= 1
                                     self.meele3.meele_dano = True
                                     #
@@ -442,7 +439,6 @@ class TelaJogo(Jogo):
                                     pygame.mixer.music.load('../assets/backgrounds/TelaJogo/Background_Parallax/sfx/q_dano.mp3')
                                     pygame.mixer.music.set_volume(0.5)
                                     pygame.mixer.music.play()
-                                for i in range(self.kills, 4):
                                     self.meele4.vida -= 1
                                     self.meele4.meele_dano = True
                                     #
