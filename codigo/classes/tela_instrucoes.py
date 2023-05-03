@@ -44,8 +44,6 @@ class TelaInstrucoes(Jogo):
 
             self.window.blit(FONTE_TEXTO.render("[E] - Ataque forte", True, (CINZA)), (self.WIDTH//2, 70))
             self.window.blit(FONTE_TEXTO.render("[E]", True, (BRANCO)), (self.WIDTH//2, 70))
-            self.window.blit(FONTE_TEXTO.render("[C] - Defesa", True, (CINZA)), (self.WIDTH//2, 110))
-            self.window.blit(FONTE_TEXTO.render("[C]", True, (BRANCO)), (self.WIDTH//2, 110))
         else:
             self.window.blit(FONTE_TEXTO.render("Combate", True, (CINZA)), (self.WIDTH//4 - len('comabteE') * 9, 480))
         
